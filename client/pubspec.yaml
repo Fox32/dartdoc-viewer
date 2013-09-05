@@ -4,3 +4,5 @@ dependencies:
   browser: any
   web_ui: any
   yaml: any
+  polymer: any
+
