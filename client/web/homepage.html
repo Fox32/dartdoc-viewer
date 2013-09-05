@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <link rel="import" href="item.html">
 
-<element name="dartdoc-homepage" constructor="HomeElement" extends="article"
+<polymer-element name="dartdoc-homepage" constructor="HomeElement" extends="article"
     apply-author-styles>
   <template>
     <template if="item != null">
-      
+
       <section class="description">{{addComment('dartdoc-homepage')}}</section>
-      
+
       <div class="page-header"><h1>Libraries</h1></div>
-      
+
       <template iterate="library in item.libraries">
         <dartdoc-item class="panel" item="{{library}}"></dartdoc-item>
       </template>
 
     </template>
   </template>
-  
+
   <script type="application/dart">
     import 'package:dartdoc_viewer/item.dart';
     import 'package:web_ui/web_ui.dart';
-    
+
     import 'member.dart';
-    
+
     class HomeElement extends MemberElement {}
   </script>
-</element>
+</polymer-element>

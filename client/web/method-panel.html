@@ -5,7 +5,7 @@
 <link rel="import" href="annotations.html">
 
 <!-- TODO(tmandel): Reduce redundancy here and in method.html -->
-<element name="method-panel" constructor="MethodPanel" extends="div"
+<polymer-element name="method-panel" constructor="MethodPanel" extends="div"
     apply-author-styles>
   <template>
     <template if="item == null">
@@ -15,17 +15,17 @@
       <a id="{{idName}}">
       </a>
       <div class="panel-heading">
-        
+
         <dartdoc-annotation annotations="{{item.annotations}}">
         </dartdoc-annotation>
-      
+
         <!-- Return Type -->
         <p>
           <span>
             <template if="item.isConstant">const</template>
             <template if="item.isAbstract">abstract</template>
             <template if="item.isStatic">static</template>
-            
+
             <template instantiate="if !item.isConstructor">
               <span class="type">
                 {{createType(item.type, 'method-panel', 'type')}}
@@ -41,7 +41,7 @@
 
       <p class="text-right"><dfn>
         <template if="isInherited">
-          This member is inherited from 
+          This member is inherited from
           <template if="exists(inheritedFrom.location)">
             <a href="#{{inheritedFrom.location}}">
               {{inheritedFrom.simpleType}}
@@ -74,7 +74,7 @@
       <p class="text-right"><dfn>
         <template if="hasInheritedComment && isExpanded">
           <template if="viewer.isInherited">
-            This documentation is inherited from 
+            This documentation is inherited from
             <template if="exists(commentFrom.location)">
               <a href="#{{commentFrom.location}}">
                 {{commentFrom.simpleType}}
@@ -89,13 +89,13 @@
 
     </template>
   </template>
-  
+
   <script type="application/dart">
     import 'package:web_ui/web_ui.dart';
-    
+
     import 'app.dart';
     import 'member.dart';
-    
+
     class MethodPanel extends MethodElement {
       @observable bool isExpanded = false;
       @observable bool nothingToExpand;
@@ -119,4 +119,4 @@
     }
   </script>
 
-</element>
+</polymer-element>

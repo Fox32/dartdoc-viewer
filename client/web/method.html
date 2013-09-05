@@ -5,24 +5,24 @@
 <link rel="import" href="annotations.html">
 
 <!-- TODO(tmandel): Reduce redundancy here and in method-panel.html -->
-<element name="dartdoc-method" constructor="DartdocMethod" extends="article"
+<polymer-element name="dartdoc-method" constructor="DartdocMethod" extends="article"
     apply-author-styles>
   <template>
     <template if="item == null">
       Loading...
     </template>
     <template if="item != null">
-      
+
       <dartdoc-annotation annotations="{{item.annotations}}">
       </dartdoc-annotation>
-      
+
       <!-- Return Type -->
       <div class="page-header">
         <h1>
           <template if="item.isConstant">const</template>
           <template if="item.isAbstract">abstract</template>
           <template if="item.isStatic">static</template>
-          
+
           <template instantiate="if !item.isConstructor">
             <span class="type">
               {{createType(item.type, 'dartdoc-method', 'type')}}
@@ -37,7 +37,7 @@
 
       <p class="text-right"><dfn>
         <template if="isInherited">
-          This member is inherited from 
+          This member is inherited from
           <template if="exists(inheritedFrom.location)">
             <a href="#{{inheritedFrom.location}}">
               {{inheritedFrom.simpleType}}
@@ -57,7 +57,7 @@
       <p class="text-right"><dfn>
         <template if="hasInheritedComment">
           <template if="viewer.isInherited">
-            This documentation is inherited from 
+            This documentation is inherited from
             <template if="exists(commentFrom.location)">
               <a href="#{{commentFrom.location}}">
                 {{commentFrom.simpleType}}
@@ -72,11 +72,11 @@
 
     </template>
   </template>
-  
+
   <script type="application/dart">
     import 'app.dart';
     import 'member.dart';
-    
+
     class DartdocMethod extends MethodElement {}
   </script>
-</element>
+</polymer-element>

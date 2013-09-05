@@ -2,7 +2,7 @@
 <link rel="import" href="parameters.html">
 <link rel="import" href="annotations.html">
 
-<element name="dartdoc-typedef" constructor="TypedefElement" extends="article"
+<polymer-element name="dartdoc-typedef" constructor="TypedefElement" extends="article"
     apply-author-styles>
   <template>
     <template if="item == null">
@@ -53,4 +53,4 @@
         item.parameters.where((parameter) => parameter.isOptional).toList();
     }
   </script>
-</element>
+</polymer-element>

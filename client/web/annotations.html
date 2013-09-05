@@ -2,7 +2,7 @@
 <link rel="import" href="item.html">
 <link rel="import" href="category.html">
 
-<element name="dartdoc-annotation" constructor="AnnotationElement"
+<polymer-element name="dartdoc-annotation" constructor="AnnotationElement"
     extends="span" apply-author-styles>
   <template>
     <template instantiate="if annotations.annotations.isNotEmpty">
@@ -50,4 +50,4 @@
       @observable AnnotationGroup annotations;
     }
   </script>
-</element>
+</polymer-element>

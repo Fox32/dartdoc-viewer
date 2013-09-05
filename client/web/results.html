@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<element name="search-result" constructor="Result" extends="a"  
+<polymer-element name="search-result" constructor="Result" extends="a"
     apply-author-styles>
   <template>
     <ul class="list-unstyled small">
@@ -7,21 +7,21 @@
       <li class="text-right text-muted small">{{descriptiveType}}</li>
       <li class="text-right text-muted small">{{outerLibrary}}</li>
     </ul>
-    
+
   </template>
   <script type="application/dart">
     import 'package:dartdoc_viewer/data.dart';
     import 'package:dartdoc_viewer/item.dart';
     import 'package:dartdoc_viewer/search.dart';
     import 'package:web_ui/web_ui.dart';
-    
+
     /**
-     * An HTML representation of a Search Result. 
+     * An HTML representation of a Search Result.
      */
     class Result extends WebComponent {
       String membertype;
       String qualifiedname;
-      
+
       /// The name of this member.
       String get descriptiveName {
         var name = qualifiedname.split('.');
@@ -37,10 +37,10 @@
         }
         return name.last;
       }
-      
+
       /// The type of this member.
       String get descriptiveType {
-        if (membertype == 'class' || membertype == 'library') 
+        if (membertype == 'class' || membertype == 'library')
           return membertype;
         var owner = ownerName(qualifiedname);
         var ownerName = owner.split('.').last;
@@ -49,17 +49,17 @@
           return '$membertype in $ownerName';
         return membertype;
       }
-      
+
       /// The library containing this member.
       String get outerLibrary {
         if (membertype == 'library') return '';
         var nameWithLibrary = findLibraryName(qualifiedname);
         var libraryName = nameWithLibrary.split('.').first;
         libraryName = libraryName.replaceAll('-', ':');
-        if (libraryName.contains(':dom:')) 
+        if (libraryName.contains(':dom:'))
           libraryName = libraryName.replaceFirst(':dom:', ':');
         return 'library $libraryName';
       }
     }
   </script>
-</element>
+</polymer-element>

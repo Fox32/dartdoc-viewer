@@ -1,6 +1,6 @@
 #!/usr/bin/env dart
 
-import 'package:web_ui/component_build.dart';
+import 'package:polymer/component_build.dart';
 import 'dart:io';
 import 'dart:async';
 

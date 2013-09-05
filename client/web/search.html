@@ -11,15 +11,15 @@ BSD-style license that can be found in the LICENSE file.
   </head>
 
   <body>
-  <element name="search-box" constructor="Search" extends="div">
+  <polymer-element name="search-box" constructor="Search" extends="div">
     <template>
-      <div class="navbar-form pull-right dropdown 
+      <div class="navbar-form pull-right dropdown
         {{!searchQuery.isEmpty && isFocused ? 'open' : ''}}" id="search">
         <input type="search" name="q" id="q" autocomplete="off"
             class="form-control dropdown-toggle" placeholder="Search API"
-            bind-value="searchQuery"  
+            bind-value="searchQuery"
             on-key-up="updateResults()" data-toggle="dropdown">
-      
+
           <ul class="dropdown-menu pull-right" role="menu"
               aria-labelledby="dropdownMenu">
             <template if="results.isEmpty">
@@ -40,12 +40,12 @@ BSD-style license that can be found in the LICENSE file.
             <!-- TODO(janicejl): Add "...add More" link to show more results.-->
           </ul>
         </div>
-    
+
     </template>
-   
-    
+
+
     <script type="application/dart" src="search.dart">
     </script>
-  </element>
-  
+  </polymer-element>
+
 </body></html>

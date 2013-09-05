@@ -2,10 +2,10 @@
 <link rel="import" href="annotations.html">
 <link rel="import" href="variable-heading.html">
 
-<element name="dartdoc-variable" constructor="VariableElement" extends="div"
+<polymer-element name="dartdoc-variable" constructor="VariableElement" extends="div"
     apply-author-styles>
   <template>
-    
+
     <div class="panel-heading">
       <dartdoc-annotation annotations="{{item.annotations}}">
       </dartdoc-annotation>
@@ -15,7 +15,7 @@
 
     <p class="text-right"><dfn>
       <template if="isInherited">
-        This property is inherited from 
+        This property is inherited from
         <template if="exists(inheritedFrom.location)">
           <a href="#{{inheritedFrom.location}}">
             {{inheritedFrom.simpleType}}
@@ -26,7 +26,7 @@
         </template>
       </template>
     </dfn></p>
-    
+
     <!-- Comment -->
     <template if="app.viewer.isInherited || !hasInheritedComment">
       <p class="description">
@@ -48,7 +48,7 @@
     <p class="text-right"><dfn>
       <template if="hasInheritedComment && isExpanded">
         <template if="app.viewer.isInherited">
-          This documentation is inherited from 
+          This documentation is inherited from
           <template if="exists(commentFrom.location)">
             <a href="#{{commentFrom.location}}">
               {{commentFrom.simpleType}}
@@ -60,7 +60,7 @@
         </template>
       </template>
     </dfn></p>
-    
+
   </template>
   <script type="application/dart">
     import 'dart:html';
@@ -94,4 +94,4 @@
       }
     }
   </script>
-</element>
+</polymer-element>
