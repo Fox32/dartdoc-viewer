@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 
-<polymer-element name="dartdoc-minimap" constructor="MinimapElement" extends="article"
-    apply-author-styles>
+<polymer-element name="dartdoc-minimap" constructor="MinimapElement" extends="article">
   <template>
-    <template iterate="item in items">
-      <template if="!item.isInherited || viewer.isInherited">
+    <template repeat="{{item in items}}">
+      <template if="{{!item.isInherited || viewer.isInherited}}">
         <li>
           <a href="#{{link(item)}}">
             {{item.decoratedName}}
@@ -17,11 +16,13 @@
   <script type="application/dart">
 
     import 'package:dartdoc_viewer/item.dart';
-    import 'package:web_ui/web_ui.dart';
+    import 'package:polymer/polymer.dart';
     import 'app.dart';
+    import 'warning_workaround.dart';
 
     /// An element in a page's minimap displayed on the right of the page.
-    class MinimapElement extends WebComponent {
+    @CustomTag("dartdoc-minimap")
+    class MinimapElement extends PolymerElement with StopBotheringMe {
       @observable List<Item> items;
 
       /// Creates a proper href String for an [Item].
@@ -29,6 +30,8 @@
        var hash = item.name == '' ? item.decoratedName : item.name;
        return '${viewer.currentPage.linkHref}#${viewer.toHash(hash)}';
       }
+
+      bool get applyAuthorStyles => true;
     }
   </script>
 </polymer-element>

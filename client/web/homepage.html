@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <link rel="import" href="item.html">
 
-<polymer-element name="dartdoc-homepage" constructor="HomeElement" extends="article"
-    apply-author-styles>
+<polymer-element name="dartdoc-homepage" extends="article">
   <template>
     <template if="item != null">
 
@@ -10,7 +9,7 @@
 
       <div class="page-header"><h1>Libraries</h1></div>
 
-      <template iterate="library in item.libraries">
+      <template repeat="{{library in item.libraries}}">
         <dartdoc-item class="panel" item="{{library}}"></dartdoc-item>
       </template>
 
@@ -19,10 +18,11 @@
 
   <script type="application/dart">
     import 'package:dartdoc_viewer/item.dart';
-    import 'package:web_ui/web_ui.dart';
+    import 'package:polymer/polymer.dart';
 
     import 'member.dart';
 
+    @CustomTag("dartdoc-homepage")
     class HomeElement extends MemberElement {}
   </script>
 </polymer-element>

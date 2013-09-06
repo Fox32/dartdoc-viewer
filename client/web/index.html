@@ -15,9 +15,9 @@
 <script type="text/javascript" src="static/js/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="static/js/bootstrap.min.js"></script>
 
-<polymer-element name="dartdoc-main" constructor="SomethingOrOther" extends="div">
+<polymer-element name="dartdoc-main">
 
-<template if="viewer.currentPage != null">
+<template if="{{viewer.currentPage != null}}">
     <title>
       {{viewer.currentPage.decoratedName}}
       {{viewer.currentPage.decoratedName == '' ? '' : ' - '}}
@@ -47,21 +47,21 @@
     <div class="nav-collapse collapse navbar-responsive-collapse"
         id="nav-collapse-content">
       <ul class="nav navbar-nav">
-        <template if="viewer.currentPage != null">
-          <template iterate="item in viewer.breadcrumbs">
-            <template if="item != viewer.breadcrumbs.first">
-              <template if="item != viewer.breadcrumbs.last">
+        <template if="{{viewer.currentPage != null}}">
+          <template repeat="{{item in viewer.breadcrumbs}}">
+            <template if="{{item != viewer.breadcrumbs.first}}">
+              <template if="{{item != viewer.breadcrumbs.last}}">
                 <li>
-                  <template instantiate="if item != null">
+                  <template if="{{item != null}}">
                     <a class="btn-link" href="#{{item.linkHref}}">
                       {{item.decoratedName}}
                     </a>
                   </template>
                 </li>
               </template>
-              <template if="item == viewer.breadcrumbs.last">
+              <template if="{{item == viewer.breadcrumbs.last}}">
                 <li class="active">
-                  <template instantiate="if item != null">
+                  <template if="{{if item != null}}">
                     <a class="btn-link">{{item.decoratedName}}</a>
                   </template>
                 </li>
@@ -79,19 +79,19 @@
             Options <b class="caret"></b>
           </a>
           <ul class="dropdown-menu">
-            <template instantiate="if viewer.currentPage != viewer.homePage">
-              <li class="visible-lg"><a on-click="viewer.togglePanel()">
-                <template if="viewer.isPanel">Hide Libraries</template>
-                <template if="!viewer.isPanel">Show Libraries</template>
+            <template if="{{viewer.currentPage != viewer.homePage}}">
+              <li class="visible-lg"><a on-click="togglePanel">
+                <template if="{{viewer.isPanel}}">Hide Libraries</template>
+                <template if="{{!viewer.isPanel}}">Show Libraries</template>
               </a></li>
-              <li class="visible-lg"><a on-click="viewer.toggleMinimap()">
-                <template if="viewer.isMinimap">Hide Minimap</template>
-                <template if="!viewer.isMinimap">Show Minimap</template>
+              <li class="visible-lg"><a on-click="toggleMinimap">
+                <template if="{{viewer.isMinimap}}">Hide Minimap</template>
+                <template if="{{!viewer.isMinimap}}">Show Minimap</template>
               </a></li>
             </template>
-            <li><a on-click="viewer.toggleInherited()">
-              <template if="viewer.isInherited">Hide Inherited</template>
-              <template if="!viewer.isInherited">Show Inherited</template>
+            <li><a on-click="toggleInherited">
+              <template if="{{viewer.isInherited}}">Hide Inherited</template>
+              <template if="{{!viewer.isInherited}}">Show Inherited</template>
             </a></li>
           </ul>
         </li>
@@ -104,22 +104,22 @@
 
 <div class="main-body">
   <!-- Library list panel -->
-  <template instantiate="if viewer.currentPage != null">
-    <template if="viewer.currentPage != viewer.homePage">
-      <template if="viewer.isPanel">
+  <template if="{{viewer.currentPage != null}}">
+    <template if="{{viewer.currentPage != viewer.homePage}}">
+      <template if="{{viewer.isPanel}}">
         <div class="list-group visible-lg col-lg-2 affix-left"
             id="library-panel">
-          <template iterate="library in viewer.homePage.libraries">
+          <template repeat="{{library in viewer.homePage.libraries}}">
             <template
-                if="library.decoratedName ==
-                    viewer.breadcrumbs[1].decoratedName">
+                if="{{library.decoratedName ==
+                    viewer.breadcrumbs[1].decoratedName}}">
               <a href="#{{library.linkHref}}" class="list-group-item active">
                 {{library.decoratedName}}
               </a>
             </template>
             <template
-                if="library.decoratedName !=
-                    viewer.breadcrumbs[1].decoratedName">
+                if="{{library.decoratedName !=
+                    viewer.breadcrumbs[1].decoratedName}}">
               <a href="#{{library.linkHref}}" class="list-group-item">
                 {{library.decoratedName}}
               </a>
@@ -133,13 +133,13 @@
   <main id="page-content"
       class="{{(viewer.isDesktop && viewer.isPanel) ? 'margin-left' : ''}}
           {{(viewer.isDesktop && viewer.isMinimap) ? 'margin-right' : ''}}">
-    <dartdoc-page home="{{viewer.homePage}}"></dartdoc-page>
+    <article is="dartdoc-page" home="{{viewer.homePage}}"></article>
   </main>
 
-  <template if="viewer.currentPage != viewer.homePage">
-    <template if="viewer.isMinimap">
+  <template if="{{viewer.currentPage != viewer.homePage}}">
+    <template if="{{viewer.isMinimap}}">
       <!-- Minimap -->
-      <template instantiate="if viewer.currentPage is Library">
+      <template if="{{viewer.currentPage is Library}}">
         <div class="visible-lg col-lg-3 well well-sm nav affix-right"
             id="minimap">
             <a href="#{{viewer.currentPage.linkHref}}">
@@ -147,79 +147,76 @@
             </a>
             <ul>
               <template
-                instantiate="if
-                    viewer.currentPage.operators.content.isNotEmpty">
+                if="{{viewer.currentPage.operators.content.isNotEmpty}}">
               <li><a href="#operators" data-toggle="collapse">
                 Operators<b class="caret"></b>
               </a></li>
               <ul id="operators" class="collapse">
-                <dartdoc-minimap
+                <article is="dartdoc-minimap"
                     items="{{viewer.currentPage.operators.content}}">
-                </dartdoc-minimap>
+                </article>
               </ul>
             </template>
             <template
-                instantiate="if
-                    viewer.currentPage.variables.content.isNotEmpty">
+                if="{{viewer.currentPage.variables.content.isNotEmpty}}">
               <li><a href="#properties" data-toggle="collapse">
                 Properties<b class="caret"></b>
               </a></li>
               <ul id="properties" class="collapse">
-                <dartdoc-minimap
+                <article is="dartdoc-minimap"
                     items="{{viewer.currentPage.variables.content}}">
-                </dartdoc-minimap>
+                </article>
               </ul>
             </template>
             <template
-                instantiate="if
-                    viewer.currentPage.functions.content.isNotEmpty">
+                if="{{viewer.currentPage.functions.content.isNotEmpty}}">
               <li><a href="#functions" data-toggle="collapse">
                 Functions<b class="caret"></b>
               </a></li>
               <ul id="functions" class="collapse">
-                <dartdoc-minimap
+                <article is="dartdoc-minimap"
                     items="{{viewer.currentPage.functions.content}}">
-                </dartdoc-minimap>
+                </article>
               </ul>
             </template>
             <template
-                instantiate="if viewer.currentPage.classes.content.isNotEmpty">
+                if="{{viewer.currentPage.classes.content.isNotEmpty}}">
               <li><a href="#classes" data-toggle="collapse">
                 Classes<b class="caret"></b>
               </a></li>
               <ul id="classes" class="collapse">
-                <dartdoc-minimap
+                <article is="dartdoc-minimap"
                     items="{{viewer.currentPage.classes.content}}">
-                </dartdoc-minimap>
+                </article>
               </ul>
             </template>
             <template
-                instantiate="if viewer.currentPage.typedefs.content.isNotEmpty">
+                if="{{viewer.currentPage.typedefs.content.isNotEmpty}}">
               <li><a href="#typedefs" data-toggle="collapse">
                 Typedefs<b class="caret"></b>
               </a></li>
               <ul id="typedefs" class="collapse">
-                <dartdoc-minimap
+                <article is="dartdoc-minimap"
                     items="{{viewer.currentPage.typedefs.content}}">
-                </dartdoc-minimap>
+                </article>
               </ul>
             </template>
             <template
-                instantiate="if viewer.currentPage.errors.content.isNotEmpty">
+                if="{{viewer.currentPage.errors.content.isNotEmpty}}">
               <li><a href="#exceptions" data-toggle="collapse">
                 Exceptions<b class="caret"></b>
               </a></li>
               <ul id="exceptions" class="collapse">
-                <dartdoc-minimap
+                <article is="dartdoc-minimap"
                     items="{{viewer.currentPage.errors.content}}">
-                </dartdoc-minimap>
+                </article>
               </ul>
             </template>
           </ul>
         </div>
       </template>
 
-      <template instantiate="if viewer.currentPage is Class">
+      <template if="{{viewer.currentPage is Class}}">
         <div class="visible-lg col-lg-3 well well-sm nav affix-right"
             id="minimap">
           <a href="#dartdoc-top">
@@ -227,62 +224,58 @@
           </a>
           <ul>
             <template
-                instantiate="if
-                  viewer.currentPage.operators.content.isNotEmpty">
-                <template if="viewer.currentPage.operators.hasNonInherited
-                  || viewer.isInherited">
+                if="{{viewer.currentPage.operators.content.isNotEmpty}}">
+                <template if="{{viewer.currentPage.operators.hasNonInherited
+                  || viewer.isInherited}}">
                   <li><a href="#operators" data-toggle="collapse">
                     Operators<b class="caret"></b>
                   </a></li>
                   <ul id="operators" class="collapse">
-                    <dartdoc-minimap
+                    <article is="dartdoc-minimap"
                       items="{{viewer.currentPage.operators.content}}">
-                    </dartdoc-minimap>
+                    </article>
                   </ul>
                 </template>
               </template>
               <template
-                instantiate="if
-                  viewer.currentPage.variables.content.isNotEmpty">
-                <template if="viewer.currentPage.variables.hasNonInherited
-                  || viewer.isInherited">
+                if="{{viewer.currentPage.variables.content.isNotEmpty}}">
+                <template if="{{viewer.currentPage.variables.hasNonInherited
+                  || viewer.isInherited}}">
                   <li><a href="#properties" data-toggle="collapse">
                     Properties<b class="caret"></b>
                   </a></li>
                   <ul id="properties" class="collapse">
-                    <dartdoc-minimap
+                    <article is="dartdoc-minimap"
                       items="{{viewer.currentPage.variables.content}}">
-                    </dartdoc-minimap>
+                    </article>
                   </ul>
                 </template>
               </template>
               <template
-                instantiate="if
-                  viewer.currentPage.constructs.content.isNotEmpty">
-                <template if="viewer.currentPage.constructs.hasNonInherited
-                  || viewer.isInherited">
+                if="{{viewer.currentPage.constructs.content.isNotEmpty}}">
+                <template if="{{viewer.currentPage.constructs.hasNonInherited
+                  || viewer.isInherited}}">
                   <li><a href="#constructors" data-toggle="collapse">
                     Constructors<b class="caret"></b>
                   </a></li>
                   <ul id="constructors" class="collapse">
-                    <dartdoc-minimap
+                    <article is="dartdoc-minimap"
                       items="{{viewer.currentPage.constructs.content}}">
-                    </dartdoc-minimap>
+                    </article>
                   </ul>
                 </template>
               </template>
               <template
-                instantiate="if
-                  viewer.currentPage.functions.content.isNotEmpty">
-                <template if="viewer.currentPage.functions.hasNonInherited
-                  || viewer.isInherited">
+                if="{{viewer.currentPage.functions.content.isNotEmpty}}">
+                <template if="{{viewer.currentPage.functions.hasNonInherited
+                  || viewer.isInherited}}">
                   <li><a href="#functions" data-toggle="collapse">
                     Functions<b class="caret"></b>
                   </a></li>
                   <ul id="functions" class="collapse">
-                    <dartdoc-minimap
+                    <article is="dartdoc-minimap"
                       items="{{viewer.currentPage.functions.content}}">
-                    </dartdoc-minimap>
+                    </article>
                   </ul>
                 </template>
               </template>
@@ -292,5 +285,21 @@
     </template>
   </template>
 </div>
+  <script type="application/dart">
+    import 'package:dartdoc_viewer/item.dart';
+    import 'package:polymer/polymer.dart';
+    import 'warning_workaround.dart';
+    import 'member.dart';
+    import 'app.dart';
+
+    @CustomTag("dartdoc-main")
+    class IndexElement extends PolymerElement with StopBotheringMe {
+      togglePanel(event, detail, target) => viewer.togglePanel();
+      toggleInherited(event, detail, target) => viewer.toggleInherited();
+      toggleMinimap(event, detail, target) => viewer.toggleMinimap();
+
+
+    }
+  </script>
 </polymer-element>
 </body>

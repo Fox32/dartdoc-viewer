@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <link rel="import" href="annotations.html">
 
-<polymer-element name="variable-heading" constructor="VariableHeading"
-  extends="p" apply-author-styles>
+<polymer-element name="variable-heading" extends="p">
   <template>
     <a id="{{idName}}"></a>
-    <template if="item.isFinal">final</template>
-    <template if="item.isStatic">static</template>
-    <template if="item.isAbstract">static</template>
-    <template if="item.isConstant">const</template>
-    <template if="item.isSetter">
+    <template if="{{item.isFinal}}">final</template>
+    <template if="{{item.isStatic}}">static</template>
+    <template if="{{item.isAbstract}}">static</template>
+    <template if="{{item.isConstant}}">const</template>
+    <template if="{{item.isSetter}}">
       void&nbsp;set&nbsp;<b>{{name}}</b>(
       <dartdoc-annotation annotations="{{setterParameter.annotations}}">
       </dartdoc-annotation>
@@ -18,7 +17,7 @@
       </span>
       {{setterParameter.decoratedName}})
     </template>
-    <template if="!item.isSetter">
+    <template if="{{!item.isSetter}}">
       <span class="type">
         {{createType(item.type, 'variable-heading', 'type')}}
       </span>
@@ -27,7 +26,7 @@
   </template>
   <script type="application/dart">
     import 'dart:html';
-    import 'package:web_ui/web_ui.dart';
+    import 'package:polymer/polymer.dart';
     import 'package:dartdoc_viewer/item.dart';
     import 'app.dart' as app;
     import 'member.dart';
@@ -35,6 +34,7 @@
     /**
      * An HTML representation of a Variable.
      */
+    @CustomTag("variable-heading")
     class VariableHeading extends MemberElement {
 
       Variable get item => super.item;

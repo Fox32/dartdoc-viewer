@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<polymer-element name="search-result" constructor="Result" extends="a"
-    apply-author-styles>
+<polymer-element name="search-result" extends="a">
   <template>
     <ul class="list-unstyled small">
       <li id="result-name"><strong>{{descriptiveName}}</strong></li>
@@ -13,12 +12,14 @@
     import 'package:dartdoc_viewer/data.dart';
     import 'package:dartdoc_viewer/item.dart';
     import 'package:dartdoc_viewer/search.dart';
-    import 'package:web_ui/web_ui.dart';
+    import 'package:polymer/polymer.dart';
+    import 'warning_workaround.dart';
 
     /**
      * An HTML representation of a Search Result.
      */
-    class Result extends WebComponent {
+    @CustomTag("search-result")
+    class Result extends PolymerElement with StopBotheringMe {
       String membertype;
       String qualifiedname;
 
@@ -60,6 +61,8 @@
           libraryName = libraryName.replaceFirst(':dom:', ':');
         return 'library $libraryName';
       }
+
+      bool get applyAuthorStyles => true;
     }
   </script>
 </polymer-element>

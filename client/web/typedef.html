@@ -2,13 +2,12 @@
 <link rel="import" href="parameters.html">
 <link rel="import" href="annotations.html">
 
-<polymer-element name="dartdoc-typedef" constructor="TypedefElement" extends="article"
-    apply-author-styles>
+<polymer-element name="dartdoc-typedef" extends="article">
   <template>
-    <template if="item == null">
+    <template if="{{item == null}}">
       Loading...
     </template>
-    <template if="item != null">
+    <template if="{{item != null}}">
 
       <div class="page-header"><h1>{{item.name}} typedef</h1></div>
 
@@ -25,8 +24,8 @@
             {{item.type.simpleType}}
           </a>{{item.name}}
 
-          <dartdoc-parameter parameters="{{item.parameters}}">
-          </dartdoc-parameter>
+          <small is="dartdoc-parameter" parameters="{{item.parameters}}">
+          </small>
         </p>
       </div>
 
@@ -36,11 +35,12 @@
   <script type="application/dart">
 
     import 'package:dartdoc_viewer/item.dart';
-    import 'package:web_ui/web_ui.dart';
+    import 'package:polymer/polymer.dart';
 
     import 'app.dart';
     import 'member.dart';
 
+    @CustomTag("dartoc-typedef")
     class TypedefElement extends MemberElement {
       Typedef get item => super.item;
 

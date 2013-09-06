@@ -3,44 +3,43 @@
 <link rel="import" href="category.html">
 <link rel="import" href="annotations.html">
 
-<polymer-element name="dartdoc-class" constructor="ClassElement" extends="article"
-    apply-author-styles>
+<polymer-element name="dartdoc-class" extends="article">
   <template>
-    <template if="item == null">
+    <template if="{{item == null}}">
       Loading...
     </template>
-    <template if="item != null">
+    <template if="{{item != null}}">
 
       <dartdoc-annotation annotations="{{annotations}}">
       </dartdoc-annotation>
 
       <div class="page-header"><h1>
         {{item.name}}
-        <template instantiate="if item.generics.isNotEmpty">
+        <template if="{{item.generics.isNotEmpty}}">
           &lt;
-          <template iterate="generic in item.generics">
+          <template repeat="{{generic in item.generics}}">
             {{generic}}
-            <template if="generic != item.generics.last">
+            <template if="{{generic != item.generics.last}}">
               ,&nbsp;
             </template>
           </template>
           &gt;
         </template>
-        <template if="item.isAbstract">abstract</template>
+        <template if="{{item.isAbstract}}">abstract</template>
         class
       </h1></div>
 
       <p>
-        <template if="interfaces.isNotEmpty">
+        <template if="{{interfaces.isNotEmpty}}">
           Implements:&nbsp;
-          <template iterate="interface in interfaces">
+          <template repeat="{{interface in interfaces}}">
             <a href="#{{interface.location}}">
               {{interface.simpleType}}
             </a>
-            <template if="interface != interfaces.last">
+            <template if="{{interface != interfaces.last}}">
               ,&nbsp;
             </template>
-            <template instantiate="if interface == interfaces.last">
+            <template if="{{interface == interfaces.last}}">
               <br/>
             </template>
           </template>
@@ -52,12 +51,12 @@
       </p>
       <p>
         <!-- Subclasses -->
-        <template instantiate="if item.qualifiedName != 'dart.core.Object'">
-          <template if="subclasses.isNotEmpty">
+        <template if="{{item.qualifiedName != 'dart.core.Object'}}">
+          <template if="{{subclasses.isNotEmpty}}">
             Subclasses:
           </template>
           <!-- Limit initial display to 3 items to not overwhelm the user. -->
-          <template if="subclasses.length > 3">
+          <template if="{{subclasses.length > 3}}">
             <a href="#{{subclasses[0].location}}">
               {{subclasses[0].simpleType}}
             </a>
@@ -70,18 +69,18 @@
               {{subclasses[2].simpleType}}
             </a>
             <a class="btn btn-link btn-xs" id="{{item.name}}-subclass-button"
-              on-click="showSubclass()">
+              on-click="showSubclass">
               ...
             </a>
             <span id="{{item.name}}-subclass-hidden" class="hidden">
               ,&nbsp;
-              <template iterate="subclass in subclasses">
-                <template if="subclass != subclasses[0] &&
-                  subclass != subclasses[1] && subclass != subclasses[2]">
+              <template repeat="{{subclass in subclasses}}">
+                <template if="{{subclass != subclasses[0] &&
+                  subclass != subclasses[1] && subclass != subclasses[2]}}">
                   <a href="#{{subclass.location}}">
                     {{subclass.simpleType}}
                   </a>
-                  <template if="subclass != subclasses.last">
+                  <template if="{{subclass != subclasses.last}}">
                     ,&nbsp;
                   </template>
                 </template>
@@ -89,12 +88,12 @@
             </span>
           </template>
 
-          <template if="subclasses.length <= 3">
-            <template iterate="subclass in subclasses">
+          <template if="{{subclasses.length <= 3}}">
+            <template repeat="{{subclass in subclasses}}">
               <a href="#{{subclass.location}}">
                 {{subclass.simpleType}}
               </a>
-              <template if="subclass != subclasses.last">
+              <template if="{{subclass != subclasses.last}}">
                 ,&nbsp;
               </template>
             </template>
@@ -106,27 +105,27 @@
       <section class="description">{{addComment('dartdoc-class')}}</section>
 
       <div class="accordion" id="accordion-grouping">
-        <template instantiate="if operators.content.isNotEmpty">
-          <template if="operators.hasNonInherited || viewer.isInherited">
+        <template if="{{operators.content.isNotEmpty}}">
+          <template if="{{operators.hasNonInherited || viewer.isInherited}}">
             <dartdoc-category category="{{operators}}" class="accordion-group">
             </dartdoc-category>
           </template>
         </template>
-        <template instantiate="if variables.content.isNotEmpty">
-          <template if="variables.hasNonInherited || viewer.isInherited">
+        <template if="{{variables.content.isNotEmpty}}">
+          <template if="{{variables.hasNonInherited || viewer.isInherited}}">
             <dartdoc-category category="{{variables}}" class="accordion-group">
             </dartdoc-category>
           </template>
         </template>
-        <template instantiate="if constructors.content.isNotEmpty">
-          <template if="constructors.hasNonInherited || viewer.isInherited">
+        <template if="{{constructors.content.isNotEmpty}}">
+          <template if="{{constructors.hasNonInherited || viewer.isInherited}}">
             <dartdoc-category category="{{constructors}}"
               class="accordion-group">
             </dartdoc-category>
           </template>
         </template>
-        <template instantiate="if methods.content.isNotEmpty">
-          <template if="methods.hasNonInherited || viewer.isInherited">
+        <template if="{{if methods.content.isNotEmpty}}">
+          <template if="{{methods.hasNonInherited || viewer.isInherited}}">
             <dartdoc-category category="{{methods}}" class="accordion-group">
             </dartdoc-category>
           </template>
@@ -139,11 +138,12 @@
   <script type="application/dart">
 
     import 'package:dartdoc_viewer/item.dart';
-    import 'package:web_ui/web_ui.dart';
+    import 'package:polymer/polymer.dart';
 
     import 'app.dart';
     import 'member.dart';
 
+    @CustomTag("dartdoc-class")
     class ClassElement extends MemberElement {
       Class get item => super.item;
 
@@ -163,11 +163,13 @@
 
       LinkableType get superClass => item.superClass;
 
-      void showSubclass() {
+      void showSubclass(event, detail, target) {
         document.query('#${item.name}-subclass-hidden').classes
             .remove('hidden');
         document.query('#${item.name}-subclass-button').classes.add('hidden');
       }
+
+      bool get applyAuthorStyles => true;
     }
   </script>
 </polymer-element>

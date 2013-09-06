@@ -8,21 +8,22 @@ import 'dart:html' as html show Element;
 import 'app.dart';
 import 'package:dartdoc_viewer/item.dart';
 import 'package:dartdoc_viewer/search.dart';
-import 'package:web_ui/web_ui.dart';
-import 'package:web_ui/watcher.dart' as watchers;
+import 'package:polymer/polymer.dart';
+import 'warning_workaround.dart';
 
 /**
  * Component implementing the Dartdoc_viewer search.
  */
-class Search extends WebComponent {
+@CustomTag("search-box")
+class Search extends PolymerElement with StopBotheringMe {
 
   List<SearchResult> results = toObservable(<SearchResult>[]);
   String _lastQuery;
   @observable bool isFocused = false;
-  
+
   int currentIndex = -1;
 
-  void updateResults() {
+  void updateResults(event, detail, target) {
     currentIndex = -1;
     results.clear();
     results.addAll(lookupSearchResults(searchQuery, viewer.isDesktop ? 10 : 5));
@@ -32,16 +33,14 @@ class Search extends WebComponent {
     if (document.activeElement == null ||
         !this.contains(document.activeElement)) {
       isFocused = false;
-      watchers.dispatch();
     }
   }
 
   void onFocusCallback(_) {
     isFocused = true;
-    watchers.dispatch();
   }
 
-  void onSubmitCallback() {
+  void onSubmitCallback([event, detail, target]) {
     if (!results.isEmpty) {
       String refId;
       if (this.contains(document.activeElement)) {
@@ -58,7 +57,6 @@ class Search extends WebComponent {
       document.query('#nav-collapse-content').classes.remove('in');
       document.query('#nav-collapse-content').classes.add('collapse');
       document.body.focus();
-      watchers.dispatch();
     }
   }
 
@@ -79,7 +77,7 @@ class Search extends WebComponent {
       e.preventDefault();
     }
   }
-  
+
   void handleUpDown(KeyboardEvent e) {
     if (e.keyCode == KeyCode.UP) {
       if (currentIndex > 0) {
@@ -95,9 +93,9 @@ class Search extends WebComponent {
         document.query('#search$currentIndex').focus();
       }
       e.preventDefault();
-    } 
+    }
   }
-  
+
   /** Activate search on Ctrl+3 and S. */
   void shortcutHandler(KeyboardEvent event) {
     if (event.keyCode == KeyCode.THREE && event.ctrlKey) {

@@ -4,7 +4,8 @@ import 'dart:html';
 
 import 'package:dartdoc_viewer/item.dart';
 import 'package:dartdoc_viewer/search.dart';
-import 'package:web_ui/web_ui.dart';
+import 'package:polymer/polymer.dart';
+import 'warning_workaround.dart';
 
 import 'app.dart' as app;
 
@@ -31,7 +32,7 @@ var validator = new NodeValidatorBuilder()
 /// This is a web component to be extended by all Dart members with comments.
 /// Each member has an [Item] associated with it as well as a comment to
 /// display, so this class handles those two aspects shared by all members.
-class MemberElement extends WebComponent {
+class MemberElement extends PolymerElement with StopBotheringMe {
   @observable var item;
 
   /// A valid string for an HTML id made from this [Item]'s name.
@@ -148,6 +149,8 @@ class InheritedElement extends MemberElement {
   LinkableType findInheritance(String qualifiedName) {
     return new LinkableType(ownerName(qualifiedName));
   }
+
+  bool get applyAuthorStyles => true;
 }
 
 class MethodElement extends InheritedElement {

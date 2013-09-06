@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <link rel="import" href="annotations.html">
 
-<polymer-element name="dartdoc-parameter" constructor="ParameterElement"
-    extends="small" apply-author-styles>
+<polymer-element name="dartdoc-parameter"
+    extends="small">
   <template>
     (
-    <template if="parameters != null">
+    <template if="{{parameters != null}}">
       <span class="required">
         {{addParameters(required, 'required')}}
       </span>
 
-      <template if="optional.isNotEmpty">
+      <template if="{{optional.isNotEmpty}}">
         {{optional.first.isNamed ? '{' : '['}}
         <span class="optional">
           {{addParameters(optional, 'optional')}}
@@ -25,12 +25,14 @@
     import 'dart:html';
 
     import 'package:dartdoc_viewer/item.dart';
-    import 'package:web_ui/web_ui.dart';
+    import 'package:polymer/polymer.dart';
+    import 'warning_workaround.dart';
 
     import 'app.dart';
     import 'member.dart';
 
-    class ParameterElement extends WebComponent {
+    @CustomTag("dartdoc-parameter")
+    class ParameterElement extends PolymerElement with StopBotheringMe {
       @observable List<Parameter> parameters;
 
       // Required parameters.
@@ -65,6 +67,7 @@
         location.children.clear();
         location.children.add(outerSpan);
       }
+      bool get applyAuthorStyles => true;
     }
   </script>
 </polymer-element>

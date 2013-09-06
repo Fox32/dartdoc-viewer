@@ -15,9 +15,11 @@ const docsPath = '../../docs/';
 /**
  * Anything that holds values and can be displayed.
  */
-@observable
+
 class Container {
+  @observable
   String name;
+  @observable
   String comment = '<span></span>';
 
   Container(this.name, [this.comment]);

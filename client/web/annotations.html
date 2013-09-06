@@ -2,27 +2,26 @@
 <link rel="import" href="item.html">
 <link rel="import" href="category.html">
 
-<polymer-element name="dartdoc-annotation" constructor="AnnotationElement"
-    extends="span" apply-author-styles>
+<polymer-element name="dartdoc-annotation">
   <template>
-    <template instantiate="if annotations.annotations.isNotEmpty">
-      <template iterate="annotation in annotations.annotations">
+    <template if="{{annotations.annotations.isNotEmpty}}">
+      <template repeat="{{annotation in annotations.annotations}}">
         <i><a href="#{{annotation.link.location}}">
           {{annotation.link.simpleType}}
         </a></i>
 
         <template if="annotation.parameters.isNotEmpty">
           (
-          <template iterate="parameter in annotation.parameters">
+          <template repeat="{{parameter in annotation.parameters}}">
             {{parameter}}
-            <template if="parameter != annotation.parameters.last">
+            <template if="{{parameter != annotation.parameters.last}}">
               ,&nbsp;
             </template>
           </template>
           )
         </template>
 
-        <template if="annotation != annotations.annotations.last">
+        <template if="{{annotation != annotations.annotations.last}}">
           ,&nbsp;
         </template>
       </template>
@@ -30,9 +29,9 @@
     </template>
     <template if="annotations.supportedBrowsers.isNotEmpty">
       <br/><i>Supported on:
-        <template iterate="browser in annotations.supportedBrowsers">
+        <template repeat="{{browser in annotations.supportedBrowsers}}">
           {{browser}}
-          <template if="browser != annotations.supportedBrowsers.last">
+          <template if="{{browser != annotations.supportedBrowsers.last}}">
             ,&nbsp;
           </template>
         </template>
@@ -43,11 +42,17 @@
   <script type="application/dart">
 
     import 'package:dartdoc_viewer/item.dart';
-    import 'package:web_ui/web_ui.dart';
+    import 'package:polymer/polymer.dart';
     import 'app.dart';
+    import 'warning_workaround.dart';
 
-    class AnnotationElement extends WebComponent {
+    @CustomTag("dartdoc-annotation")
+    class AnnotationElement extends PolymerElement with StopBotheringMe {
+
+      getAttributeNS(a, b) => null;
       @observable AnnotationGroup annotations;
+
+      bool get applyAuthorStyles => true;
     }
   </script>
 </polymer-element>

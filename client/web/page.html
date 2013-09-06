@@ -6,36 +6,35 @@
 <link rel="import" href="method.html">
 <link rel="import" href="typedef.html">
 
-<polymer-element name="dartdoc-page" constructor="PageElement" extends="article"
-    apply-author-styles>
+<polymer-element name="dartdoc-page" extends="article">
   <template>
 
     <!-- Home -->
-    <template if="app.viewer.currentPage is Home">
-      <dartdoc-homepage item="{{app.viewer.homePage}}"></dartdoc-homepage>
+    <template if="{{app.viewer.currentPage is Home}}">
+      <article is="dartdoc-homepage" item="{{app.viewer.homePage}}"></article>
     </template>
 
-    <template if="app.viewer.homePage != null">
+    <template if="{{app.viewer.homePage != null}}">
 
       <!-- Library -->
-      <template if="app.viewer.currentPage is Library">
-        <dartdoc-library item="{{app.viewer.currentPage}}">
-        </dartdoc-library>
+      <template if="{{app.viewer.currentPage is Library}}">
+        <article is="dartdoc-library" item="{{app.viewer.currentPage}}">
+        </article>
       </template>
 
       <!-- Class -->
-      <template if="app.viewer.currentPage is Class">
-        <dartdoc-class item="{{app.viewer.currentPage}}"></dartdoc-class>
+      <template if="{{app.viewer.currentPage is Class}}">
+        <article is="dartdoc-class" item="{{app.viewer.currentPage}}"></article>
       </template>
 
       <!-- Method -->
-      <template instantiate="if app.viewer.currentPage is Method">
-        <dartdoc-method item="{{app.viewer.currentPage}}"></dartdoc-method>
+      <template if="{{app.viewer.currentPage is Method}}">
+        <article is="dartdoc-method" item="{{app.viewer.currentPage}}"></article>
       </template>
 
       <!-- Typedef -->
-      <template instantiate="if app.viewer.currentPage is Typedef">
-        <dartdoc-typedef item="{{app.viewer.currentPage}}"></dartdoc-typedef>
+      <template if="{{app.viewer.currentPage is Typedef}}">
+        <article is="dartdoc-typedef" item="{{app.viewer.currentPage}}"></article>
       </template>
 
     </template>
@@ -46,15 +45,19 @@
     import 'dart:html';
 
     import 'package:dartdoc_viewer/item.dart';
-    import 'package:web_ui/web_ui.dart';
+    import 'package:polymer/polymer.dart';
+    import 'warning_workaround.dart';
 
     import 'app.dart' as app;
 
     /**
      * An HTML representation of a page
      */
-    class PageElement extends WebComponent {
+    @CustomTag("dartdoc-page")
+    class PageElement extends PolymerElement with StopBotheringMe {
       @observable Home home;
+
+      bool get applyAuthorStyles => true;
     }
   </script>
 </polymer-element>
