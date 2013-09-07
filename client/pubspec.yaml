@@ -5,4 +5,5 @@ dependencies:
   web_ui: any
   yaml: any
   polymer: any
+  barback: any
 

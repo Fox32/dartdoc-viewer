@@ -26,13 +26,12 @@
 
     import 'package:dartdoc_viewer/item.dart';
     import 'package:polymer/polymer.dart';
-    import 'warning_workaround.dart';
 
     import 'app.dart';
     import 'member.dart';
 
     @CustomTag("dartdoc-parameter")
-    class ParameterElement extends PolymerElement with StopBotheringMe {
+    class ParameterElement extends PolymerElement {
       @observable List<Parameter> parameters;
 
       // Required parameters.

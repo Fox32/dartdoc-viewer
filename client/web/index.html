@@ -1,21 +1,24 @@
 <!DOCTYPE html>
+<head>
 <meta charset="utf-8">
 <script src="packages/polymer/boot.js"></script>
 
-<link rel="stylesheet" href="static/css/bootstrap.css">
-<link rel="stylesheet" href="static/css/pics.css">
+ <link rel="stylesheet" href="static/css/bootstrap.css">
+ <link rel="stylesheet" href="static/css/pics.css">
 <link rel="import" href="category.html">
-<link rel="import" href="item.html">
-<link rel="import" href="minimap-element.html">
-<link rel="import" href="page.html">
+<!--<link rel="import" href="item.html">
+ <link rel="import" href="minimap-element.html">
+<link rel="import" href="page.html"> -->
 <link rel="import" href="search.html">
-
+</head>
 <body>
-<script type="application/dart" src="app.dart"></script>
-<script type="text/javascript" src="static/js/jquery-1.10.2.min.js"></script>
-<script type="text/javascript" src="static/js/bootstrap.min.js"></script>
+<!-- <script type="text/javascript" src="static/js/jquery-1.10.2.min.js"></script> -->
+<!-- <script type="text/javascript" src="static/js/bootstrap.min.js"></script> -->
 
-<polymer-element name="dartdoc-main">
+<!-- <polymer-element name="dartdoc-main">
+  <template repeat="{{[1,2,3]}}">
+    <p>sdfgsdfg</p>
+    </template>
 
 <template if="{{viewer.currentPage != null}}">
     <title>
@@ -29,7 +32,6 @@
 
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
-    <!-- .navbar-toggle is used as the toggle for collapsed navbar content -->
     <button type="button" class="navbar-toggle" data-toggle="collapse"
       data-target=".navbar-responsive-collapse" id="nav-collapse-button">
       <span class="icon-bar"></span>
@@ -103,7 +105,6 @@
 </div>
 
 <div class="main-body">
-  <!-- Library list panel -->
   <template if="{{viewer.currentPage != null}}">
     <template if="{{viewer.currentPage != viewer.homePage}}">
       <template if="{{viewer.isPanel}}">
@@ -138,8 +139,7 @@
 
   <template if="{{viewer.currentPage != viewer.homePage}}">
     <template if="{{viewer.isMinimap}}">
-      <!-- Minimap -->
-      <template if="{{viewer.currentPage is Library}}">
+       <template if="{{viewer.currentPage is Library}}">
         <div class="visible-lg col-lg-3 well well-sm nav affix-right"
             id="minimap">
             <a href="#{{viewer.currentPage.linkHref}}">
@@ -293,7 +293,11 @@
     import 'app.dart';
 
     @CustomTag("dartdoc-main")
-    class IndexElement extends PolymerElement with StopBotheringMe {
+    class IndexElement extends PolymerElement {
+      IndexElement() {
+         throw "foo";
+      }
+
       togglePanel(event, detail, target) => viewer.togglePanel();
       toggleInherited(event, detail, target) => viewer.toggleInherited();
       toggleMinimap(event, detail, target) => viewer.toggleMinimap();
@@ -302,4 +306,8 @@
     }
   </script>
 </polymer-element>
+ -->
+<dartdoc-main></dartdoc-main>
+<script type="application/dart" src="app.dart"></script>
+
 </body>

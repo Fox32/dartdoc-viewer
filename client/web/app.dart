@@ -33,7 +33,7 @@ const int desktopSizeBoundary = 1006;
 Viewer viewer;
 
 /// The Dartdoc Viewer application state.
-class Viewer {
+class Viewer extends Observable {
 
   @observable bool isDesktop = window.innerWidth > desktopSizeBoundary;
 
@@ -286,6 +286,7 @@ void startHistory() {
 
 /// Handles browser navigation.
 main() {
+  print("whatever");
   _pathname = window.location.pathname;
 
   window.onResize.listen((event) {

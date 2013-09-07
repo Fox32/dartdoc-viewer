@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<link rel="import" href="item.html">
-<link rel="import" href="variable.html">
-<link rel="import" href="method-panel.html">
+<!--<link rel="import" href="item.html">
+ <link rel="import" href="variable.html">
+<link rel="import" href="method-panel.html"> -->
 
 <polymer-element name="dartdoc-category">
-  <template>
-    <div class="accordion-heading">
+ <!--  <template>
+   <div class="accordion-heading">
       <a class="accordion-toggle {{app.viewer.isDesktop ? '' : 'collapsed'}}"
         data-toggle="collapse"
         data-parent="{{app.viewer.isDesktop ? '' : '#accordion-grouping'}}"
@@ -13,14 +13,15 @@
         {{title}}
       </a>
     </div>
-    <div id="accordion-{{stylizedName}}"
+    -->
+   <!--    <div id="accordion-{{stylizedName}}"
       class="accordion-body collapse
         {{app.viewer.isDesktop ? 'in' : 'collapse'}}"
       style="height:{{app.viewer.isDesktop ? 'auto':'0px'}}">
-      <div class="accordion-inner">
+     <div class="accordion-inner">
         <ul class="nav nav-pills nav-stacked">
-          <template repeat="{{item in category.content}}">
-            <template if="{{item is Item && item is! Variable && item is! Method}}">
+         <template repeat="{{item in category.content}}">
+           <template if="{{item is Item && item is! Variable && item is! Method}}">
               <dartdoc-item class="panel" item="{{item}}"></dartdoc-item>
             </template>
 
@@ -40,33 +41,34 @@
               </template>
             </template>
           </template>
+
         </ul>
       </div>
     </div>
-  </template>
+  </template>-->
 
+ <!-- <script type="application/dart" src="category.dart"></script> -->
   <script type="application/dart">
-    import 'package:polymer/polymer.dart';
-    import 'package:dartdoc_viewer/item.dart';
-    import 'app.dart' as app;
+ //   import 'package:polymer/polymer.dart';
+ //   import 'package:dartdoc_viewer/item.dart';
+  //  import 'app.dart' as app;
     import 'member.dart';
-    import 'warning_workaround.dart';
 
     /**
      * An HTML representation of a Category.
      *
      * Used as a placeholder for an CategoryItem object.
      */
-     @CustomTag("dartdoc-category")
-    class CategoryElement extends PolymerElement with StopBotheringMe {
-      @observable Container category;
+  //   @CustomTag("dartdoc-category")
+//    class CategoryElement extends PolymerElement {
+  //    @observable Container category;
 
-      String get title => category.name;
+  //    String get title => category.name;
 
-      String get stylizedName => category.name.replaceAll(' ', '-');
+//      String get stylizedName => category.name.replaceAll(' ', '-');
 
-      bool get applyAuthorStyles => true;
-    }
+  //    bool get applyAuthorStyles => true;
+  //  }
 
   </script>
 </polymer-element>

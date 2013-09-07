@@ -9,13 +9,12 @@ import 'app.dart';
 import 'package:dartdoc_viewer/item.dart';
 import 'package:dartdoc_viewer/search.dart';
 import 'package:polymer/polymer.dart';
-import 'warning_workaround.dart';
 
 /**
  * Component implementing the Dartdoc_viewer search.
  */
 @CustomTag("search-box")
-class Search extends PolymerElement with StopBotheringMe {
+class Search extends PolymerElement with ObservableMixin {
 
   List<SearchResult> results = toObservable(<SearchResult>[]);
   String _lastQuery;
@@ -26,7 +25,7 @@ class Search extends PolymerElement with StopBotheringMe {
   void updateResults(event, detail, target) {
     currentIndex = -1;
     results.clear();
-    results.addAll(lookupSearchResults(searchQuery, viewer.isDesktop ? 10 : 5));
+    results.addAll(lookupSearchResults(searchQueryHolder.searchQuery, viewer.isDesktop ? 10 : 5));
   }
 
   void onBlurCallback(_) {
@@ -51,7 +50,7 @@ class Search extends PolymerElement with StopBotheringMe {
         refId = results.first.element;
       }
       viewer.handleLink(new LinkableType(refId).location);
-      searchQuery = "";
+      searchQueryHolder.searchQuery = "";
       results.clear();
       document.query('#nav-collapse-button').classes.add('collapsed');
       document.query('#nav-collapse-content').classes.remove('in');
