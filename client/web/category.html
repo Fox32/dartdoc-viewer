@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!--<link rel="import" href="item.html">
- <link rel="import" href="variable.html">
-<link rel="import" href="method-panel.html"> -->
+<link rel="import" href="item.html">
+<link rel="import" href="variable.html">
+<link rel="import" href="method-panel.html">
 
 <polymer-element name="dartdoc-category">
- <!--  <template>
+   <template>
    <div class="accordion-heading">
       <a class="accordion-toggle {{app.viewer.isDesktop ? '' : 'collapsed'}}"
         data-toggle="collapse"
@@ -13,8 +13,8 @@
         {{title}}
       </a>
     </div>
-    -->
-   <!--    <div id="accordion-{{stylizedName}}"
+
+   <div id="accordion-{{stylizedName}}"
       class="accordion-body collapse
         {{app.viewer.isDesktop ? 'in' : 'collapse'}}"
       style="height:{{app.viewer.isDesktop ? 'auto':'0px'}}">
@@ -45,30 +45,8 @@
         </ul>
       </div>
     </div>
-  </template>-->
+  </template>
 
- <!-- <script type="application/dart" src="category.dart"></script> -->
-  <script type="application/dart">
- //   import 'package:polymer/polymer.dart';
- //   import 'package:dartdoc_viewer/item.dart';
-  //  import 'app.dart' as app;
-    import 'member.dart';
+<script type="application/dart" src="category.dart"></script>
 
-    /**
-     * An HTML representation of a Category.
-     *
-     * Used as a placeholder for an CategoryItem object.
-     */
-  //   @CustomTag("dartdoc-category")
-//    class CategoryElement extends PolymerElement {
-  //    @observable Container category;
-
-  //    String get title => category.name;
-
-//      String get stylizedName => category.name.replaceAll(' ', '-');
-
-  //    bool get applyAuthorStyles => true;
-  //  }
-
-  </script>
 </polymer-element>
