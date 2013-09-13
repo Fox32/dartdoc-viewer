@@ -10,31 +10,31 @@
   <template>
 
     <!-- Home -->
-    <template if="{{app.viewer.currentPage is Home}}">
-      <article is="dartdoc-homepage" item="{{app.viewer.homePage}}"></article>
+    <template if="{{viewer.currentPage is Home}}">
+      <article is="dartdoc-homepage" item="{{viewer.homePage}}"></article>
     </template>
 
-    <template if="{{app.viewer.homePage != null}}">
+    <template if="{{viewer.homePage}}">
 
       <!-- Library -->
-      <template if="{{app.viewer.currentPage is Library}}">
-        <article is="dartdoc-library" item="{{app.viewer.currentPage}}">
+      <template if="{{viewer.currentPage is Library}}">
+        <article is="dartdoc-library" item="{{viewer.currentPage}}">
         </article>
       </template>
 
       <!-- Class -->
-      <template if="{{app.viewer.currentPage is Class}}">
-        <article is="dartdoc-class" item="{{app.viewer.currentPage}}"></article>
+      <template if="{{viewer.currentPage is Class}}">
+        <article is="dartdoc-class" item="{{viewer.currentPage}}"></article>
       </template>
 
       <!-- Method -->
-      <template if="{{app.viewer.currentPage is Method}}">
-        <article is="dartdoc-method" item="{{app.viewer.currentPage}}"></article>
+      <template if="{{viewer.currentPage is Method}}">
+        <article is="dartdoc-method" item="{{viewer.currentPage}}"></article>
       </template>
 
       <!-- Typedef -->
-      <template if="{{app.viewer.currentPage is Typedef}}">
-        <article is="dartdoc-typedef" item="{{app.viewer.currentPage}}"></article>
+      <template if="{{viewer.currentPage is Typedef}}">
+        <article is="dartdoc-typedef" item="{{viewer.currentPage}}"></article>
       </template>
 
     </template>

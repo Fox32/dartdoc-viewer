@@ -11,5 +11,8 @@ import 'app.dart' as app;
 class PageElement extends PolymerElement {
   @observable Home home;
 
+  // We need this because we can't write {{app.viewer...}} in polymer.
+  get viewer => app.viewer;
+
   bool get applyAuthorStyles => true;
 }

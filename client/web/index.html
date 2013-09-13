@@ -6,16 +6,16 @@
  <link rel="stylesheet" href="static/css/bootstrap.css">
  <link rel="stylesheet" href="static/css/pics.css">
 <link rel="import" href="category.html">
-<!--<link rel="import" href="item.html">
+<link rel="import" href="item.html">
  <link rel="import" href="minimap-element.html">
-<link rel="import" href="page.html"> -->
+<link rel="import" href="page.html">
 <link rel="import" href="search.html">
 </head>
 <body>
 <!-- <script type="text/javascript" src="static/js/jquery-1.10.2.min.js"></script> -->
-<!-- <script type="text/javascript" src="static/js/bootstrap.min.js"></script> -->
+<script type="text/javascript" src="static/js/bootstrap.min.js"></script>
 
-<!-- <polymer-element name="dartdoc-main">
+<polymer-element name="dartdoc-main">
   <template repeat="{{[1,2,3]}}">
     <p>sdfgsdfg</p>
     </template>
@@ -285,29 +285,11 @@
     </template>
   </template>
 </div>
-  <script type="application/dart">
-    import 'package:dartdoc_viewer/item.dart';
-    import 'package:polymer/polymer.dart';
-    import 'warning_workaround.dart';
-    import 'member.dart';
-    import 'app.dart';
-
-    @CustomTag("dartdoc-main")
-    class IndexElement extends PolymerElement {
-      IndexElement() {
-         throw "foo";
-      }
-
-      togglePanel(event, detail, target) => viewer.togglePanel();
-      toggleInherited(event, detail, target) => viewer.toggleInherited();
-      toggleMinimap(event, detail, target) => viewer.toggleMinimap();
-
-
-    }
-  </script>
 </polymer-element>
- -->
-<dartdoc-main></dartdoc-main>
+
 <script type="application/dart" src="app.dart"></script>
+<script type="application/dart" src="index.dart"></script>
+
+<dartdoc-main></dartdoc-main>
 
 </body>

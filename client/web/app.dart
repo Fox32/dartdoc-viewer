@@ -30,7 +30,7 @@ String sourcePath = '../../docs/library_list.json';
 const int desktopSizeBoundary = 1006;
 
 /// The [Viewer] object being displayed.
-Viewer viewer;
+Viewer viewer = new Viewer._();
 
 /// The Dartdoc Viewer application state.
 class Viewer extends Observable {
@@ -307,7 +307,6 @@ main() {
   });
 
   startHistory();
-  viewer = new Viewer._();
   // If a user navigates to a page other than the homepage, the viewer
   // must first load fully before navigating to the specified page.
   viewer.finished.then((_) {
