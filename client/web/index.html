@@ -3,8 +3,8 @@
 <meta charset="utf-8">
 <script src="packages/polymer/boot.js"></script>
 
- <link rel="stylesheet" href="static/css/bootstrap.css">
- <link rel="stylesheet" href="static/css/pics.css">
+<!-- <link rel="stylesheet" href="static/css/bootstrap.css">
+ <link rel="stylesheet" href="static/css/pics.css"> -->
 <link rel="import" href="category.html">
 <link rel="import" href="item.html">
  <link rel="import" href="minimap-element.html">
@@ -12,19 +12,23 @@
 <link rel="import" href="search.html">
 </head>
 <body>
-<!-- <script type="text/javascript" src="static/js/jquery-1.10.2.min.js"></script> -->
+<!-- <script type="text/javascript" src="static/js/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="static/js/bootstrap.min.js"></script>
-
-<polymer-element name="dartdoc-main">
-  <template repeat="{{[1,2,3]}}">
+-->
+<!-- <polymer-element name="dartdoc-main"> -->
+  <p>This is just some text</p>
+  <template repeat="{{things}}">
     <p>sdfgsdfg</p>
     </template>
 
-<template if="{{viewer.currentPage != null}}">
+<!-- <template if="{{viewer.currentPage != null}}"> -->
+No, really...
+  <template if="2 == 2">
+    Now is the time...
     <title>
       {{viewer.currentPage.decoratedName}}
       {{viewer.currentPage.decoratedName == '' ? '' : ' - '}}
-      Dart API Reference
+      Dart API ReferenceZZZZZZZZZZZZ
     </title>
 </template>
 
@@ -285,7 +289,7 @@
     </template>
   </template>
 </div>
-</polymer-element>
+<!-- </polymer-element> -->
 
 <script type="application/dart" src="app.dart"></script>
 <script type="application/dart" src="index.dart"></script>

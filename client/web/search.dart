@@ -7,7 +7,7 @@ import 'dart:html' hide Element;
 import 'dart:html' as html show Element;
 import 'app.dart';
 import 'package:dartdoc_viewer/item.dart';
-import 'package:dartdoc_viewer/search.dart';
+import '../lib/search.dart';
 import 'package:polymer/polymer.dart';
 
 /**
@@ -20,12 +20,16 @@ class Search extends PolymerElement with ObservableMixin {
   String _lastQuery;
   @observable bool isFocused = false;
 
+  @observable String searchQuery = "";
+
+  String get dropdownOpen => !searchQuery.isEmpty && isFocused ? 'open' : '';
+
   int currentIndex = -1;
 
   void updateResults(event, detail, target) {
     currentIndex = -1;
     results.clear();
-    results.addAll(lookupSearchResults(searchQueryHolder.searchQuery, viewer.isDesktop ? 10 : 5));
+    results.addAll(lookupSearchResults(searchQuery, viewer.isDesktop ? 10 : 5));
   }
 
   void onBlurCallback(_) {
@@ -50,7 +54,7 @@ class Search extends PolymerElement with ObservableMixin {
         refId = results.first.element;
       }
       viewer.handleLink(new LinkableType(refId).location);
-      searchQueryHolder.searchQuery = "";
+      searchQuery = "";
       results.clear();
       document.query('#nav-collapse-button').classes.add('collapsed');
       document.query('#nav-collapse-content').classes.remove('in');

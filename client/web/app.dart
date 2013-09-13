@@ -16,7 +16,7 @@ import 'dart:json';
 import 'package:dartdoc_viewer/data.dart';
 import 'package:dartdoc_viewer/item.dart';
 import 'package:dartdoc_viewer/read_yaml.dart';
-import 'package:dartdoc_viewer/search.dart';
+import '../lib/search.dart';
 import 'package:web_ui/web_ui.dart';
 
 // TODO(janicejl): JSON path should not be hardcoded.
@@ -286,7 +286,6 @@ void startHistory() {
 
 /// Handles browser navigation.
 main() {
-  print("whatever");
   _pathname = window.location.pathname;
 
   window.onResize.listen((event) {

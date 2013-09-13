@@ -16,12 +16,12 @@ import 'package:web_ui/web_ui.dart';
 /** Search Index */
 Map<String, String> index = {};
 
-class SearchQueryObservableHolder extends Observable {
-  /** Search query. */
-  @observable String searchQuery = "";
-}
-
-var searchQueryHolder = new SearchQueryObservableHolder();
+//class SearchQueryObservableHolder extends Observable {
+//  /** Search query. */
+//  @observable String searchQuery = "";
+//}
+//
+//var searchQueryHolder = new SearchQueryObservableHolder();
 
 class SearchResult implements Comparable {
 
@@ -72,8 +72,13 @@ List<SearchResult> lookupSearchResults(String query, int maxResults) {
   var scoredResults = <SearchResult>[];
   var resultSet = new Set<String>();
   var queryList = query.trim().toLowerCase().split(' ');
-  queryList.forEach((q) => resultSet.addAll(index.keys.where((e) =>
-    e.toLowerCase().contains(q))));
+  for (var q in queryList) {
+    for (var key in index.keys) {
+      if (key.toLowerCase().contains(q)) {
+        resultSet.add(key);
+      }
+    }
+  }
 
   for (var r in resultSet) {
     /// If it is taking too long to compute the search results, time out and
