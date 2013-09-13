@@ -10,7 +10,15 @@
      * Used as a placeholder for an CategoryItem object.
      */
      @CustomTag("dartdoc-category")
-    class CategoryElement extends PolymerElement {
+    class CategoryElement extends PolymerElement with ObservableMixin {
+
+      CategoryElement() {
+        new PathObserver(this, "category.name").bindSync(
+            (_) {
+              notifyProperty(this, const Symbol('title'));
+              notifyProperty(this, const Symbol('stylizedName'));
+            });
+      }
       @observable Container category;
 
       String get title => category.name;

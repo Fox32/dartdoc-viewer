@@ -3,7 +3,7 @@ import 'package:polymer/polymer.dart';
 import 'app.dart';
 
 @CustomTag("dartdoc-annotation")
-class AnnotationElement extends PolymerElement {
+class AnnotationElement extends PolymerElement with ObservableMixin {
 
   getAttributeNS(a, b) => null;
   @observable AnnotationGroup annotations;

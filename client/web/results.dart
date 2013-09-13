@@ -10,7 +10,6 @@ import 'package:polymer/polymer.dart';
 class Result extends PolymerElement with ObservableMixin {
 
   Result() {
-    print("Creating result");
     bindProperty(this, const Symbol('membertype'), broadcastProperty);
     bindProperty(this, const Symbol('qualifiedname'), broadcastProperty);
   }

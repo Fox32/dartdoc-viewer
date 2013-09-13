@@ -8,7 +8,7 @@ import 'app.dart' as app;
  * An HTML representation of a page
  */
 @CustomTag("dartdoc-page")
-class PageElement extends PolymerElement {
+class PageElement extends PolymerElement with ObservableMixin {
   @observable Home home;
 
   // We need this because we can't write {{app.viewer...}} in polymer.

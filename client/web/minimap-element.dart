@@ -5,7 +5,7 @@ import 'app.dart';
 
 /// An element in a page's minimap displayed on the right of the page.
 @CustomTag("dartdoc-minimap")
-class MinimapElement extends PolymerElement {
+class MinimapElement extends PolymerElement with ObservableMixin {
   @observable List<Item> items;
 
   /// Creates a proper href String for an [Item].

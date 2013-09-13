@@ -31,7 +31,7 @@ var validator = new NodeValidatorBuilder()
 //// This is a web component to be extended by all Dart members with comments.
 //// Each member has an [Item] associated with it as well as a comment to
 //// display, so this class handles those two aspects shared by all members.
-class MemberElement extends PolymerElement {
+class MemberElement extends PolymerElement with ObservableMixin {
   @observable var item;
 
   /// A valid string for an HTML id made from this [Item]'s name.

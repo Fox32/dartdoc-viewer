@@ -7,8 +7,7 @@ import 'app.dart';
 
 @CustomTag("dartdoc-main")
 class IndexElement extends PolymerElement {
-  IndexElement() {}
- get things => [1, 2, 3];
+
   togglePanel(event, detail, target) => viewer.togglePanel();
   toggleInherited(event, detail, target) => viewer.toggleInherited();
   toggleMinimap(event, detail, target) => viewer.toggleMinimap();

@@ -7,7 +7,7 @@ import 'app.dart';
 import 'member.dart';
 
 @CustomTag("dartdoc-parameter")
-class ParameterElement extends PolymerElement {
+class ParameterElement extends PolymerElement with ObservableMixin {
   @observable List<Parameter> parameters;
 
   // Required parameters.
