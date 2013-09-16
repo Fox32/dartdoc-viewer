@@ -2,39 +2,38 @@
 <head>
 <meta charset="utf-8">
 <script src="packages/polymer/boot.js"></script>
-
-<!-- <link rel="stylesheet" href="static/css/bootstrap.css">
- <link rel="stylesheet" href="static/css/pics.css"> -->
+<link rel="stylesheet" href="static/css/bootstrap.css">
+ <link rel="stylesheet" href="static/css/pics.css">
 <link rel="import" href="category.html">
 <link rel="import" href="item.html">
  <link rel="import" href="minimap-element.html">
 <link rel="import" href="page.html">
 <link rel="import" href="search.html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+
 <body>
 <!-- <script type="text/javascript" src="static/js/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="static/js/bootstrap.min.js"></script>
 -->
-<!-- <polymer-element name="dartdoc-main"> -->
-  <p>This is just some text</p>
-  <template repeat="{{things}}">
-    <p>sdfgsdfg</p>
-    </template>
+
+
+<polymer-element name="dartdoc-main">
 
 <!-- <template if="{{viewer.currentPage != null}}"> -->
-No, really...
-  <template if="2 == 2">
-    Now is the time...
+  <template>
+
     <title>
-      {{viewer.currentPage.decoratedName}}
-      {{viewer.currentPage.decoratedName == '' ? '' : ' - '}}
+      Title = ###{{decoratedName}}
+      {{pageNameSeparator}}
       Dart API ReferenceZZZZZZZZZZZZ
     </title>
-</template>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<div class="navbar navbar-fixed-top">
+
+
+
+ <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <button type="button" class="navbar-toggle" data-toggle="collapse"
       data-target=".navbar-responsive-collapse" id="nav-collapse-button">
@@ -44,10 +43,12 @@ No, really...
     </button>
 
 
+
+
     <a href="http://www.dartlang.org/" class="navbar-brand header-logo"></a>
     <a href="#home"
       class="navbar-brand btn-link">
-      Dart API Reference
+      Dart API Referencezzzzzzzzzzzzzzzz
     </a>
 
     <div class="nav-collapse collapse navbar-responsive-collapse"
@@ -136,8 +137,9 @@ No, really...
   </template>
 
   <main id="page-content"
-      class="{{(viewer.isDesktop && viewer.isPanel) ? 'margin-left' : ''}}
-          {{(viewer.isDesktop && viewer.isMinimap) ? 'margin-right' : ''}}">
+      class="{{pageContentClass}}">
+
+            aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
     <article is="dartdoc-page" home="{{viewer.homePage}}"></article>
   </main>
 
@@ -288,12 +290,13 @@ No, really...
       </template>
     </template>
   </template>
+
 </div>
-<!-- </polymer-element> -->
+</template>
+</polymer-element>
 
 <script type="application/dart" src="app.dart"></script>
 <script type="application/dart" src="index.dart"></script>
 
 <dartdoc-main></dartdoc-main>
-
 </body>

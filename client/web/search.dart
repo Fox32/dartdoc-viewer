@@ -115,4 +115,6 @@ class Search extends PolymerElement with ObservableMixin {
       event.preventDefault();
     }
   }
+
+//  get applyAuthorStyles => true;
 }

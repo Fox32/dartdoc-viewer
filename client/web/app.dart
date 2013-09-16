@@ -30,7 +30,7 @@ String sourcePath = '../../docs/library_list.json';
 const int desktopSizeBoundary = 1006;
 
 /// The [Viewer] object being displayed.
-Viewer viewer = new Viewer._();
+ Viewer viewer = new Viewer._();
 
 /// The Dartdoc Viewer application state.
 class Viewer extends Observable {
