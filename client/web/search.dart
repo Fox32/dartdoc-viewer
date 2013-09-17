@@ -4,11 +4,12 @@
 
 import 'dart:async';
 import 'dart:html' hide Element;
-import 'dart:html' as html show Element;
+import 'dart:html' as html show Element; // #### Why?
 import 'app.dart';
 import 'package:dartdoc_viewer/item.dart';
 import '../lib/search.dart';
 import 'package:polymer/polymer.dart';
+import 'results.dart';
 
 /**
  * Component implementing the Dartdoc_viewer search.
@@ -16,13 +17,26 @@ import 'package:polymer/polymer.dart';
 @CustomTag("search-box")
 class Search extends PolymerElement with ObservableMixin {
 
-  List<SearchResult> results = toObservable(<SearchResult>[]);
+  Search() {
+    new PathObserver(this, "results").bindSync(
+        (_) {
+          notifyProperty(this, const Symbol('dropdownOpen'));
+        });
+    new PathObserver(this, "isFocused").bindSync(
+        (_) {
+          notifyProperty(this, const Symbol('dropdownOpen'));
+        });
+  }
+
+
+  ObservableList<SearchResult> results = toObservable(<SearchResult>[]);
   String _lastQuery;
   @observable bool isFocused = false;
 
   @observable String searchQuery = "";
 
-  String get dropdownOpen => !searchQuery.isEmpty && isFocused ? 'open' : '';
+  @observable String get dropdownOpen =>
+      !searchQuery.isEmpty && isFocused ? 'open' : '';
 
   int currentIndex = -1;
 
@@ -43,11 +57,11 @@ class Search extends PolymerElement with ObservableMixin {
     isFocused = true;
   }
 
-  void onSubmitCallback([event, detail, target]) {
+  void onSubmitCallback(event, detail, target) {
     if (!results.isEmpty) {
       String refId;
-      if (this.contains(document.activeElement)) {
-        refId = document.activeElement.dataset['ref-id'];
+      if (target != null ) {
+        refId = target.parent.dataset['ref-id'];
       }
       if (refId == null || refId.isEmpty) {
         // If nothing is focused, use the first search result.
@@ -56,9 +70,7 @@ class Search extends PolymerElement with ObservableMixin {
       viewer.handleLink(new LinkableType(refId).location);
       searchQuery = "";
       results.clear();
-      document.query('#nav-collapse-button').classes.add('collapsed');
-      document.query('#nav-collapse-content').classes.remove('in');
-      document.query('#nav-collapse-content').classes.add('collapse');
+      dartdocMain.searchSubmitted();
       document.body.focus();
     }
   }
@@ -76,7 +88,7 @@ class Search extends PolymerElement with ObservableMixin {
 
   void onKeyPressCallback(KeyboardEvent e) {
     if (e.keyCode == KeyCode.ENTER) {
-      onSubmitCallback();
+      onSubmitCallback(e, null, e.target);
       e.preventDefault();
     }
   }
@@ -93,6 +105,7 @@ class Search extends PolymerElement with ObservableMixin {
     } else if (e.keyCode == KeyCode.DOWN) {
       if (currentIndex < results.length - 1) {
         currentIndex++;
+        var x = document.query('#search*');
         document.query('#search$currentIndex').focus();
       }
       e.preventDefault();
@@ -116,5 +129,5 @@ class Search extends PolymerElement with ObservableMixin {
     }
   }
 
-//  get applyAuthorStyles => true;
+  get applyAuthorStyles => true;
 }

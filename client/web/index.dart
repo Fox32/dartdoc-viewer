@@ -22,6 +22,14 @@ class IndexElement extends PolymerElement with ObservableMixin {
     return '';
   }
 
+  query(String selectors) => shadowRoot.query(selectors);
+
+  searchSubmitted() {
+    query('#nav-collapse-button').classes.add('collapsed');
+    query('#nav-collapse-content').classes.remove('in');
+    query('#nav-collapse-content').classes.add('collapse');
+  }
+
   @observable get viewer => app.viewer;
   @observable var things = ["1", "2", "3"];
   @observable get pageNameSeparator => decoratedName == '' ? '' : ' - ';

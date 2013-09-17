@@ -21,8 +21,8 @@
 <polymer-element name="dartdoc-main">
 
 <!-- <template if="{{viewer.currentPage != null}}"> -->
-  <template>
-
+<template>
+    <button type="button" id="fred">asdfasdf</button>
     <title>
       Title = ###{{decoratedName}}
       {{pageNameSeparator}}
@@ -48,7 +48,7 @@
     <a href="http://www.dartlang.org/" class="navbar-brand header-logo"></a>
     <a href="#home"
       class="navbar-brand btn-link">
-      Dart API Referencezzzzzzzzzzzzzzzz
+      Dart API Reference
     </a>
 
     <div class="nav-collapse collapse navbar-responsive-collapse"
@@ -298,5 +298,5 @@
 <script type="application/dart" src="app.dart"></script>
 <script type="application/dart" src="index.dart"></script>
 
-<dartdoc-main></dartdoc-main>
+<dartdoc-main id="dartdoc-main"></dartdoc-main>
 </body>

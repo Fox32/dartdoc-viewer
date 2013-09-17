@@ -28,11 +28,13 @@ BSD-style license that can be found in the LICENSE file.
             </template>
             <template repeat="{{result in results}}">
               <!-- A tabIndex of 0 allows for tab navigation through results -->
-              <li data-ref-id="{{result.element}}"
-                  on-click="onSubmitCallback" tabindex="0"
-                  id="search{{result.position}}" class="search-result">
+              <li tabindex="0"
+                  class="search-result">
                 <a is="search-result" qualifiedname="{{result.element}}"
-                    membertype="{{result.type}}">
+                    membertype="{{result.type}}"
+                    on-click="onSubmitCallback"
+                    id="search{{result.position}}"
+                    data-ref-id="{{result.element}}" >
                 </a>
               </li>
             </template>

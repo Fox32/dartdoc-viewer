@@ -19,8 +19,8 @@ class Result extends PolymerElement with ObservableMixin {
           const Symbol('outerLibrary')]
       .forEach((property) => notifyProperty(this, property));
 
-  @observable String membertype = 'invalid#######';
-  @observable String qualifiedname = 'no.such.object#####';
+  @observable String membertype = 'none';
+  @observable String qualifiedname = 'none';
 
   /// The name of this member.
   String get descriptiveName {
@@ -43,10 +43,10 @@ class Result extends PolymerElement with ObservableMixin {
     if (membertype == 'class' || membertype == 'library')
       return membertype;
     var owner = ownerName(qualifiedname);
-    var ownerName = owner.split('.').last;
+    var ownerShortName = owner.split('.').last;
     var ownerType = index[owner];
     if (ownerType == 'class')
-      return '$membertype in $ownerName';
+      return '$membertype in $ownerShortName';
     return membertype;
   }
 

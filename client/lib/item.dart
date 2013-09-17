@@ -6,7 +6,7 @@ import 'dart:json';
 
 import 'package:dartdoc_viewer/data.dart';
 import 'package:dartdoc_viewer/read_yaml.dart';
-import 'package:web_ui/web_ui.dart';
+import 'package:polymer/polymer.dart';
 import 'package:yaml/yaml.dart';
 
 // TODO(tmandel): Don't hardcode in a path if it can be avoided.

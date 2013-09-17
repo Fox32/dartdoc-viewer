@@ -17,7 +17,8 @@ import 'package:dartdoc_viewer/data.dart';
 import 'package:dartdoc_viewer/item.dart';
 import 'package:dartdoc_viewer/read_yaml.dart';
 import '../lib/search.dart';
-import 'package:web_ui/web_ui.dart';
+import 'package:polymer/polymer.dart';
+import 'index.dart';
 
 // TODO(janicejl): JSON path should not be hardcoded.
 // Path to the JSON file being read in. This file will always be in JSON
@@ -30,10 +31,15 @@ String sourcePath = '../../docs/library_list.json';
 const int desktopSizeBoundary = 1006;
 
 /// The [Viewer] object being displayed.
- Viewer viewer = new Viewer._();
+  Viewer viewer = new Viewer._();
+
+
+  IndexElement _dartdocMain;
+  IndexElement dartdocMain =
+      _dartdocMain == null ? _dartdocMain = query("#dartdoc-main").xtag : null;
 
 /// The Dartdoc Viewer application state.
-class Viewer extends Observable {
+class Viewer extends ObservableBase {
 
   @observable bool isDesktop = window.innerWidth > desktopSizeBoundary;
 
