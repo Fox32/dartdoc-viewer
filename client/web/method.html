@@ -7,11 +7,6 @@
 <!-- TODO(tmandel): Reduce redundancy here and in method-panel.html -->
 <polymer-element name="dartdoc-method" extends="article">
   <template>
-    <template if="{{item == null}}">
-      Loading...
-    </template>
-    <template if="{{item != null}}">
-
       <dartdoc-annotation annotations="{{item.annotations}}">
       </dartdoc-annotation>
 
@@ -22,11 +17,9 @@
           <template if="{{item.isAbstract}}">abstract</template>
           <template if="{{item.isStatic}}">static</template>
 
-          <template if="{{!item.isConstructor}}">
-            <span class="type">
-              {{createType(item.type, 'dartdoc-method', 'type')}}
-            </span>
-          </template>
+          <span class="type">
+          </span>
+
           <template if="{{item.isOperator}}">operator</template>
           {{item.decoratedName}}
            <!-- Parameters -->
@@ -49,9 +42,11 @@
       </dfn></p>
 
       <!-- Comment -->
-      <template if="{{viewer.isInherited || !hasInheritedComment}}">
-        <section class="description">{{addComment('dartdoc-method')}}</section>
-      </template>
+      <section class="description">
+      </section>
+         <template if="{{viewer.isInherited || !hasInheritedComment}}">
+          {{addComment('dartdoc-method')}}
+        </template>
 
       <p class="text-right"><dfn>
         <template if="{{hasInheritedComment}}">
@@ -70,7 +65,6 @@
       </dfn></p>
 
     </template>
-  </template>
 
   <script type="application/dart" src="method.dart"></script>
 </polymer-element>

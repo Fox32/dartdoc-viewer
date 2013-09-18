@@ -5,11 +5,6 @@
 
 <polymer-element name="dartdoc-class" extends="article">
   <template>
-    <template if="{{item == null}}">
-      Loading...
-    </template>
-    <template if="{{item != null}}">
-
       <dartdoc-annotation annotations="{{annotations}}">
       </dartdoc-annotation>
 
@@ -124,7 +119,7 @@
             </dartdoc-category>
           </template>
         </template>
-        <template if="{{if methods.content.isNotEmpty}}">
+        <template if="{{methods.content.isNotEmpty}}">
           <template if="{{methods.hasNonInherited || viewer.isInherited}}">
             <dartdoc-category category="{{methods}}" class="accordion-group">
             </dartdoc-category>
@@ -133,7 +128,6 @@
       </div>
 
     </template>
-  </template>
 
   <script type="application/dart" src="class.dart"></script>
 </polymer-element>

@@ -6,8 +6,21 @@ import 'package:polymer/polymer.dart';
 import 'app.dart';
 import 'member.dart';
 
+import "dart:html";
+import "dart:collection";
+
 @CustomTag("dartdoc-library")
 class LibraryElement extends MemberElement {
+  LibraryElement() {
+    item = new Library.forPlaceholder({
+      "name" : 'loading',
+      "preview" : 'loading',
+    });
+    new PathObserver(this, "item").bindSync(
+        (_) {
+          notifyProperty(this, const Symbol('addComment'));
+        });
+  }
 
   Category get variables => item.variables;
 

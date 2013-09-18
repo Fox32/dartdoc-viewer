@@ -33,10 +33,9 @@ var validator = new NodeValidatorBuilder()
 //// display, so this class handles those two aspects shared by all members.
 class MemberElement extends PolymerElement with ObservableMixin {
 
-  MemberElement() {
-  }
-
   @observable var item;
+
+  get viewer => app.viewer;
 
   /// A valid string for an HTML id made from this [Item]'s name.
   String get idName {
@@ -61,7 +60,7 @@ class MemberElement extends PolymerElement with ObservableMixin {
       else comment = item.comment.substring(0, index) + '</p></span>';
     }
     if (comment != '' && comment != null) {
-      var commentLocation = getShadowRoot(elementName).query('.description');
+      var commentLocation = shadowRoot.query('.description');
       commentLocation.children.clear();
       var commentElement = new Element.html(comment, validator: validator);
       var links = commentElement.queryAll('a');
@@ -118,7 +117,7 @@ class MemberElement extends PolymerElement with ObservableMixin {
   /// Creates a new HTML element describing a possibly parameterized type
   /// and adds it to [memberName]'s tag with class [className].
   void createType(NestedType type, String memberName, String className) {
-    var location = getShadowRoot(memberName).query('.$className');
+    var location = shadowRoot.query('.$className');
     location.children.clear();
     location.children.add(createInner(type));
   }
@@ -158,6 +157,16 @@ class InheritedElement extends MemberElement {
 }
 
 class MethodElement extends InheritedElement {
+  MethodElement() {
+    item = new Method({
+      "name" : "Loading",
+      "qualifiedName" : "Loading",
+      "comment" : "",
+      "parameters" : null,
+      "return" : [null],
+    }, isConstructor: true);
+  }
+
   Method get item => super.item;
 
   List<Parameter> get parameters => item.parameters;

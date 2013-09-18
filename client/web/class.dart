@@ -6,6 +6,15 @@ import 'member.dart';
 
 @CustomTag("dartdoc-class")
 class ClassElement extends MemberElement {
+  ClassElement() {
+    item = new Class.forPlaceholder('loading', 'loading');
+//    new PathObserver(this, "item").bindSync(
+//        (_) {
+//          notifyProperty(this, const Symbol('addComment'));
+//        });
+  }
+
+
   Class get item => super.item;
 
   Category get variables => item.variables;

@@ -16,7 +16,7 @@ import 'package:polymer/polymer.dart';
 /** Search Index */
 Map<String, String> index = {};
 
-//class SearchQueryObservableHolder extends Observable {
+//class SearchQueryObservableHolder extends ObservableBase {
 //  /** Search query. */
 //  @observable String searchQuery = "";
 //}

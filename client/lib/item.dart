@@ -16,7 +16,7 @@ const docsPath = '../../docs/';
  * Anything that holds values and can be displayed.
  */
 
-class Container extends Observable {
+class Container extends ObservableBase {
   @observable
   String name;
   @observable
