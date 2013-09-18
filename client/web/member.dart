@@ -32,6 +32,10 @@ var validator = new NodeValidatorBuilder()
 //// Each member has an [Item] associated with it as well as a comment to
 //// display, so this class handles those two aspects shared by all members.
 class MemberElement extends PolymerElement with ObservableMixin {
+
+  MemberElement() {
+  }
+
   @observable var item;
 
   /// A valid string for an HTML id made from this [Item]'s name.
@@ -44,6 +48,7 @@ class MemberElement extends PolymerElement with ObservableMixin {
   /// Adds [item]'s comment to the the [elementName] element with markdown
   /// links converted to working links.
   void addComment(String elementName, {preview: false}) {
+    if (item == null) return;
     var comment = item.comment;
     if (preview && (item is Class || item is Library))
       comment = item.previewComment;
@@ -134,10 +139,10 @@ class InheritedElement extends MemberElement {
   }
 
   bool get isInherited =>
-      item.inheritedFrom != '' && item.inheritedFrom != null;
+      item != null && item.inheritedFrom != '' && item.inheritedFrom != null;
 
   bool get hasInheritedComment =>
-      item.commentFrom != '' && item.commentFrom != null;
+      item != null && item.commentFrom != '' && item.commentFrom != null;
 
   /// Returns whether [location] exists within the search index.
   bool exists(String location) {

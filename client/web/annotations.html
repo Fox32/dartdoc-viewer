@@ -10,7 +10,7 @@
           {{annotation.link.simpleType}}
         </a></i>
 
-        <template if="annotation.parameters.isNotEmpty">
+        <template if="{{annotation.parameters.isNotEmpty}}">
           (
           <template repeat="{{parameter in annotation.parameters}}">
             {{parameter}}
@@ -27,7 +27,7 @@
       </template>
 
     </template>
-    <template if="annotations.supportedBrowsers.isNotEmpty">
+    <template if="{{annotations.supportedBrowsers.isNotEmpty}}">
       <br/><i>Supported on:
         <template repeat="{{browser in annotations.supportedBrowsers}}">
           {{browser}}

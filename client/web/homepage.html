@@ -3,12 +3,9 @@
 
 <polymer-element name="dartdoc-homepage" extends="article">
   <template>
-    <template if="item != null">
-
+    <template if="{{item != null}}">
       <section class="description">{{addComment('dartdoc-homepage')}}</section>
-
       <div class="page-header"><h1>Libraries</h1></div>
-
       <template repeat="{{library in item.libraries}}">
         <dartdoc-item class="panel" item="{{library}}"></dartdoc-item>
       </template>
