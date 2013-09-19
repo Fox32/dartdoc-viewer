@@ -6,11 +6,11 @@ import 'app.dart';
 /// An element in a page's minimap displayed on the right of the page.
 @CustomTag("dartdoc-minimap")
 class MinimapElement extends PolymerElement with ObservableMixin {
-  @observable List<Item> items;
+  @observable List<Item> items = [];
 
   /// Creates a proper href String for an [Item].
-  String link(item) {
-   var hash = item.name == '' ? item.decoratedName : item.name;
+  String link(linkItem) {
+   var hash = linkItem.name == '' ? linkItem.decoratedName : linkItem.name;
    return '${viewer.currentPage.linkHref}#${viewer.toHash(hash)}';
   }
 

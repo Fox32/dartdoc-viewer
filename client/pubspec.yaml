@@ -1,9 +1,10 @@
 name: dartdoc_viewer
 description: Dart API Reference
 dependencies:
-  browser: any
-  web_ui: any
-  yaml: any
-  polymer: any
   barback: any
-
+  browser: any
+  polymer:
+    path: /Users/alanknight/dart-git/dart/pkg/polymer
+  polymer_expressions:
+    path: /Users/alanknight/dart-git/dart/pkg/polymer_expressions
+  yaml: any

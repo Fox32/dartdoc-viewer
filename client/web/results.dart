@@ -10,13 +10,11 @@ import 'package:polymer/polymer.dart';
 class Result extends PolymerElement with ObservableMixin {
 
   Result() {
-    bindProperty(this, const Symbol('membertype'), broadcastProperty);
-    bindProperty(this, const Symbol('qualifiedname'), broadcastProperty);
+    bindProperty(this, #membertype, broadcastProperty);
+    bindProperty(this, #qualifiedname, broadcastProperty);
   }
 
-  broadcastProperty() => [const Symbol('descriptiveName'),
-          const Symbol('descriptiveType'),
-          const Symbol('outerLibrary')]
+  broadcastProperty() => [#descriptiveName, #descriptiveType, #outerLibrary]
       .forEach((property) => notifyProperty(this, property));
 
   @observable String membertype = 'none';

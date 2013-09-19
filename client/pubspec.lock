@@ -33,10 +33,6 @@ packages:
     description: html_import
     source: hosted
     version: "0.7.3+1"
-  js:
-    description: js
-    source: hosted
-    version: "0.0.24"
   logging:
     description: logging
     source: hosted
@@ -61,18 +57,18 @@ packages:
     description: path
     source: hosted
     version: "0.7.3+1"
-  pathos:
-    description: pathos
-    source: hosted
-    version: "0.6.3+1"
   polymer:
-    description: polymer
-    source: hosted
-    version: "0.7.3+1"
+    description:
+      path: "/Users/alanknight/dart-git/dart/pkg/polymer"
+      relative: false
+    source: path
+    version: "0.0.0"
   polymer_expressions:
-    description: polymer_expressions
-    source: hosted
-    version: "0.7.3+1"
+    description:
+      path: "/Users/alanknight/dart-git/dart/pkg/polymer_expressions"
+      relative: false
+    source: path
+    version: "0.0.0"
   shadow_dom:
     description: shadow_dom
     source: hosted
@@ -93,10 +89,6 @@ packages:
     description: unmodifiable_collection
     source: hosted
     version: "0.7.3+1"
-  web_ui:
-    description: web_ui
-    source: hosted
-    version: "0.4.20"
   yaml:
     description: yaml
     source: hosted

@@ -54,7 +54,7 @@
         <template if="{{viewer.currentPage != null}}">
           <template repeat="{{item in viewer.breadcrumbs}}">
             <template if="{{item != viewer.breadcrumbs.first}}">
-              <template if="{{item != viewer.breadcrumbs.last}}">
+              <template if="{{viewer.currentPage.item != viewer.breadcrumbs.last}}">
                 <li>
                   <template if="{{item != null}}">
                     <a class="btn-link" href="#{{item.linkHref}}">
@@ -63,7 +63,7 @@
                   </template>
                 </li>
               </template>
-              <template if="{{item == viewer.breadcrumbs.last}}">
+             <template if="{{item == viewer.breadcrumbs.last}}">
                 <li class="active">
                   <template if="{{if item != null}}">
                     <a class="btn-link">{{item.decoratedName}}</a>
@@ -135,8 +135,6 @@
 
   <main id="page-content"
       class="{{pageContentClass}}">
-
-            aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
     <article is="dartdoc-page" home="{{viewer.homePage}}"></article>
   </main>
 
@@ -255,10 +253,9 @@
                 </template>
               </template>
               <template
-                if="{{viewer.currentPage.constructs.content.isNotEmpty}}">
-                <template if="{{viewer.currentPage.constructs.hasNonInherited
-                  || viewer.isInherited}}">
-                  <li><a href="#constructors" data-toggle="collapse">
+                if="{{viewer.currentPage is Class && viewer.currentPage.constructs.content.isNotEmpty}}">
+                <template if="{{viewer.currentPage.constructs.hasNonInherited || viewer.isInherited}}">
+                    <li><a href="#constructors" data-toggle="collapse">
                     Constructors<b class="caret"></b>
                   </a></li>
                   <ul id="constructors" class="collapse">

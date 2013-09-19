@@ -20,11 +20,11 @@ class Search extends PolymerElement with ObservableMixin {
   Search() {
     new PathObserver(this, "results").bindSync(
         (_) {
-          notifyProperty(this, const Symbol('dropdownOpen'));
+          notifyProperty(this, #dropdownOpen);
         });
     new PathObserver(this, "isFocused").bindSync(
         (_) {
-          notifyProperty(this, const Symbol('dropdownOpen'));
+          notifyProperty(this, #dropdownOpen);
         });
   }
 

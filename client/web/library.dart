@@ -18,7 +18,7 @@ class LibraryElement extends MemberElement {
     });
     new PathObserver(this, "item").bindSync(
         (_) {
-          notifyProperty(this, const Symbol('addComment'));
+          notifyProperty(this, #addComment);
         });
   }
 

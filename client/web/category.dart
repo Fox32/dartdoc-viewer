@@ -15,8 +15,8 @@
       CategoryElement() {
         new PathObserver(this, "category.name").bindSync(
             (_) {
-              notifyProperty(this, const Symbol('title'));
-              notifyProperty(this, const Symbol('stylizedName'));
+              notifyProperty(this, #title);
+              notifyProperty(this, #stylizedName);
             });
       }
       @observable Container category;

@@ -11,7 +11,8 @@ class IndexElement extends PolymerElement with ObservableMixin {
   IndexElement() {
     new PathObserver(this, "viewer.currentPage").bindSync(
         (_) {
-          notifyProperty(this, const Symbol('viewer'));
+          notifyProperty(this, #viewer);
+          notifyProperty(this, #item);
         });
   }
 
@@ -30,6 +31,7 @@ class IndexElement extends PolymerElement with ObservableMixin {
     query('#nav-collapse-content').classes.add('collapse');
   }
 
+  @observable get item => viewer.currentPage.item;
   @observable get viewer => app.viewer;
   @observable var things = ["1", "2", "3"];
   @observable get pageNameSeparator => decoratedName == '' ? '' : ' - ';

@@ -14,7 +14,6 @@ class ClassElement extends MemberElement {
 //        });
   }
 
-
   Class get item => super.item;
 
   Category get variables => item.variables;
