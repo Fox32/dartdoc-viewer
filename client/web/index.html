@@ -54,7 +54,7 @@
         <template if="{{viewer.currentPage != null}}">
           <template repeat="{{item in viewer.breadcrumbs}}">
             <template if="{{item != viewer.breadcrumbs.first}}">
-              <template if="{{viewer.currentPage.item != viewer.breadcrumbs.last}}">
+              <template if="{{item != viewer.breadcrumbs.last}}">
                 <li>
                   <template if="{{item != null}}">
                     <a class="btn-link" href="#{{item.linkHref}}">
