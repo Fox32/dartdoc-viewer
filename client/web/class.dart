@@ -14,6 +14,11 @@ class ClassElement extends MemberElement {
 //        });
   }
 
+  // TODO(alanknight): This is a workaround for bindings firing even when
+  // their surrounding test isn't true. So ignore values of the wrong type
+  // temporarily.
+  set item(x) => super.item = (x is Class) ? x : item;
+
   Class get item => super.item;
 
   Category get variables => item.variables;

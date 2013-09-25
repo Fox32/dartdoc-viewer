@@ -2,7 +2,7 @@
 <link rel="import" href="annotations.html">
 <link rel="import" href="variable-heading.html">
 
-<polymer-element name="dartdoc-variable">
+<polymer-element name="dartdoc-variable" attributes="item">
   <template>
 
     <div class="panel-heading">
@@ -29,8 +29,9 @@
     <!-- Comment -->
     <template if="{{app.viewer.isInherited || !hasInheritedComment}}">
       <p class="description">
-        {{addComment('dartdoc-variable', preview: !isExpanded)}}
       </p>
+     {{addComment('dartdoc-variable', !isExpanded)}}
+      
     </template>
 
     <template if="{{!nothingToExpand}}">

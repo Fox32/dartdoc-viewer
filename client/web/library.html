@@ -8,7 +8,8 @@
       <div class="page-header"><h1>{{item.decoratedName}} library</h1></div>
 
       <!-- Comment -->
-      <section class="description">{{addComment('dartdoc-library')}}</section>
+      <section class="description"></section>
+      {{addComment('dartdoc-library')}}
 
       <div class="accordion" id="accordion-grouping">
         <template if="{{operators.content.isNotEmpty}}">

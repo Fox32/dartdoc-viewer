@@ -2,7 +2,7 @@
 <link rel="import" href="parameters.html">
 <link rel="import" href="annotations.html">
 
-<polymer-element name="dartdoc-typedef" extends="article">
+<polymer-element name="dartdoc-typedef" extends="article" attributes="item">
   <template>
     <template if="{{item == null}}">
       Loading Typedef...
@@ -12,7 +12,8 @@
       <div class="page-header"><h1>{{item.name}} typedef</h1></div>
 
       <!-- Comment -->
-      <section class="description">{{addComment('dartdoc-typedef')}}</section>
+      <section class="description"></section>
+      {{addComment('dartdoc-typedef')}}
 
       <!-- Signature -->
       <div class="panel">

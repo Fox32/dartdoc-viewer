@@ -5,7 +5,7 @@
 <link rel="import" href="annotations.html">
 
 <!-- TODO(tmandel): Reduce redundancy here and in method.html -->
-<polymer-element name="method-panel">
+<polymer-element name="method-panel" attributes="item">
   <template>
     <template if="{{item == null}}">
       Loading Method Panel...
@@ -55,8 +55,9 @@
       <!-- Comment -->
       <template if="{{viewer.isInherited || !hasInheritedComment}}">
         <section class="description">
-          {{addComment('method-panel', preview: !isExpanded)}}
         </section>
+        {{addComment('method-panel', !isExpanded)}}
+        
       </template>
 
       <template if="{{!nothingToExpand}}">

@@ -16,10 +16,10 @@ class LibraryElement extends MemberElement {
       "name" : 'loading',
       "preview" : 'loading',
     });
-    new PathObserver(this, "item").bindSync(
-        (_) {
-          notifyProperty(this, #addComment);
-        });
+//    new PathObserver(this, "item").bindSync(
+//        (_) {
+//          notifyProperty(this, #addComment);
+//        });
   }
 
   Category get variables => item.variables;

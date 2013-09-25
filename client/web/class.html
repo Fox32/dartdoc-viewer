@@ -3,7 +3,7 @@
 <link rel="import" href="category.html">
 <link rel="import" href="annotations.html">
 
-<polymer-element name="dartdoc-class" extends="article">
+<polymer-element name="dartdoc-class" extends="article" attributes="item">
   <template>
       <dartdoc-annotation annotations="{{annotations}}">
       </dartdoc-annotation>
@@ -97,7 +97,8 @@
       </p>
 
       <!-- Comment -->
-      <section class="description">{{addComment('dartdoc-class')}}</section>
+      <section class="description"></section>
+      {{addComment('dartdoc-class')}}
 
       <div class="accordion" id="accordion-grouping">
         <template if="{{operators.content.isNotEmpty}}">

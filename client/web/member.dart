@@ -39,6 +39,7 @@ class MemberElement extends PolymerElement with ObservableMixin {
 
   /// A valid string for an HTML id made from this [Item]'s name.
   String get idName {
+    if (item == null) return '';
     var name = item.name;
     if (item.name == '') name = item.decoratedName;
     return app.viewer.toHash(name);
@@ -46,7 +47,8 @@ class MemberElement extends PolymerElement with ObservableMixin {
 
   /// Adds [item]'s comment to the the [elementName] element with markdown
   /// links converted to working links.
-  void addComment(String elementName, {preview: false}) {
+  void addComment(String elementName, [preview = false]) {
+    print("Calling addComment $elementName with item = $item in $this");
     if (item == null) return;
     var comment = item.comment;
     if (preview && (item is Class || item is Library))
@@ -117,6 +119,7 @@ class MemberElement extends PolymerElement with ObservableMixin {
   /// Creates a new HTML element describing a possibly parameterized type
   /// and adds it to [memberName]'s tag with class [className].
   void createType(NestedType type, String memberName, String className) {
+    if (type == null) return;
     var location = shadowRoot.query('.$className');
     location.children.clear();
     location.children.add(createInner(type));
@@ -166,6 +169,11 @@ class MethodElement extends InheritedElement {
       "return" : [null],
     }, isConstructor: true);
   }
+
+  // TODO(alanknight): This is a workaround for bindings firing even when
+  // their surrounding test isn't true. So ignore values of the wrong type
+  // temporarily.
+  set item(x) => super.item = (x is Method) ? x : item;
 
   Method get item => super.item;
 

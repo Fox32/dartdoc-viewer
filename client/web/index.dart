@@ -12,7 +12,7 @@ class IndexElement extends PolymerElement with ObservableMixin {
     new PathObserver(this, "viewer.currentPage").bindSync(
         (_) {
           notifyProperty(this, #viewer);
-          notifyProperty(this, #item);
+//          notifyProperty(this, #item);
         });
   }
 

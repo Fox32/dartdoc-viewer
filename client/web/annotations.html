@@ -2,7 +2,7 @@
 <link rel="import" href="item.html">
 <link rel="import" href="category.html">
 
-<polymer-element name="dartdoc-annotation">
+<polymer-element name="dartdoc-annotation" attributes="item">
   <template>
     <template if="{{annotations.annotations.isNotEmpty}}">
       <template repeat="{{annotation in annotations.annotations}}">
