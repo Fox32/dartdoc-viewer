@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 
-<polymer-element name="dartdoc-minimap" constructor="MinimapElement" 
-    extends="article" attributes="item">
+<polymer-element name="dartdoc-minimap" extends="article" attributes="item">
   <template>
     <template repeat="{{item in items}}">
       <template if="{{!item.isInherited || viewer.isInherited}}">

@@ -9,6 +9,8 @@
  <link rel="import" href="minimap-element.html">
 <link rel="import" href="page.html">
 <link rel="import" href="search.html">
+<link rel="import" href="minimap-library.html">
+<link rel="import" href="breadcrumbs.html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
@@ -52,28 +54,8 @@
         id="nav-collapse-content">
       <ul class="nav navbar-nav">
         <template if="{{viewer.currentPage != null}}">
-          <template repeat="{{item in viewer.breadcrumbs}}">
-            <template if="{{item != viewer.breadcrumbs.first}}">
-              <template if="{{item != viewer.breadcrumbs.last}}">
-                <li>
-                  <template if="{{item != null}}">
-                    <a class="btn-link" href="#{{item.linkHref}}">
-                      {{item.decoratedName}}
-                    </a>
-                  </template>
-                </li>
-              </template>
-             <template if="{{item == viewer.breadcrumbs.last}}">
-                <li class="active">
-                  <template if="{{if item != null}}">
-                    <a class="btn-link">{{item.decoratedName}}</a>
-                  </template>
-                </li>
-              </template>
-            </template>
-          </template>
+          <dartdoc-breadcrumbs></dartdoc-breadcrumbs>
         </template>
-
       </ul>
 
       <ul class="nav navbar-nav pull-right">
@@ -139,149 +121,14 @@
   </main>
 
   <template if="{{viewer.currentPage != viewer.homePage}}">
-    <template if="{{viewer.isMinimap}}">
-       <template if="{{viewer.currentPage is Library}}">
-        <div class="visible-lg col-lg-3 well well-sm nav affix-right"
-            id="minimap">
-            <a href="#{{viewer.currentPage.linkHref}}">
-              {{viewer.currentPage.name}} library
-            </a>
-            <ul>
-              <template
-                if="{{viewer.currentPage.operators.content.isNotEmpty}}">
-              <li><a href="#operators" data-toggle="collapse">
-                Operators<b class="caret"></b>
-              </a></li>
-              <ul id="operators" class="collapse">
-                <article is="dartdoc-minimap"
-                    items="{{viewer.currentPage.operators.content}}">
-                </article>
-              </ul>
-            </template>
-            <template
-                if="{{viewer.currentPage.variables.content.isNotEmpty}}">
-              <li><a href="#properties" data-toggle="collapse">
-                Properties<b class="caret"></b>
-              </a></li>
-              <ul id="properties" class="collapse">
-                <article is="dartdoc-minimap"
-                    items="{{viewer.currentPage.variables.content}}">
-                </article>
-              </ul>
-            </template>
-            <template
-                if="{{viewer.currentPage.functions.content.isNotEmpty}}">
-              <li><a href="#functions" data-toggle="collapse">
-                Functions<b class="caret"></b>
-              </a></li>
-              <ul id="functions" class="collapse">
-                <article is="dartdoc-minimap"
-                    items="{{viewer.currentPage.functions.content}}">
-                </article>
-              </ul>
-            </template>
-            <template
-                if="{{viewer.currentPage.classes.content.isNotEmpty}}">
-              <li><a href="#classes" data-toggle="collapse">
-                Classes<b class="caret"></b>
-              </a></li>
-              <ul id="classes" class="collapse">
-                <article is="dartdoc-minimap"
-                    items="{{viewer.currentPage.classes.content}}">
-                </article>
-              </ul>
-            </template>
-            <template
-                if="{{viewer.currentPage.typedefs.content.isNotEmpty}}">
-              <li><a href="#typedefs" data-toggle="collapse">
-                Typedefs<b class="caret"></b>
-              </a></li>
-              <ul id="typedefs" class="collapse">
-                <article is="dartdoc-minimap"
-                    items="{{viewer.currentPage.typedefs.content}}">
-                </article>
-              </ul>
-            </template>
-            <template
-                if="{{viewer.currentPage.errors.content.isNotEmpty}}">
-              <li><a href="#exceptions" data-toggle="collapse">
-                Exceptions<b class="caret"></b>
-              </a></li>
-              <ul id="exceptions" class="collapse">
-                <article is="dartdoc-minimap"
-                    items="{{viewer.currentPage.errors.content}}">
-                </article>
-              </ul>
-            </template>
-          </ul>
-        </div>
-      </template>
+    <template if="{{viewer.currentPage is Library && viewer.isMinimap}}">
+        <article is="dartdoc-minimap-library" item={{viewer.currentPage}}>
+        </article>
+    </template>
 
-      <template if="{{viewer.currentPage is Class}}">
-        <div class="visible-lg col-lg-3 well well-sm nav affix-right"
-            id="minimap">
-          <a href="#dartdoc-top">
-            {{viewer.currentPage.name}} Class
-          </a>
-          <ul>
-            <template
-                if="{{viewer.currentPage.operators.content.isNotEmpty}}">
-                <template if="{{viewer.currentPage.operators.hasNonInherited
-                  || viewer.isInherited}}">
-                  <li><a href="#operators" data-toggle="collapse">
-                    Operators<b class="caret"></b>
-                  </a></li>
-                  <ul id="operators" class="collapse">
-                    <article is="dartdoc-minimap"
-                      items="{{viewer.currentPage.operators.content}}">
-                    </article>
-                  </ul>
-                </template>
-              </template>
-              <template
-                if="{{viewer.currentPage.variables.content.isNotEmpty}}">
-                <template if="{{viewer.currentPage.variables.hasNonInherited
-                  || viewer.isInherited}}">
-                  <li><a href="#properties" data-toggle="collapse">
-                    Properties<b class="caret"></b>
-                  </a></li>
-                  <ul id="properties" class="collapse">
-                    <article is="dartdoc-minimap"
-                      items="{{viewer.currentPage.variables.content}}">
-                    </article>
-                  </ul>
-                </template>
-              </template>
-              <template
-                if="{{viewer.currentPage is Class && viewer.currentPage.constructs.content.isNotEmpty}}">
-                <template if="{{viewer.currentPage.constructs.hasNonInherited || viewer.isInherited}}">
-                    <li><a href="#constructors" data-toggle="collapse">
-                    Constructors<b class="caret"></b>
-                  </a></li>
-                  <ul id="constructors" class="collapse">
-                    <article is="dartdoc-minimap"
-                      items="{{viewer.currentPage.constructs.content}}">
-                    </article>
-                  </ul>
-                </template>
-              </template>
-              <template
-                if="{{viewer.currentPage.functions.content.isNotEmpty}}">
-                <template if="{{viewer.currentPage.functions.hasNonInherited
-                  || viewer.isInherited}}">
-                  <li><a href="#functions" data-toggle="collapse">
-                    Functions<b class="caret"></b>
-                  </a></li>
-                  <ul id="functions" class="collapse">
-                    <article is="dartdoc-minimap"
-                      items="{{viewer.currentPage.functions.content}}">
-                    </article>
-                  </ul>
-                </template>
-              </template>
-            </ul>
-        </div>
-      </template>
+    <template if="{{viewer.currentPage is Class && viewer.isMinimap}}">
+      <article is="dartdoc-minimap-class" item={{viewer.currentPage}}>
+      </article>
     </template>
   </template>
 
