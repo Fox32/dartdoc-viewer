@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <polymer-element name="dartdoc-breadcrumbs">
+  <template>
   <template repeat="{{breadcrumb in viewer.breadcrumbs}}">
     <template if="{{breadcrumb != viewer.breadcrumbs.first}}">
       <template if="{{breadcrumb != viewer.breadcrumbs.last}}">
         <li>
           <template if="{{breadcrumb != null}}">
             <a class="btn-link" href="#{{breadcrumb.linkHref}}">
-              {{item.decoratedName}}
+              {{breadcrumb.decoratedName}}
             </a>
           </template>
         </li>
@@ -20,4 +21,6 @@
       </template>
     </template>
   </template>
+  </template>
+<script type="application/dart" src="breadcrumbs.dart"></script> 
 </polymer-element>

@@ -1,6 +1,9 @@
 <!DOCTYPE html>
+<link rel="import" href="minimap-element.html">
+
 <polymer-element name="dartdoc-minimap-library" 
     extends="article" attributes="item">
+ <template>
   <div class="visible-lg col-lg-3 well well-sm nav affix-right"
       id="minimap">
       <template>
@@ -10,72 +13,74 @@
       </template>
       <ul>
         <template
-          if="{{viewer.currentPage.operators.content.isNotEmpty}}">
+          if="{{operatorItems.isNotEmpty}}">
         <li><a href="#operators" data-toggle="collapse">
           Operators<b class="caret"></b>
         </a></li>
         <ul id="operators" class="collapse">
           <article is="dartdoc-minimap"
-              items="{{viewer.currentPage.operators.content}}">
+              items="{{operatorItems}}">
           </article>
         </ul>
       </template>
       <template
-          if="{{viewer.currentPage.variables.content.isNotEmpty}}">
+          if="{{variableItems.isNotEmpty}}">
         <li><a href="#properties" data-toggle="collapse">
           Properties<b class="caret"></b>
         </a></li>
         <ul id="properties" class="collapse">
           <article is="dartdoc-minimap"
-              items="{{viewer.currentPage.variables.content}}">
+              items="variableItems">
           </article>
         </ul>
       </template>
       <template
-          if="{{viewer.currentPage.functions.content.isNotEmpty}}">
+          if="{{functionItems.isNotEmpty}}">
         <li><a href="#functions" data-toggle="collapse">
           Functions<b class="caret"></b>
         </a></li>
         <ul id="functions" class="collapse">
           <article is="dartdoc-minimap"
-              items="{{viewer.currentPage.functions.content}}">
+              items="{{functionItems}}">
           </article>
         </ul>
       </template>
       <template
-          if="{{viewer.currentPage.classes.content.isNotEmpty}}">
+          if="{{classItems.isNotEmpty}}">
         <li><a href="#classes" data-toggle="collapse">
           Classes<b class="caret"></b>
         </a></li>
         <ul id="classes" class="collapse">
           <article is="dartdoc-minimap"
-              items="{{viewer.currentPage.classes.content}}">
+              items="{{classItems}}">
           </article>
         </ul>
       </template>
       <template
-          if="{{viewer.currentPage.typedefs.content.isNotEmpty}}">
+          if="{{typedefItems.isNotEmpty}}">
         <li><a href="#typedefs" data-toggle="collapse">
           Typedefs<b class="caret"></b>
         </a></li>
         <ul id="typedefs" class="collapse">
           <article is="dartdoc-minimap"
-              items="{{viewer.currentPage.typedefs.content}}">
+              items="{{typedefItems}}">
           </article>
         </ul>
       </template>
       <template
-          if="{{viewer.currentPage.errors.content.isNotEmpty}}">
+          if="{{errorItems.isNotEmpty}}">
         <li><a href="#exceptions" data-toggle="collapse">
           Exceptions<b class="caret"></b>
         </a></li>
         <ul id="exceptions" class="collapse">
           <article is="dartdoc-minimap"
-              items="{{viewer.currentPage.errors.content}}">
+              items="{{errorItems}}">
           </article>
         </ul>
       </template>
     </ul>
   </div>
+  </template>
+  <script type="application/dart" src="minimap-library.dart"></script>
   </polymer-element>
   

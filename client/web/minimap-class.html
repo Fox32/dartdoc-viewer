@@ -1,6 +1,9 @@
 <!DOCTYPE html>
+<link rel="import" href="minimap-element.html">
+
 <polymer-element name="dartdoc-minimap-class" 
 extends="article" attributes="item">
+  <template>
   <div class="visible-lg col-lg-3 well well-sm nav affix-right"
       id="minimap">
   <template>
@@ -10,21 +13,21 @@ extends="article" attributes="item">
   </template>
     <ul>
       <template
-          if="{{viewer.currentPage.operators.content.isNotEmpty}}">
-          <template if="{{viewer.currentPage.operators.hasNonInherited
-            || viewer.isInherited}}">
+          if="{{operatorItems.isNotEmpty}}">
+          <template if="{{viewer.currentPage is Class && (viewer.currentPage.operators.hasNonInherited
+            || viewer.isInherited)}}">
             <li><a href="#operators" data-toggle="collapse">
               Operators<b class="caret"></b>
             </a></li>
             <ul id="operators" class="collapse">
               <article is="dartdoc-minimap"
-                items="{{viewer.currentPage.operators.content}}">
+                items="{{operatorItems}}">
               </article>
             </ul>
           </template>
         </template>
         <template
-          if="{{viewer.currentPage.variables.content.isNotEmpty}}">
+          if="{{variableItems.isNotEmpty}}">
           <template if="{{viewer.currentPage.variables.hasNonInherited
             || viewer.isInherited}}">
             <li><a href="#properties" data-toggle="collapse">
@@ -32,26 +35,26 @@ extends="article" attributes="item">
             </a></li>
             <ul id="properties" class="collapse">
               <article is="dartdoc-minimap"
-                items="{{viewer.currentPage.variables.content}}">
+                items="{{variableItems}}">
               </article>
             </ul>
           </template>
         </template>
         <template
-          if="{{viewer.currentPage is Class && viewer.currentPage.constructs.content.isNotEmpty}}">
+          if="{{constructorItems.isNotEmpty}}">
           <template if="{{viewer.currentPage.constructs.hasNonInherited || viewer.isInherited}}">
               <li><a href="#constructors" data-toggle="collapse">
               Constructors<b class="caret"></b>
             </a></li>
             <ul id="constructors" class="collapse">
               <article is="dartdoc-minimap"
-                items="{{viewer.currentPage.constructs.content}}">
+                items="{{constructorItems}}">
               </article>
             </ul>
           </template>
         </template>
         <template
-          if="{{viewer.currentPage.functions.content.isNotEmpty}}">
+          if="{{functionItems.isNotEmpty}}">
           <template if="{{viewer.currentPage.functions.hasNonInherited
             || viewer.isInherited}}">
             <li><a href="#functions" data-toggle="collapse">
@@ -59,7 +62,7 @@ extends="article" attributes="item">
             </a></li>
             <ul id="functions" class="collapse">
               <article is="dartdoc-minimap"
-                items="{{viewer.currentPage.functions.content}}">
+                items="{{functionItems}}">
               </article>
             </ul>
           </template>
@@ -67,4 +70,5 @@ extends="article" attributes="item">
       </ul>
     </div>
   </template>
+  <script type="application/dart" src="minimap-class.dart"></script> 
 </polymer-element>

@@ -5,7 +5,7 @@
 <link rel="import" href="category-interior.html">
 
 
-<polymer-element name="dartdoc-category" attributes="item category">
+<polymer-element name="dartdoc-category" attributes="item category" extends="div">
    <template>
    <div class="accordion-heading">
       <a class="accordion-toggle {{accordionStyle}}"
@@ -17,14 +17,14 @@
     </div>
 
    <div id="accordion-{{stylizedName}}"
-      class="accordion-body collapse {{divClass}}"
+      class="accordion-body {{divClass}}"
       style="height:{{divStyle}}">
      <div class="accordion-inner">
         <ul class="nav nav-pills nav-stacked">
          <template repeat="{{each in categoryContent}}">
-            <dartdoc-category-interior item="{{each}}"></dartdoc-category-interior>
+            <p>{{each}}</p>
+            <div is="dartdoc-category-interior" item="{{each}}"></div>
         </template>
-
         </ul>
       </div>
     </div>

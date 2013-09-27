@@ -11,37 +11,30 @@
       <!-- Comment -->
       <section class="description"></section>
       {{addComment('dartdoc-library')}}
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
       <div class="accordion" id="accordion-grouping">
-      BBBBBBBBBBBBBBBBBBBBBBBBBB
         <template if="{{operators.content.isNotEmpty}}">
-          <dartdoc-category category="{{operators}}" class="accordion-group">
-          </dartdoc-category>
+          <div is="dartdoc-category" category="{{operators}}" class="accordion-group">
+          </div>
         </template>
         <template if="{{variables.content.isNotEmpty}}">
-          <dartdoc-category category="{{variables}}" class="accordion-group">
-          </dartdoc-category>
+          <div is="dartdoc-category" category="{{variables}}" class="accordion-group">
+          </div>
         </template>
         <template if="{{functions.content.isNotEmpty}}">
-          <dartdoc-category category="{{functions}}" class="accordion-group">
-          </dartdoc-category>
+          <div is="dartdoc-category" category="{{functions}}" class="accordion-group">
+          </div>
         </template>
-        
-        
-        BEFORE CLASSES
         <template if="{{clazzesNotEmpty}}">
-        INSIDE CLASSES
-          <dartdoc-category category="{{clazzes}}" class="accordion-group">
-          <p>REALLY INSIDE CLASSES</p> 
-          </dartdoc-category>
+          <div is="dartdoc-category" category="{{clazzes}}" class="accordion-group"> 
+          </div>
         </template>
         <template if="{{typedefs.content.isNotEmpty}}">
-          <dartdoc-category category="{{typedefs}}" class="accordion-group">
-          </dartdoc-category>
+          <div is="dartdoc-category" category="{{typedefs}}" class="accordion-group">
+          </div>
         </template>
         <template if="{{errors.content.isNotEmpty}}">
-          <dartdoc-category category="{{errors}}" class="accordion-group">
-          </dartdoc-category>
+          <div is="dartdoc-category" category="{{errors}}" class="accordion-group">
+          </div>
         </template>
       </div>
   </template>

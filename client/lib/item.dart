@@ -23,6 +23,8 @@ class Container extends ObservableBase {
   String comment = '<span></span>';
 
   Container(this.name, [this.comment]);
+
+  toString() => "$runtimeType($name)";
 }
 
 // Wraps a comment in span element to make it a single HTML Element.
