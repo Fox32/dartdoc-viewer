@@ -48,13 +48,13 @@ class MemberElement extends PolymerElement with ObservableMixin {
   void addCommentOrSkip(String elementName, [preview = false]) {
     var commentLocation = shadowRoot.query('.description');
     if (commentLocation == null) return;
-    addComment(elementName, commentLocation, preview);
+    addComment(elementName, preview, commentLocation);
   }
 
 
   /// Adds [item]'s comment to the the [elementName] element with markdown
   /// links converted to working links.
-  void addComment(String elementName, [commentLocation, preview = false]) {
+  void addComment(String elementName, [bool preview = false, commentLocation]) {
     if (item == null) return;
     var comment = item.comment;
     if (preview && (item is Class || item is Library))
@@ -129,6 +129,7 @@ class MemberElement extends PolymerElement with ObservableMixin {
   void createType(NestedType type, String memberName, String className) {
     if (type == null) return;
     var location = shadowRoot.query('.$className');
+    if (location == null) return;
     location.children.clear();
     location.children.add(createInner(type));
   }

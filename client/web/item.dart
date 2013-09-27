@@ -16,5 +16,5 @@ class ItemElement extends MemberElement {
   String get title => item.decoratedName;
 
   get parameters => item is Method ? item.parameters : [];
-  get type => item is Library ? null : item.type;
+  get type => item is Method ? item.type : null;
 }

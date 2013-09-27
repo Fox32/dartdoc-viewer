@@ -33,7 +33,7 @@
         <hr/>
         <p class="description">
         </p>
-       {{addComment('dartdoc-item')}}     
+       {{addCommentOrSkip('dartdoc-item')}}     
     </template>
 
       <template if="{{item is Method && item.comment != '<span></span>'}}">
@@ -43,7 +43,7 @@
         <!-- TODO(alanknight): Pulled these out of the element because they 
         couldn't see the element until it was created. But are they both going
         to find all descriptions within the polymer element now?? -->
-        {{addComment('dartdoc-item', true)}}
+        {{addCommentOrSkip('dartdoc-item', true)}}
       </template>
 
   </template>

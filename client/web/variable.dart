@@ -12,7 +12,10 @@ class VariableElement extends InheritedElement {
   @observable bool isExpanded = false;
   @observable bool nothingToExpand;
 
+  set item(x) => super.item = (x is Variable ? x : null);
+
   inserted() {
+    if (item == null) return;
     super.inserted();
     var index = item.comment.indexOf('</p>');
     if (index == -1) {
