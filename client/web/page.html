@@ -5,36 +5,38 @@
 <link rel="import" href="class.html">
 <link rel="import" href="method.html">
 <link rel="import" href="typedef.html">
+<link rel="import" href="debug.html">
 
 <polymer-element name="dartdoc-page" extends="article" attributes="item">
   <template>
 
     <!-- Home -->
-    <template if="{{viewer.currentPage is Home}}">
+    <template if="{{isHome}}">
       <article is="dartdoc-homepage" item="{{viewer.homePage}}"></article>
     </template>
-
-    <template if="{{viewer.homePage}}">
+    
+    <template if="{{hasHomePage}}">
 
       <!-- Library -->
-      <template if="{{viewer.currentPage is Library}}">
-        <article is="dartdoc-library" item="{{viewer.currentPage}}">
+      <template if="{{currentPageIsLibrary}}">
+      BAAKDSLFJGALKSDJFLASKJDLFKJASDLKFJALSKDJFLASDJKFLKJ
+        <article is="dartdoc-library" item="{{currentPage}}">
         </article>
       </template>
 
       <!-- Class -->
-      <template if="{{viewer.currentPage is Class}}">
-        <article is="dartdoc-class" item="{{viewer.currentPage}}"></article>
+      <template if="{{currentPageIsClass}}">
+        <article is="dartdoc-class" item="{{currentPage}}"></article>
       </template>
 
       <!-- Method -->
-      <template if="{{viewer.currentPage is Method}}">
-        <article is="dartdoc-method" item="{{viewer.currentPage}}"></article>
+      <template if="{{currentPageIsMethod}}">
+        <article is="dartdoc-method" item="{{currentPage}}"></article>
       </template>
 
       <!-- Typedef -->
-      <template if="{{viewer.currentPage is Typedef}}">
-        <article is="dartdoc-typedef" item="{{viewer.currentPage}}"></article>
+      <template if="{{currentPageIsTypedef}}">
+        <article is="dartdoc-typedef" item="{{currentPage}}"></article>
       </template>
 
     </template>

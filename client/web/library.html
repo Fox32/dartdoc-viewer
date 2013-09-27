@@ -2,6 +2,7 @@
 <link rel="import" href="item.html">
 <link rel="import" href="class.html">
 <link rel="import" href="category.html">
+<link rel="import" href="debug.html">
 
 <polymer-element name="dartdoc-library" extends="article" attributes="item">
   <template>
@@ -10,8 +11,9 @@
       <!-- Comment -->
       <section class="description"></section>
       {{addComment('dartdoc-library')}}
-
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
       <div class="accordion" id="accordion-grouping">
+      BBBBBBBBBBBBBBBBBBBBBBBBBB
         <template if="{{operators.content.isNotEmpty}}">
           <dartdoc-category category="{{operators}}" class="accordion-group">
           </dartdoc-category>
@@ -24,8 +26,13 @@
           <dartdoc-category category="{{functions}}" class="accordion-group">
           </dartdoc-category>
         </template>
-        <template if="{{clazzes.content.isNotEmpty}}">
+        
+        
+        BEFORE CLASSES
+        <template if="{{clazzesNotEmpty}}">
+        INSIDE CLASSES
           <dartdoc-category category="{{clazzes}}" class="accordion-group">
+          <p>REALLY INSIDE CLASSES</p> 
           </dartdoc-category>
         </template>
         <template if="{{typedefs.content.isNotEmpty}}">

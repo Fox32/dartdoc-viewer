@@ -11,6 +11,8 @@
 <link rel="import" href="search.html">
 <link rel="import" href="minimap-library.html">
 <link rel="import" href="breadcrumbs.html">
+<link rel="import" href="library-panel.html">
+<link rel="import" href="minimap-class.html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
@@ -89,30 +91,8 @@
 </div>
 
 <div class="main-body">
-  <template if="{{viewer.currentPage != null}}">
-    <template if="{{viewer.currentPage != viewer.homePage}}">
-      <template if="{{viewer.isPanel}}">
-        <div class="list-group visible-lg col-lg-2 affix-left"
-            id="library-panel">
-          <template repeat="{{library in viewer.homePage.libraries}}">
-            <template
-                if="{{library.decoratedName ==
-                    viewer.breadcrumbs[1].decoratedName}}">
-              <a href="#{{library.linkHref}}" class="list-group-item active">
-                {{library.decoratedName}}
-              </a>
-            </template>
-            <template
-                if="{{library.decoratedName !=
-                    viewer.breadcrumbs[1].decoratedName}}">
-              <a href="#{{library.linkHref}}" class="list-group-item">
-                {{library.decoratedName}}
-              </a>
-            </template>
-          </template>
-        </div>
-      </template>
-    </template>
+  <template if="{{viewer.currentPage != null && viewer.currentPage != viewer.homePage && viewer.isPanel}}">
+    <dartdoc-library-panel></dartdoc-library-panel>
   </template>
 
   <main id="page-content"

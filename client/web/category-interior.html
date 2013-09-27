@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<link rel="import" href="item.html">
+
+<polymer-element name="dartdoc-category-interior" >
+   <template if="item is Item && item is! Variable && item is! Method}}">
+      <dartdoc-item class="panel" item="item"></dartdoc-item>
+    </template>
+
+    <template if="item is Variable && !item.isInherited || viewer.isInherited}}">
+        <dartdoc-variable item="{{item}}" class="panel">
+        </dartdoc-variable>
+      </template>
+
+  <template if="{{item is Method}}">
+    <template if="{{!item.isInherited || viewer.isInherited}}">
+      <method-panel class="panel hidden-sm" item="{{item}}">
+      </method-panel>
+      <dartdoc-item class="visible-sm panel" item="{{item}}">
+      </dartdoc-item>
+    </template>
+  </template>
+          
+</polymer-element>

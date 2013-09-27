@@ -48,7 +48,6 @@ class MemberElement extends PolymerElement with ObservableMixin {
   /// Adds [item]'s comment to the the [elementName] element with markdown
   /// links converted to working links.
   void addComment(String elementName, [preview = false]) {
-    print("Calling addComment $elementName with item = $item in $this");
     if (item == null) return;
     var comment = item.comment;
     if (preview && (item is Class || item is Library))

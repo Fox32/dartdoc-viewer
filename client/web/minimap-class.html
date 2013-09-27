@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<polymer-element name="dartdoc-minimap-class" 
+extends="article" attributes="item">
+  <div class="visible-lg col-lg-3 well well-sm nav affix-right"
+      id="minimap">
+  <template>
+    <a href="#dartdoc-top">
+      {{viewer.currentPage.name}} Class
+    </a>
+  </template>
+    <ul>
+      <template
+          if="{{viewer.currentPage.operators.content.isNotEmpty}}">
+          <template if="{{viewer.currentPage.operators.hasNonInherited
+            || viewer.isInherited}}">
+            <li><a href="#operators" data-toggle="collapse">
+              Operators<b class="caret"></b>
+            </a></li>
+            <ul id="operators" class="collapse">
+              <article is="dartdoc-minimap"
+                items="{{viewer.currentPage.operators.content}}">
+              </article>
+            </ul>
+          </template>
+        </template>
+        <template
+          if="{{viewer.currentPage.variables.content.isNotEmpty}}">
+          <template if="{{viewer.currentPage.variables.hasNonInherited
+            || viewer.isInherited}}">
+            <li><a href="#properties" data-toggle="collapse">
+              Properties<b class="caret"></b>
+            </a></li>
+            <ul id="properties" class="collapse">
+              <article is="dartdoc-minimap"
+                items="{{viewer.currentPage.variables.content}}">
+              </article>
+            </ul>
+          </template>
+        </template>
+        <template
+          if="{{viewer.currentPage is Class && viewer.currentPage.constructs.content.isNotEmpty}}">
+          <template if="{{viewer.currentPage.constructs.hasNonInherited || viewer.isInherited}}">
+              <li><a href="#constructors" data-toggle="collapse">
+              Constructors<b class="caret"></b>
+            </a></li>
+            <ul id="constructors" class="collapse">
+              <article is="dartdoc-minimap"
+                items="{{viewer.currentPage.constructs.content}}">
+              </article>
+            </ul>
+          </template>
+        </template>
+        <template
+          if="{{viewer.currentPage.functions.content.isNotEmpty}}">
+          <template if="{{viewer.currentPage.functions.hasNonInherited
+            || viewer.isInherited}}">
+            <li><a href="#functions" data-toggle="collapse">
+              Functions<b class="caret"></b>
+            </a></li>
+            <ul id="functions" class="collapse">
+              <article is="dartdoc-minimap"
+                items="{{viewer.currentPage.functions.content}}">
+              </article>
+            </ul>
+          </template>
+        </template>
+      </ul>
+    </div>
+  </template>
+</polymer-element>

@@ -27,7 +27,7 @@
     </dfn></p>
 
     <!-- Comment -->
-    <template if="{{app.viewer.isInherited || !hasInheritedComment}}">
+    <template if="{{viewer.isInherited || !hasInheritedComment}}">
       <p class="description">
       </p>
      {{addComment('dartdoc-variable', !isExpanded)}}
@@ -47,7 +47,7 @@
 
     <p class="text-right"><dfn>
       <template if="{{hasInheritedComment && isExpanded}}">
-        <template if="{{app.viewer.isInherited}}">
+        <template if="{{viewer.isInherited}}">
           This documentation is inherited from
           <template if="{{exists(commentFrom.location)}}">
             <a href="#{{commentFrom.location}}">

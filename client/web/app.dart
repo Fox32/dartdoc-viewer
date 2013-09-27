@@ -67,6 +67,7 @@ class Viewer extends ObservableBase {
 
   // Private constructor for singleton instantiation.
   Viewer._() {
+    print("Created new viewer");
     var manifest = retrieveFileContents(sourcePath);
     finished = manifest.then((response) {
       var libraries = parse(response);

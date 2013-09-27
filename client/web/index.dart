@@ -33,7 +33,6 @@ class IndexElement extends PolymerElement with ObservableMixin {
 
   @observable get item => viewer.currentPage.item;
   @observable get viewer => app.viewer;
-  @observable var things = ["1", "2", "3"];
   @observable get pageNameSeparator => decoratedName == '' ? '' : ' - ';
   @observable get decoratedName =>
       viewer.currentPage == null ? '' : viewer.currentPage.decoratedName;

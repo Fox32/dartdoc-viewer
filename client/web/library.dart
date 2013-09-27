@@ -16,10 +16,17 @@ class LibraryElement extends MemberElement {
       "name" : 'loading',
       "preview" : 'loading',
     });
-//    new PathObserver(this, "item").bindSync(
-//        (_) {
-//          notifyProperty(this, #addComment);
-//        });
+    new PathObserver(this, "item").bindSync(
+        (_) {
+          notifyProperty(this, #variables);
+          notifyProperty(this, #operators);
+          notifyProperty(this, #functions);
+          notifyProperty(this, #clazzes);
+          notifyProperty(this, #clazzesNotEmpty);
+          notifyProperty(this, #typedefs);
+          notifyProperty(this, #errors);
+          notifyProperty(this, #addComment);
+        });
   }
 
   Category get variables => item.variables;
@@ -29,6 +36,8 @@ class LibraryElement extends MemberElement {
   Category get functions => item.functions;
 
   Category get clazzes => item.classes;
+  bool get clazzesNotEmpty =>
+      clazzes == null ? false : clazzes.content.isNotEmpty;
 
   Category get typedefs => item.typedefs;
 

@@ -12,11 +12,11 @@ class VariableHeading extends MemberElement {
 
   Variable get item => super.item;
 
-  String get getter => item.isGetter ? 'get' : '';
+  String get getter => item != null && item.isGetter ? 'get' : '';
 
   Parameter get setterParameter => item.setterParameter;
 
   NestedType get type => item.type;
 
-  String get name => item.name;
+  String get name => item == null ? '' : item.name;
 }
