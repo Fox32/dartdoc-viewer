@@ -13,9 +13,7 @@
       <!-- Return Type -->
       <div class="page-header">
         <h1>
-          <template if="{{item.isConstant}}">const</template>
-          <template if="{{item.isAbstract}}">abstract</template>
-          <template if="{{item.isStatic}}">static</template>
+          {{modifiers}}
 
           <span class="type">
           </span>

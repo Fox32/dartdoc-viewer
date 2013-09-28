@@ -1,24 +1,23 @@
 <!DOCTYPE html>
 <link rel="import" href="item.html">
 
-<polymer-element name="dartdoc-category-interior" extends="div" attributes="item">
+<polymer-element name="dartdoc-category-interior" attributes="item">
  <template>
-   <template if="item is Item && item is! Variable && item is! Method}}">
+    <template if="item is Item && item is! Variable && item is! Method}}">
       <dartdoc-item class="panel" item="item"></dartdoc-item>
     </template>
 
-    <template if="item is Variable && (!item.isInherited || viewer.isInherited)}}">
+    <template if="{{variableShouldShow}}">
         <dartdoc-variable item="{{item}}" class="panel">
         </dartdoc-variable>
       </template>
 
-  <template if="{{item is Method}} && (!item.isInherited || viewer.isInherited)}}">
-    <method-panel class="panel hidden-sm" item="{{item}}">
-    </method-panel>
+  <template if="{{methodShouldShow}}">
+    <div is="method-panel" class="panel hidden-sm" item="{{item}}">
+    </div> <!--  ### What is this for?
     <dartdoc-item class="visible-sm panel" item="{{item}}">
-    </dartdoc-item>
+    </dartdoc-item> -->
   </template>
-</template>
-          
+ </template>
 <script type="application/dart" src="category-interior.dart"></script>          
 </polymer-element>

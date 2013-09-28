@@ -24,4 +24,9 @@ class MethodPanel extends MethodElement {
   void toggleExpand(event, detail, target) {
     isExpanded = !isExpanded;
   }
+
+  String get modifiers => constantModifier + abstractModifier + staticModifier;
+  get constantModifier => item.isConstant ? 'const' : '';
+  get abstractModifier => item.isAbstract ? 'abstract' : '';
+  get staticModifier => item.isStatic ? 'static' : '';
 }

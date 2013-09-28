@@ -9,6 +9,10 @@ import 'member.dart';
  */
 @CustomTag("dartdoc-variable")
 class VariableElement extends InheritedElement {
+  VariableElement() {
+    print("Created VariableElement");
+  }
+
   @observable bool isExpanded = false;
   @observable bool nothingToExpand;
 

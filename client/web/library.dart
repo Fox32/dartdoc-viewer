@@ -12,10 +12,7 @@ import "dart:collection";
 @CustomTag("dartdoc-library")
 class LibraryElement extends MemberElement {
   LibraryElement() {
-    item = new Library.forPlaceholder({
-      "name" : 'loading',
-      "preview" : 'loading',
-    });
+    item = defaultItem;
     new PathObserver(this, "item").bindSync(
         (_) {
           notifyProperty(this, #variables);
@@ -28,6 +25,13 @@ class LibraryElement extends MemberElement {
           notifyProperty(this, #addComment);
         });
   }
+
+  set item(x) => super.item = x is Library ? x : defaultItem;
+
+  get defaultItem => item = new Library.forPlaceholder({
+      "name" : 'loading',
+      "preview" : 'loading',
+    });
 
   Category get variables => item.variables;
 

@@ -5,7 +5,7 @@
 <link rel="import" href="annotations.html">
 
 <!-- TODO(tmandel): Reduce redundancy here and in method.html -->
-<polymer-element name="method-panel" attributes="item">
+<polymer-element name="method-panel" attributes="item" extends="div">
   <template>
     <template if="{{item == null}}">
       Loading Method Panel...
@@ -21,10 +21,7 @@
         <!-- Return Type -->
         <p>
           <span>
-            <template if="{{item.isConstant}}">const</template>
-            <template if="{{item.isAbstract}}">abstract</template>
-            <template if="{{item.isStatic}}">static</template>
-
+            {{modifiers}}
             <template if="{{!item.isConstructor}}">
               <span class="type">
                 {{createType(item.type, 'method-panel', 'type')}}
