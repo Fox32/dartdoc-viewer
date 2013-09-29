@@ -3,7 +3,7 @@
 
 <polymer-element name="dartdoc-category-interior" attributes="item">
  <template>
-    <template if="item is Item && item is! Variable && item is! Method}}">
+    <template if="{{itemShouldShow}}">
       <dartdoc-item class="panel" item="item"></dartdoc-item>
     </template>
 

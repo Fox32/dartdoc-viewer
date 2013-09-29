@@ -13,36 +13,16 @@ class CategoryInterior extends MemberElement {
         (_) {
           notifyProperty(this, #variableShouldShow);
           notifyProperty(this, #methodShouldShow);
+          notifyProperty(this, #itemShouldShow);
         });
   }
-
-  static const method = '''
-    <method-panel class="panel hidden-sm" item="{{item}}">
-    <method-panel> <!--  ### What is this for?
-    <dartdoc-item class="visible-sm panel" item="{{item}}">
-    </dartdoc-item> -->''';
-  static const variable = '''
-        <dartdoc-variable item="{{item}}" class="panel">
-        </dartdoc-variable>''';
-  static const otherwise = '''
-      <dartdoc-item class="panel" item="{{item}}"></dartdoc-item>''';
 
   @observable get variableShouldShow =>
     item is Variable && (!item.isInherited || viewer.isInherited);
   @observable get methodShouldShow =>
     item is Method && (!item.isInherited || viewer.isInherited);
-
-
-
-   set item(x) {
-     if (x == null)
-       print("whoops");
-     print(x);
-          super.item = x;
-     print(interiorElementString());
-//     interiorElements;
-
-   }
+  @observable get itemShouldShow =>
+    item is Item && item is! Variable && item is! Method;
 
    String interiorElementString() {
      if (item == null)
@@ -65,23 +45,4 @@ class CategoryInterior extends MemberElement {
 //       setInnerHtml(text, validator: validator);
 //     }
 
-//     children.last.xtag.attributes["item"] = "{{item}}";
-//     shadowRoot.children.add(new Element.html("<i>$item</i>", validator: validator));
-//   }
-//
-//   <template if="item is Item && item is! Variable && item is! Method}}">
-//      <dartdoc-item class="panel" item="item"></dartdoc-item>
-//    </template>
-//
-//    <template if="item is Variable && (!item.isInherited || viewer.isInherited)}}">
-//        <dartdoc-variable item="{{item}}" class="panel">
-//        </dartdoc-variable>
-//      </template>
-//
-//  <template if="{{item is Method}} && (!item.isInherited || viewer.isInherited)}}">
-//    <div is="method-panel" class="panel hidden-sm" item="{{item}}">
-//    </div> <!--  ### What is this for?
-//    <dartdoc-item class="visible-sm panel" item="{{item}}">
-//    </dartdoc-item> -->
-//  </template>
 }
