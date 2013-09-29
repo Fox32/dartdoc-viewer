@@ -38,7 +38,7 @@ class MemberElement extends PolymerElement with ObservableMixin {
   get viewer => app.viewer;
 
   /// A valid string for an HTML id made from this [Item]'s name.
-  String get idName {
+  @observable String get idName {
     if (item == null) return '';
     var name = item.name;
     if (item.name == '') name = item.decoratedName;

@@ -12,9 +12,40 @@ import 'member.dart';
  */
  @CustomTag("dartdoc-item")
 class ItemElement extends MemberElement {
+  ItemElement() {
+    item = defaultItem();
+    new PathObserver(this, "item").bindSync(
+        (_) {
+          notifyProperty(this, #title);
+          notifyProperty(this, #parameters);
+          notifyProperty(this, #type);
+          notifyProperty(this, #linkHref);
+          notifyProperty(this, #isMethod);
+          notifyProperty(this, #modifiers);
 
-  String get title => item.decoratedName;
+        });
+  }
 
-  get parameters => item is Method ? item.parameters : [];
-  get type => item is Method ? item.type : null;
-}
+  set item(x) => super.item = (x == null || x is! Item) ? defaultItem() : x;
+
+  defaultItem() => new Class.forPlaceholder("<p>loading</p>", "<p>loading</p>");
+
+  @observable get linkHref => item.linkHref;
+  @observable String get title => item.decoratedName;
+
+  @observable get parameters => item is Method ? item.parameters : [];
+  @observable get type => item is Method ? item.type : null;
+
+  @observable get isMethod => item is Method;
+  @observable get isConstructor => isMethod && item.isConstructor;
+
+  @observable String get modifiers {
+    if (item is! Method) return '';
+    return constantModifier + abstractModifier + staticModifier;
+  }
+  @observable get constantModifier => item.isConstant ? 'const' : '';
+  @observable get abstractModifier => item.isAbstract ? 'abstract' : '';
+  @observable get staticModifier => item.isStatic ? 'static' : '';
+
+
+ }

@@ -4,7 +4,7 @@
 <polymer-element name="dartdoc-category-interior" attributes="item">
  <template>
     <template if="{{itemShouldShow}}">
-      <dartdoc-item class="panel" item="item"></dartdoc-item>
+      <div is="dartdoc-item" class="panel" item="{{item}}"></div>
     </template>
 
     <template if="{{variableShouldShow}}">

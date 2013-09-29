@@ -1,25 +1,23 @@
 <!DOCTYPE html>
 <link rel="import" href="parameters.html">
 
-<polymer-element name="dartdoc-item" attributes="item">
+<polymer-element name="dartdoc-item" attributes="item" extends="div">
   <template>
     <ul class="nav nav-pills nav-stacked">
       <li>
-        <a id="{{idName}}" href="#{{item.linkHref}}">
+        <a id="{{idName}}" href="#{{linkHref}}">
           <template if="{{item is! Method}}">
               {{title}}
           </template>
-          <template if="{{item is Method}}">
-            <template if="{{item is Method && !item.isConstructor}}">
+          <template if="{{isMethod}}">
+            <template if="{{!isConstructor}}">
               <span class="type">
-                {{createType(type, 'dartdoc-item', 'type')}}
               </span>
+              {{createType(item.type, 'dartdoc-item', 'type')}}
             </template>
 
             <span>
-              <template if="{{item isMethod && item.isConstant}}">const</template>
-              <template if="{{item isMethod && item.isAbstract}}">abstract</template>
-              <template if="{{item isMethod && item.isStatic}}">static</template>
+              {{modifiers}}
               <b>{{item.decoratedName}}</b>
                <!-- Parameters -->
               <small is="dartdoc-parameter" parameters="{{parameters}}">
@@ -32,18 +30,20 @@
     <template if="{{item is Class || item is Library && item.previewComment != null}}">
         <hr/>
         <p class="description">
+               {{addCommentOrSkip('dartdoc-item')}}   
         </p>
-       {{addCommentOrSkip('dartdoc-item')}}     
+  
     </template>
 
       <template if="{{item is Method && item.comment != '<span></span>'}}">
         <hr/>
         <p class="description" id="{{item.name}}-method-comment">
+                {{addCommentOrSkip('dartdoc-item', true)}}
         </p>
         <!-- TODO(alanknight): Pulled these out of the element because they 
         couldn't see the element until it was created. But are they both going
         to find all descriptions within the polymer element now?? -->
-        {{addCommentOrSkip('dartdoc-item', true)}}
+
       </template>
 
   </template>
