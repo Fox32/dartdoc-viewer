@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<polymer-element name="dartdoc-breadcrumb-item">
+  <template>
+    <template if="{{item != viewer.breadcrumbs.first}}">
+      <template if="{{item != viewer.breadcrumbs.last}}">
+        <li>
+            <a class="btn-link" href="#{{item.linkHref}}">
+              {{item.decoratedName}}
+            </a>
+        </li>
+      </template>
+     <template if="{{item == viewer.breadcrumbs.last}}">
+        <li class="active">
+          <template if="{{if item != null}}">
+            <a class="btn-link">{{item.decoratedName}}</a>
+          </template>
+        </li>
+      </template>
+    </template>
+  </template>
+<script type="application/dart" src="breadcrumb-item.dart"></script> 
+</polymer-element>

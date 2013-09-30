@@ -74,6 +74,11 @@ class Viewer extends ObservableBase {
       isYaml = libraries['filetype'] == 'yaml';
       homePage = new Home(libraries);
     });
+
+    new PathObserver(this, "currentPage").bindSync(
+      (_) {
+        notifyProperty(this, #breadcrumbs);
+      });
   }
 
   /// Creates a valid hash ID for anchor tags.
@@ -85,7 +90,7 @@ class Viewer extends ObservableBase {
   String get title => currentPage == null ? '' : currentPage.decoratedName;
 
   /// Creates a list of [Item] objects describing the path to [currentPage].
-  List<Item> get breadcrumbs => [homePage]
+  @observable List<Item> get breadcrumbs => [homePage]
     ..addAll(currentPage == null ? [] : currentPage.path);
 
   /// Scrolls the screen to the correct member if necessary.

@@ -8,4 +8,5 @@ import 'member.dart';
 class Breadcrumbs extends PolymerElement {
 
   get viewer => app.viewer;
+
 }
