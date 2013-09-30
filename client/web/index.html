@@ -49,11 +49,9 @@
 
     <div class="nav-collapse collapse navbar-responsive-collapse"
         id="nav-collapse-content">
-      <ul class="nav navbar-nav">
-        <template if="{{viewer.currentPage != null}}">
-          <dartdoc-breadcrumbs></dartdoc-breadcrumbs>
-        </template>
-      </ul>
+      <ul class="nav navbar-nav" id="navbar">
+      </ul>         
+      {{crumbs()}}
 
       <ul class="nav navbar-nav pull-right">
 

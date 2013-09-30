@@ -8,6 +8,11 @@ import 'member.dart';
 class BreadcrumbItem extends MemberElement {
   BreadcrumbItem() {
     item = defaultItem();
+    new PathObserver(this, "item").bindSync(
+    (_) {
+      notifyProperty(this, #linkHref);
+      notifyProperty(this, #decoratedName);
+    });
   }
 
   set item(x) => super.item = item == null ? defaultItem() : x;
@@ -15,4 +20,5 @@ class BreadcrumbItem extends MemberElement {
   defaultItem() => new Class.forPlaceholder("<p>loading</p>", "loading");
 
   @observable get linkHref => item.linkHref;
+  @observable get decoratedName => item.decoratedName;
 }

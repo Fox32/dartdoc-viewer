@@ -314,6 +314,7 @@ class Class extends LazyItem {
   Category functions;
   Category variables;
   Category constructs;
+  get constructors => constructs;
   Category operators;
   LinkableType superClass;
   bool isAbstract;

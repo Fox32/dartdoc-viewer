@@ -13,4 +13,13 @@ class MinimapElementClass extends MemberElement {
 
   get page => viewer.currentPage;
   List check(Function f) => page is Class ? f() : [];
+
+  get shouldShowConstructors => shouldShow((x) => x.constructors);
+  get shouldShowFunctions => shouldShow((x) => x.functions);
+  get shouldShowVariables => shouldShow((x) => x.variables);
+  get shouldShowOperators => shouldShow((x) => x.operators);
+
+  shouldShow(Function f) => page is Class &&
+      (f(page).hasNonInherited ||  viewer.isInherited);
+
 }

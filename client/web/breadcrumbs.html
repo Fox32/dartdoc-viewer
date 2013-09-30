@@ -3,9 +3,8 @@
 
 <polymer-element name="dartdoc-breadcrumbs">
   <template>
-    <template repeat="{{breadcrumb in viewer.breadcrumbs}}">
-      <dartdoc-breadcrumb-item item="{{breadcrumb}}"></dartdoc-breadcrumb-item>
-    </template>
+  <div id="breadcrumb-holder"></div>
+      {{crumbs()}}
   </template>
 <script type="application/dart" src="breadcrumbs.dart"></script> 
 </polymer-element>

@@ -4,6 +4,7 @@ import 'package:dartdoc_viewer/item.dart';
 import 'package:polymer/polymer.dart';
 import 'member.dart';
 import 'app.dart' as app;
+import 'dart:html';
 
 @CustomTag("dartdoc-main")
 class IndexElement extends PolymerElement with ObservableMixin {
@@ -14,6 +15,7 @@ class IndexElement extends PolymerElement with ObservableMixin {
           notifyProperty(this, #viewer);
           notifyProperty(this, #shouldShowLibraryMinimap);
           notifyProperty(this, #shouldShowClassMinimap);
+          notifyProperty(this, #crumbs);
         });
   }
 
@@ -47,5 +49,26 @@ class IndexElement extends PolymerElement with ObservableMixin {
       viewer.currentPage is Library && viewer.isMinimap;
 
   get shouldShowClassMinimap => viewer.currentPage is Class && viewer.isMinimap;
+
+  get breadcrumbs => viewer.breadcrumbs;
+
+  @observable crumbs() {
+    var root = shadowRoot.query("#navbar");
+    if (root == null) return;
+    if (breadcrumbs.length < 2) return;
+    root.children.clear();
+    var last = breadcrumbs.toList().removeLast();
+    breadcrumbs.skip(1).takeWhile((x) => x != last).forEach(
+        (x) => root.append(normalCrumb(x)));
+    root.append(finalCrumb(last));
+  }
+
+  normalCrumb(item) =>
+      new Element.html('<li><a class="btn-link" href="${item.linkHref}">'
+        '${item.decoratedName}</a></li>', validator: validator);
+
+  finalCrumb(item) =>
+    new Element.html('<li class="active"><a class="btn-link">'
+      '${item.decoratedName}</a></li>', validator: validator);
 
 }

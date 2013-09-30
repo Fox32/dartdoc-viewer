@@ -14,8 +14,7 @@ extends="article" attributes="item">
     <ul>
       <template
           if="{{operatorItems.isNotEmpty}}">
-          <template if="{{viewer.currentPage is Class && (viewer.currentPage.operators.hasNonInherited
-            || viewer.isInherited)}}">
+          <template if="{{shouldShowOperators}}">
             <li><a href="#operators" data-toggle="collapse">
               Operators<b class="caret"></b>
             </a></li>
@@ -28,8 +27,7 @@ extends="article" attributes="item">
         </template>
         <template
           if="{{variableItems.isNotEmpty}}">
-          <template if="{{viewer.currentPage.variables.hasNonInherited
-            || viewer.isInherited}}">
+          <template if="{{shouldShowVariables}}">
             <li><a href="#properties" data-toggle="collapse">
               Properties<b class="caret"></b>
             </a></li>
@@ -42,7 +40,7 @@ extends="article" attributes="item">
         </template>
         <template
           if="{{constructorItems.isNotEmpty}}">
-          <template if="{{viewer.currentPage.constructs.hasNonInherited || viewer.isInherited}}">
+          <template if="{{shouldShowConstructors}}">
               <li><a href="#constructors" data-toggle="collapse">
               Constructors<b class="caret"></b>
             </a></li>
@@ -55,8 +53,7 @@ extends="article" attributes="item">
         </template>
         <template
           if="{{functionItems.isNotEmpty}}">
-          <template if="{{viewer.currentPage.functions.hasNonInherited
-            || viewer.isInherited}}">
+          <template if="{{shouldShowFunctions}}">
             <li><a href="#functions" data-toggle="collapse">
               Functions<b class="caret"></b>
             </a></li>
