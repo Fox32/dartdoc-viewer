@@ -95,17 +95,15 @@
     <article is="dartdoc-page" home="{{viewer.homePage}}"></article>
   </main>
 
-  <template if="{{viewer.currentPage != viewer.homePage}}">
-    <template if="{{viewer.currentPage is Library && viewer.isMinimap}}">
+    <template if="{{shouldShowLibraryMinimap}}">
         <article is="dartdoc-minimap-library" item={{viewer.currentPage}}>
         </article>
     </template>
 
-    <template if="{{viewer.currentPage is Class && viewer.isMinimap}}">
+    <template if="{{shouldShowClassMinimap}}">
       <article is="dartdoc-minimap-class" item={{viewer.currentPage}}>
       </article>
     </template>
-  </template>
 
 </div>
 </template>

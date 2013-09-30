@@ -12,7 +12,8 @@ class IndexElement extends PolymerElement with ObservableMixin {
     new PathObserver(this, "viewer.currentPage").bindSync(
         (_) {
           notifyProperty(this, #viewer);
-//          notifyProperty(this, #item);
+          notifyProperty(this, #shouldShowLibraryMinimap);
+          notifyProperty(this, #shouldShowClassMinimap);
         });
   }
 
@@ -41,4 +42,10 @@ class IndexElement extends PolymerElement with ObservableMixin {
   toggleMinimap(event, detail, target) => viewer.toggleMinimap();
 
   get applyAuthorStyles => true;
+
+  @observable get shouldShowLibraryMinimap =>
+      viewer.currentPage is Library && viewer.isMinimap;
+
+  get shouldShowClassMinimap => viewer.currentPage is Class && viewer.isMinimap;
+
 }

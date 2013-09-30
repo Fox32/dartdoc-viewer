@@ -133,6 +133,8 @@ class MemberElement extends PolymerElement with ObservableMixin {
     location.children.clear();
     location.children.add(createInner(type));
   }
+
+  bool get applyAuthorStyles => true;
 }
 
 //// A [MemberElement] that could be inherited from another [MemberElement].
@@ -165,7 +167,6 @@ class InheritedElement extends MemberElement {
     return new LinkableType(ownerName(qualifiedName));
   }
 
-  bool get applyAuthorStyles => true;
 }
 
 class MethodElement extends InheritedElement {

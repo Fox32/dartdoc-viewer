@@ -6,11 +6,9 @@
  <template>
   <div class="visible-lg col-lg-3 well well-sm nav affix-right"
       id="minimap">
-      <template>
-      <a href="#{{viewer.currentPage.linkHref}}">
-        {{viewer.currentPage.name}} library
+      <a href="#{{linkHref}}">
+        {{name}} library
       </a>
-      </template>
       <ul>
         <template
           if="{{operatorItems.isNotEmpty}}">
