@@ -17,10 +17,6 @@
 </head>
 
 <body>
-<!-- <script type="text/javascript" src="static/js/jquery-1.10.2.min.js"></script>
-<script type="text/javascript" src="static/js/bootstrap.min.js"></script>
--->
-
 
 <polymer-element name="dartdoc-main">
 
@@ -91,7 +87,7 @@
 
 <div class="main-body">
   <template if="{{viewer.currentPage != null && viewer.currentPage != viewer.homePage && viewer.isPanel}}">
-    <dartdoc-library-panel></dartdoc-library-panel>
+    <div is="dartdoc-library-panel"></div>
   </template>
 
   <main id="page-content"

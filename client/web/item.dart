@@ -44,8 +44,8 @@ class ItemElement extends MemberElement {
     return constantModifier + abstractModifier + staticModifier;
   }
   @observable get constantModifier => item.isConstant ? 'const' : '';
-  @observable get abstractModifier => item.isAbstract ? 'abstract' : '';
+  @observable get abstractModifier => item.isAbstract ?'abstract' : '';
   @observable get staticModifier => item.isStatic ? 'static' : '';
 
-
+ get applyAuthorStyles => true;
  }

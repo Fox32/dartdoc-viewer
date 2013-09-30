@@ -9,4 +9,5 @@ class Breadcrumbs extends PolymerElement {
 
   get viewer => app.viewer;
 
+  get applyAuthorStyles => true;
 }

@@ -7,7 +7,7 @@
       {{addComment('dartdoc-homepage')}}
       <div class="page-header"><h1>Libraries</h1></div>
       <template repeat="{{library in libraries}}"> 
-        <dartdoc-item class="panel" item="{{library}}"></dartdoc-item>
+        <div is="dartdoc-item" class="panel" item="{{library}}"></div>
       </template>
 
   </template>

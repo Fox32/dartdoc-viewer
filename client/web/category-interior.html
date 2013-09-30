@@ -4,7 +4,7 @@
 <polymer-element name="dartdoc-category-interior" attributes="item">
  <template>
     <template if="{{itemShouldShow}}">
-      <dartdoc-item class="panel" item="{{item}}"></dartdoc-item>
+      <div is="dartdoc-item" class="panel" item="{{item}}"></div>
     </template>
 
     <template if="{{variableShouldShow}}">
@@ -15,8 +15,8 @@
   <template if="{{methodShouldShow}}">
     <div is="method-panel" class="panel hidden-sm" item="{{item}}">
     </div> <!--  ### What is this for?
-    <dartdoc-item class="visible-sm panel" item="{{item}}">
-    </dartdoc-item> -->
+    <div is="dartdoc-item" class="visible-sm panel" item="{{item}}">
+    </div> -->
   </template>
  </template>
 <script type="application/dart" src="category-interior.dart"></script>          
