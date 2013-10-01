@@ -1,3 +1,5 @@
+library minimap_library;
+
 import 'package:dartdoc_viewer/item.dart';
 import 'package:polymer/polymer.dart';
 import 'app.dart' as app;
@@ -15,6 +17,7 @@ class MinimapElementLibrary extends MemberElement {
         notifyProperty(this, #classItems);
         notifyProperty(this, #typedefItems);
         notifyProperty(this, #errorItems);
+        notifyProperty(this, #name);
       });
   }
 

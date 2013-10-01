@@ -1,3 +1,5 @@
+library category;
+
 
     import 'package:polymer/polymer.dart';
     import 'package:dartdoc_viewer/item.dart';

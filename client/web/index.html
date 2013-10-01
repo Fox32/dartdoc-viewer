@@ -22,13 +22,10 @@
 <!-- <template if="{{viewer.currentPage != null}}"> -->
 <template>
     <title>
-      Title = ###{{decoratedName}}
+      Title = {{decoratedName}}
       {{pageNameSeparator}}
-      Dart API ReferenceZZZZZZZZZZZZ
+      Dart API Reference
     </title>
-
-
-
 
 
  <div class="navbar navbar-fixed-top">
@@ -50,7 +47,8 @@
         id="nav-collapse-content">
       <ul class="nav navbar-nav" id="navbar">
       </ul>         
-      {{crumbs()}}
+      {{crumbs()}} <!--  We need the breadcrumbs done inline so they match
+          the styles. -->
 
       <ul class="nav navbar-nav pull-right">
 

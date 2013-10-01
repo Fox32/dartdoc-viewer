@@ -1,3 +1,5 @@
+library library_panel;
+
 import 'package:dartdoc_viewer/item.dart';
 import 'package:polymer/polymer.dart';
 import 'app.dart' as app;

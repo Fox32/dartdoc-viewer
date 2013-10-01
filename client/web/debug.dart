@@ -1,3 +1,5 @@
+library debug;
+
 import 'package:polymer/polymer.dart';
 import 'app.dart';
 

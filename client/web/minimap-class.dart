@@ -1,3 +1,5 @@
+library minimap_class;
+
 import 'package:dartdoc_viewer/item.dart';
 import 'package:polymer/polymer.dart';
 import 'app.dart';
@@ -12,7 +14,7 @@ class MinimapElementClass extends MemberElement {
   get functionItems => check(() => page.functions.content);
 
   get page => viewer.currentPage;
-  List check(Function f) => page is Class ? f() : [];
+  check(Function f) => page is Class ? f() : [];
 
   get shouldShowConstructors => shouldShow((x) => x.constructors);
   get shouldShowFunctions => shouldShow((x) => x.functions);
@@ -22,4 +24,5 @@ class MinimapElementClass extends MemberElement {
   shouldShow(Function f) => page is Class &&
       (f(page).hasNonInherited ||  viewer.isInherited);
 
+  @observable get name => check(() => page.name);
 }

@@ -1,3 +1,5 @@
+library results;
+
 import 'package:dartdoc_viewer/data.dart';
 import 'package:dartdoc_viewer/item.dart';
 import '../lib/search.dart'; // #####

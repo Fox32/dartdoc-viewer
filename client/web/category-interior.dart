@@ -1,3 +1,5 @@
+library category_interior;
+
 import 'package:dartdoc_viewer/item.dart';
 import 'package:polymer/polymer.dart';
 import 'app.dart';
@@ -29,6 +31,7 @@ class CategoryInterior extends MemberElement {
     ..allowCustomElement("method-panel", attributes: ["item"])
     ..allowCustomElement("dartdoc-item", attributes: ["item"])
     ..allowCustomElement("dartdoc-variable", attributes: ["item"])
-    ..allowTagExtension("method-panel", "div", attributes: ["item"]);
+    ..allowTagExtension("method-panel", "div", attributes: ["item"])
+    ..allowTagExtension("dartdoc-variable", "div", attributes: ["item"]);
 
 }

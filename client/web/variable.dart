@@ -1,3 +1,5 @@
+library variable;
+
 import 'dart:html';
 import 'package:polymer/polymer.dart';
 import 'package:dartdoc_viewer/item.dart';
@@ -9,9 +11,6 @@ import 'member.dart';
  */
 @CustomTag("dartdoc-variable")
 class VariableElement extends InheritedElement {
-  VariableElement() {
-    print("Created VariableElement");
-  }
 
   @observable bool isExpanded = false;
   @observable bool nothingToExpand;

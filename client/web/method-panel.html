@@ -24,8 +24,8 @@
             {{modifiers}}
             <template if="{{!item.isConstructor}}">
               <span class="type">
-                {{createType(item.type, 'method-panel', 'type')}}
               </span>
+              {{createType(item.type, 'method-panel', 'type')}}
             </template>
             <template if="{{item.isOperator}}">operator</template>
             <b>{{item.decoratedName}}</b>

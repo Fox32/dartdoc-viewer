@@ -1,3 +1,5 @@
+library class_;
+
 import 'package:dartdoc_viewer/item.dart';
 import 'package:polymer/polymer.dart';
 
@@ -8,10 +10,18 @@ import 'member.dart';
 class ClassElement extends MemberElement {
   ClassElement() {
     item = new Class.forPlaceholder('loading', 'loading');
-//    new PathObserver(this, "item").bindSync(
-//        (_) {
-//          notifyProperty(this, const Symbol('addComment'));
-//        });
+    new PathObserver(this, "item").bindSync(
+        (_) {
+          notifyProperty(this, #variables);
+          notifyProperty(this, #operators);
+          notifyProperty(this, #constructors);
+          notifyProperty(this, #methods);
+          notifyProperty(this, #annotations);
+          notifyProperty(this, #interfaces);
+          notifyProperty(this, #subclasses);
+          notifyProperty(this, #superClass);
+          notifyProperty(this, #nameWithGeneric);
+        });
   }
 
   // TODO(alanknight): This is a workaround for bindings firing even when
@@ -19,23 +29,23 @@ class ClassElement extends MemberElement {
   // temporarily.
   set item(x) => super.item = (x is Class) ? x : item;
 
-  Class get item => super.item;
+  @observable Class get item => super.item;
 
-  Category get variables => item.variables;
+  @observable Category get variables => item.variables;
 
-  Category get operators => item.operators;
+  @observable Category get operators => item.operators;
 
-  Category get constructors => item.constructs;
+  @observable Category get constructors => item.constructs;
 
-  Category get methods => item.functions;
+  @observable Category get methods => item.functions;
 
-  AnnotationGroup get annotations => item.annotations;
+  @observable AnnotationGroup get annotations => item.annotations;
 
-  List<LinkableType> get interfaces => item.implements;
+  @observable List<LinkableType> get interfaces => item.implements;
 
-  List<LinkableType> get subclasses => item.subclasses;
+  @observable List<LinkableType> get subclasses => item.subclasses;
 
-  LinkableType get superClass => item.superClass;
+  @observable LinkableType get superClass => item.superClass;
 
   void showSubclass(event, detail, target) {
     document.query('#${item.name}-subclass-hidden').classes
@@ -44,4 +54,7 @@ class ClassElement extends MemberElement {
   }
 
   bool get applyAuthorStyles => true;
+
+  @observable String get nameWithGeneric => item.nameWithGeneric;
+
 }

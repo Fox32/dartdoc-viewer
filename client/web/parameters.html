@@ -2,23 +2,16 @@
 <link rel="import" href="annotations.html">
 
 <polymer-element name="dartdoc-parameter"
-    extends="small" attributes="item">
+    extends="small" attributes="parameters">
   <template>
     (
-    <template if="{{parameters != null}}">
       <span class="required">
-        {{addParameters(required, 'required')}}
       </span>
+      {{addParameters(required, 'required')}}
 
-      <template if="{{optional.isNotEmpty}}">
-        {{optional.first.isNamed ? '{' : '['}}
-        <span class="optional">
-          {{addParameters(optional, 'optional')}}
-        </span>
-
-        {{optional.first.isNamed ? '}' : ']'}}
-      </template>
-    </template>
+      <span class="optional">
+      </span>
+      {{addParameters(optional, 'optional')}}
     )
   </template>
   <script type="application/dart" src="parameters.dart"></script>

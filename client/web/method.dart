@@ -1,3 +1,5 @@
+library method;
+
 import 'app.dart';
 import 'member.dart';
 import 'package:polymer/polymer.dart';

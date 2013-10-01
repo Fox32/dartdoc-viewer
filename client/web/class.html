@@ -9,17 +9,7 @@
       </dartdoc-annotation>
 
       <div class="page-header"><h1>
-        {{item.name}}
-        <template if="{{item.generics.isNotEmpty}}">
-          &lt;
-          <template repeat="{{generic in item.generics}}">
-            {{generic}}
-            <template if="{{generic != item.generics.last}}">
-              ,&nbsp;
-            </template>
-          </template>
-          &gt;
-        </template>
+        {{nameWithGeneric}}
         <template if="{{item.isAbstract}}">abstract</template>
         class
       </h1></div>

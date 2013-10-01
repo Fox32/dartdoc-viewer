@@ -1,3 +1,4 @@
+library minimap_element;
 
 import 'package:dartdoc_viewer/item.dart';
 import 'package:polymer/polymer.dart';

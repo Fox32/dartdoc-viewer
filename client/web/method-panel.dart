@@ -1,3 +1,5 @@
+library method_panel;
+
 import 'package:polymer/polymer.dart';
 
 import 'app.dart';

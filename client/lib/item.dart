@@ -414,6 +414,18 @@ class Class extends LazyItem {
       });
     }
   }
+
+  String get nameWithGeneric {
+    var out = new StringBuffer();
+    out.write(name);
+    if (generics.isNotEmpty) {
+      out.write("<");
+      out.write(generics.join(",&nbsp"));
+      out.write(">");
+    }
+    return out.toString();
+  }
+
 }
 
 /**

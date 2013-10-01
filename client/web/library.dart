@@ -1,3 +1,5 @@
+library library;
+
 import 'dart:async';
 
 import 'package:dartdoc_viewer/item.dart';

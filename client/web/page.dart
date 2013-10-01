@@ -1,3 +1,5 @@
+library page;
+
 import 'dart:html';
 import 'package:polymer/polymer.dart';
 import 'package:dartdoc_viewer/item.dart';
