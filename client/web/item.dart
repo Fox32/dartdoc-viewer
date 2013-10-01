@@ -24,6 +24,8 @@ class ItemElement extends MemberElement {
           notifyProperty(this, #linkHref);
           notifyProperty(this, #isMethod);
           notifyProperty(this, #modifiers);
+          notifyProperty(this, #shouldShowClassOrLibraryComment);
+          notifyProperty(this, #shouldShowMethodComment);
 
         });
   }
@@ -48,6 +50,11 @@ class ItemElement extends MemberElement {
   @observable get constantModifier => item.isConstant ? 'const' : '';
   @observable get abstractModifier => item.isAbstract ?'abstract' : '';
   @observable get staticModifier => item.isStatic ? 'static' : '';
+
+  @observable get shouldShowClassOrLibraryComment =>
+      (item is Class || item is Library) && item.previewComment != null;
+  @observable get shouldShowMethodComment =>
+      item is Method && item.comment != '<span></span>';
 
  get applyAuthorStyles => true;
  }

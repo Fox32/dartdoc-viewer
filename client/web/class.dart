@@ -21,6 +21,7 @@ class ClassElement extends MemberElement {
           notifyProperty(this, #subclasses);
           notifyProperty(this, #superClass);
           notifyProperty(this, #nameWithGeneric);
+          notifyProperty(this, #addComment);
         });
   }
 
