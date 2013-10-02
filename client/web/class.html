@@ -14,77 +14,19 @@
         class
       </h1></div>
 
-      <p>
-        <template if="{{interfaces.isNotEmpty}}">
-          Implements:&nbsp;
-          <template repeat="{{interface in interfaces}}">
-            <a href="#{{interface.location}}">
-              {{interface.simpleType}}
-            </a>
-            <template if="{{interface != interfaces.last}}">
-              ,&nbsp;
-            </template>
-            <template if="{{interface == interfaces.last}}">
-              <br/>
-            </template>
-          </template>
-        </template>
-        Extends:&nbsp;
-        <a href="#{{superClass.location}}">
-          {{superClass.simpleType}}
-        </a>
-      </p>
-      <p>
-        <!-- Subclasses -->
-        <template if="{{item.qualifiedName != 'dart.core.Object'}}">
-          <template if="{{subclasses.isNotEmpty}}">
-            Subclasses:
-          </template>
-          <!-- Limit initial display to 3 items to not overwhelm the user. -->
-          <template if="{{subclasses.length > 3}}">
-            <a href="#{{subclasses[0].location}}">
-              {{subclasses[0].simpleType}}
-            </a>
-            ,&nbsp;
-            <a href="#{{subclasses[1].location}}">
-              {{subclasses[1].simpleType}}
-            </a>
-            ,&nbsp;
-            <a href="#{{subclasses[2].location}}">
-              {{subclasses[2].simpleType}}
-            </a>
-            <a class="btn btn-link btn-xs" id="{{item.name}}-subclass-button"
-              on-click="showSubclass">
-              ...
-            </a>
-            <span id="{{item.name}}-subclass-hidden" class="hidden">
-              ,&nbsp;
-              <template repeat="{{subclass in subclasses}}">
-                <template if="{{subclass != subclasses[0] &&
-                  subclass != subclasses[1] && subclass != subclasses[2]}}">
-                  <a href="#{{subclass.location}}">
-                    {{subclass.simpleType}}
-                  </a>
-                  <template if="{{subclass != subclasses.last}}">
-                    ,&nbsp;
-                  </template>
-                </template>
-              </template>
-            </span>
-          </template>
+      <p id="interfaces"></p>
+      {{addInterfaceLinks()}}
 
-          <template if="{{subclasses.length <= 3}}">
-            <template repeat="{{subclass in subclasses}}">
-              <a href="#{{subclass.location}}">
-                {{subclass.simpleType}}
-              </a>
-              <template if="{{subclass != subclasses.last}}">
-                ,&nbsp;
-              </template>
-            </template>
-          </template>
-        </template>
+      <p id="subclasses">
+           <a class="btn btn-link btn-xs" 
+            id="{{name}}-subclass-button" 
+            on-click="showSubclass">...</a>
       </p>
+      <!-- Subclasses -->
+      <template if="{{isNotObject}}">
+        {{addSubclassLinks()}}
+      </template>
+   
 
       <!-- Comment -->
       <section class="description"></section>

@@ -13,10 +13,16 @@ class DartdocMethod extends MethodElement {
             createType(item.type, 'dartdoc-method', 'type');
           }
         });
+    new PathObserver(this, "item").bindSync(
+        (_) {
+          notifyProperty(this, #annotations);
+          notifyProperty(this, #modifiers);
+        });
   }
 
-  String get modifiers => constantModifier + abstractModifier + staticModifier;
-  get constantModifier => item.isConstant ? 'const' : '';
-  get abstractModifier => item.isAbstract ? 'abstract' : '';
-  get staticModifier => item.isStatic ? 'static' : '';
+  @observable String get modifiers => constantModifier + abstractModifier + staticModifier;
+  @observable get constantModifier => item.isConstant ? 'const' : '';
+  @observable get abstractModifier => item.isAbstract ? 'abstract' : '';
+  @observable get staticModifier => item.isStatic ? 'static' : '';
+  @observable get annotations => item.annotations;
 }

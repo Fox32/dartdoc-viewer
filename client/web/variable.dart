@@ -12,24 +12,10 @@ import 'member.dart';
 @CustomTag("dartdoc-variable")
 class VariableElement extends InheritedElement {
 
-  @observable bool isExpanded = false;
-  @observable bool nothingToExpand;
+  @observable bool isExpanded = true;
+  @observable bool nothingToExpand = true;
 
   set item(x) => super.item = (x is Variable ? x : null);
-
-  inserted() {
-    if (item == null) return;
-    super.inserted();
-    var index = item.comment.indexOf('</p>');
-    if (index == -1) {
-      isExpanded = true;
-    } else {
-      index = item.comment.indexOf('</p>', index + 1);
-      if (index == -1) isExpanded = true;
-      else isExpanded = false;
-    }
-    nothingToExpand = isExpanded;
-  }
 
   void toggleExpand(event, handler, detail) {
     isExpanded = !isExpanded;

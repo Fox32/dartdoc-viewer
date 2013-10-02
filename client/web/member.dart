@@ -25,8 +25,9 @@ class SameProtocolUriPolicy implements UriPolicy {
   }
 }
 
+var uriPolicy = new SameProtocolUriPolicy();
 var validator = new NodeValidatorBuilder()
-    ..allowHtml5(uriPolicy: new SameProtocolUriPolicy());
+    ..allowHtml5(uriPolicy: uriPolicy);
 
 //// This is a web component to be extended by all Dart members with comments.
 //// Each member has an [Item] associated with it as well as a comment to
@@ -50,7 +51,6 @@ class MemberElement extends PolymerElement with ObservableMixin {
     if (commentLocation == null) return;
     addComment(elementName, preview, commentLocation);
   }
-
 
   /// Adds [item]'s comment to the the [elementName] element with markdown
   /// links converted to working links.

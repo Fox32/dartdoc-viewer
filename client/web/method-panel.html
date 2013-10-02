@@ -15,7 +15,7 @@
       </a>
       <div class="panel-heading">
 
-        <dartdoc-annotation annotations="{{item.annotations}}">
+        <dartdoc-annotation annotations="{{annotations}}">
         </dartdoc-annotation>
 
         <!-- Return Type -->
@@ -49,12 +49,11 @@
         </template>
       </dfn></p>
 
-      <!-- Comment -->
-      <template if="{{viewer.isInherited || !hasInheritedComment}}">
         <section class="description">
         </section>
-        {{addCommentOrSkip('method-panel', !isExpanded)}}
-        
+      <!-- Comment -->
+      <template if="{{viewer.isInherited || !hasInheritedComment}}">
+        {{addComment('method-panel', !isExpanded)}}
       </template>
 
       <template if="{{!nothingToExpand}}">

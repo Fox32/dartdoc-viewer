@@ -21,7 +21,11 @@ class ClassElement extends MemberElement {
           notifyProperty(this, #subclasses);
           notifyProperty(this, #superClass);
           notifyProperty(this, #nameWithGeneric);
+          notifyProperty(this, #name);
           notifyProperty(this, #addComment);
+          notifyProperty(this, #addInterfaceLinks);
+          notifyProperty(this, #addSubclassLinks);
+          notifyProperty(this, #isNotObject);
         });
   }
 
@@ -49,13 +53,54 @@ class ClassElement extends MemberElement {
   @observable LinkableType get superClass => item.superClass;
 
   void showSubclass(event, detail, target) {
-    document.query('#${item.name}-subclass-hidden').classes
+    shadowRoot.query('#${item.name}-subclass-hidden').classes
         .remove('hidden');
-    document.query('#${item.name}-subclass-button').classes.add('hidden');
+    shadowRoot.query('#${item.name}-subclass-button').classes.add('hidden');
   }
 
   bool get applyAuthorStyles => true;
 
   @observable String get nameWithGeneric => item.nameWithGeneric;
+  @observable String get name => item.name;
+
+  @observable bool get isNotObject => item.qualifiedName != 'dart.core.Object';
+
+  @observable addExtraSubclassLinks() {
+    makeLinks(subclasses.skip(3));
+  }
+
+  @observable addInterfaceLinks() {
+    var p = shadowRoot.query("#interfaces");
+    if (p == null) return;
+    p.children.clear();
+    if (interfaces.isEmpty) return;
+    p.append(p.createFragment('Implements:&nbsp;' + makeLinks(interfaces)
+                              + '&nbsp;'));
+    p.append(p.createFragment('Extends:&nbsp;' + makeLinks([superClass])));
+  }
+
+
+  @observable addSubclassLinks() {
+    if (subclasses.isEmpty) return;
+    var p = shadowRoot.query("#subclasses");
+    // Remove all the children except the '...' button, which we can't
+    // create dynamically because the on-click handler won't get registered.
+    var buttonThatMustBeStatic = p.query(".btn-link");
+    p.children.clear();
+    var text = makeLinks(subclasses.take(3));
+    p.append(p.createFragment('Subclasses: ' + text, validator: validator));
+    p.append(buttonThatMustBeStatic);
+    if (subclasses.length <= 3) return;
+    p.append(p.createFragment(
+         '<span id="${item.name}-subclass-hidden" class="hidden">,&nbsp;'
+         '</span>', validator: validator));
+    var q = shadowRoot.query("#${item.name}-subclass-hidden");
+    q.append(q.createFragment(makeLinks(subclasses.skip(3))));
+  }
+
+  makeLinks(Iterable classes) =>
+    classes
+        .map((x) =>'<a href="#${x.location}">${x.simpleType}</a>')
+        .join(",&nbsp;");
 
 }

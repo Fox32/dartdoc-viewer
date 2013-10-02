@@ -31,7 +31,6 @@ library category;
         new PathObserver(this, "category").bindSync(
             (_) {
               notifyProperty(this, #categoryContent);
-              notifyProperty(this, #insertCategoryItems);
             });
       }
 
@@ -58,16 +57,7 @@ library category;
     ..allowCustomElement("dartdoc-category-interior", attributes: ["item"])
     ..allowTagExtension("method-panel", "div", attributes: ["item"]);
 
-    @observable insertCategoryItems() {
-        for (var item in categoryContent) {
-           var node = createFragment(
-               '<dartdoc-category-interior> item="{{item}}"></dartdoc-category-interior>',
-               validator: validator);
-           node.bind("item", item, "this");
-           append(node);
-        }
 
-      }
 
       bool get applyAuthorStyles => true;
     }

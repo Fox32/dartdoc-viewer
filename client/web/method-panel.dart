@@ -7,21 +7,15 @@ import 'member.dart';
 
 @CustomTag("method-panel")
 class MethodPanel extends MethodElement {
-  @observable bool isExpanded = false;
-  @observable bool nothingToExpand;
-
-  inserted() {
-    super.inserted();
-    var index = item.comment.indexOf('</p>');
-    if (index == -1) {
-      isExpanded = !isInherited;
-    } else {
-      index = item.comment.indexOf('</p>', index + 1);
-      if (index == -1) isExpanded = true;
-      else isExpanded = false;
-    }
-    nothingToExpand = isExpanded;
+  MethodPanel() {
+    new PathObserver(this, "item").bindSync(
+        (_) {
+          notifyProperty(this, #annotations);
+          notifyProperty(this, #modifiers);
+        });
   }
+  @observable bool isExpanded = true;
+  @observable bool nothingToExpand = true;
 
   void toggleExpand(event, detail, target) {
     isExpanded = !isExpanded;
@@ -31,4 +25,5 @@ class MethodPanel extends MethodElement {
   @observable get constantModifier => item.isConstant ? 'const' : '';
   @observable get abstractModifier => item.isAbstract ? 'abstract' : '';
   @observable get staticModifier => item.isStatic ? 'static' : '';
+  @observable get annotations => item.annotations;
 }

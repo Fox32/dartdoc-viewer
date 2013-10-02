@@ -125,13 +125,13 @@ class Category extends Container {
 class Item extends Container {
   /// A list of [Item]s representing the path to this [Item].
   List<Item> path = [];
-  String qualifiedName;
+  @observable String qualifiedName;
 
   Item(String name, this.qualifiedName, [String comment])
       : super(name, comment);
 
   /// [Item]'s name with its properties properly appended.
-  String get decoratedName => name;
+  @observable String get decoratedName => name;
 
   /// Adds this [Item] to [pageIndex] and updates all necessary members.
   void addToHierarchy() {
@@ -142,7 +142,7 @@ class Item extends Container {
   void addInheritedComment(Item item) {}
 
   /// Denotes whether this [Item] is inherited from another [Item] or not.
-  bool get isInherited => false;
+  @observable bool get isInherited => false;
 
   /// Creates a link for the href attribute of an [AnchorElement].
   String get linkHref {
@@ -420,7 +420,7 @@ class Class extends LazyItem {
     out.write(name);
     if (generics.isNotEmpty) {
       out.write("<");
-      out.write(generics.join(",&nbsp"));
+      out.write(generics.join(",&nbsp;"));
       out.write(">");
     }
     return out.toString();

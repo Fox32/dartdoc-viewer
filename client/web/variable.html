@@ -26,11 +26,12 @@
       </template>
     </dfn></p>
 
+    <p class="description">
+    </p>
     <!-- Comment -->
     <template if="{{viewer.isInherited || !hasInheritedComment}}">
-      <p class="description">
-      </p>
-     {{addCommentOrSkip('dartdoc-variable', !isExpanded)}}
+
+     {{addComment('dartdoc-variable', !isExpanded)}}
       
     </template>
 
