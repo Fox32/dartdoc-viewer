@@ -67,7 +67,6 @@ class Viewer extends ObservableBase {
 
   // Private constructor for singleton instantiation.
   Viewer._() {
-    print("Created new viewer");
     var manifest = retrieveFileContents(sourcePath);
     finished = manifest.then((response) {
       var libraries = parse(response);
@@ -104,7 +103,7 @@ class Viewer extends ObservableBase {
         // All ids are created using getIdName to avoid creating an invalid
         // HTML id from an operator or setter.
         hash = hash.substring(1, hash.length);
-        var e = document.query('#$hash');
+        var e = documentzzz.query('#$hash');
         if (e != null) {
           // Find the parent category element to make sure it is open.
           var category = e.parent;
@@ -287,13 +286,16 @@ String location;
 
 /// Listens for browser navigation and acts accordingly.
 void startHistory() {
-  window.onPopState.listen((event) {
-    location = window.location.hash.replaceFirst('#', '');
-    if (viewer.homePage != null) {
-      if (location != '') viewer._handleLinkWithoutState(location);
-      else viewer._handleLinkWithoutState('home');
-    }
-  });
+  location = window.location.hash.replaceFirst('#', '');
+  window.onPopState.listen(navigate);
+}
+
+void navigate(event) {
+  location = window.location.hash.replaceFirst('#', '');
+  if (viewer.homePage != null) {
+    if (location != '') viewer._handleLinkWithoutState(location);
+    else viewer._handleLinkWithoutState('home');
+  }
 }
 
 /// Handles browser navigation.
