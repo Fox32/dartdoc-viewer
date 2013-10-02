@@ -18,6 +18,7 @@ class MinimapElementLibrary extends MemberElement {
         notifyProperty(this, #typedefItems);
         notifyProperty(this, #errorItems);
         notifyProperty(this, #name);
+        notifyProperty(this, #decoratedName);
       });
   }
 
@@ -33,5 +34,8 @@ class MinimapElementLibrary extends MemberElement {
   check(Function f) => page is Library ? f() : [];
   @observable get linkHref => check(() => page.linkHref);
   @observable get name => check(() => page.name);
+
+  @observable decoratedName(thing) =>
+      thing == null ? null : thing.decoratedName;
 
 }
