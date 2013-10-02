@@ -73,22 +73,27 @@ class ClassElement extends MemberElement {
     var p = shadowRoot.query("#interfaces");
     if (p == null) return;
     p.children.clear();
-    if (interfaces.isEmpty) return;
-    p.append(p.createFragment('Implements:&nbsp;' + makeLinks(interfaces)
+    if (interfaces.isNotEmpty) {
+      p.append(p.createFragment('Implements:&nbsp;' + makeLinks(interfaces)
                               + '&nbsp;'));
+    }
     p.append(p.createFragment('Extends:&nbsp;' + makeLinks([superClass])));
   }
 
 
   @observable addSubclassLinks() {
-    if (subclasses.isEmpty) return;
     var p = shadowRoot.query("#subclasses");
     // Remove all the children except the '...' button, which we can't
     // create dynamically because the on-click handler won't get registered.
     var buttonThatMustBeStatic = p.query(".btn-link");
     p.children.clear();
     var text = makeLinks(subclasses.take(3));
-    p.append(p.createFragment('Subclasses: ' + text, validator: validator));
+    if (subclasses.isEmpty) {
+      buttonThatMustBeStatic.classes.add("hidden");
+    } else {
+      p.append(p.createFragment('Subclasses: ' + text, validator: validator));
+      buttonThatMustBeStatic.remove("hidden");
+    }
     p.append(buttonThatMustBeStatic);
     if (subclasses.length <= 3) return;
     p.append(p.createFragment(

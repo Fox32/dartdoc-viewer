@@ -3,6 +3,7 @@ library annotations;
 import 'package:dartdoc_viewer/item.dart';
 import 'package:polymer/polymer.dart';
 import 'app.dart';
+import 'member.dart';
 
 @CustomTag("dartdoc-annotation")
 class AnnotationElement extends PolymerElement with ObservableMixin {
@@ -33,7 +34,8 @@ class AnnotationElement extends PolymerElement with ObservableMixin {
       out.write(annotations.supportedBrowsers.join(",&nbsp;"));
       out.write("</i><br/>");
     }
-    append(createFragment(out.toString(), validator: validator));
+    var fragment = createFragment(out.toString(), validator: validator);
+    shadowRoot.append(fragment);
   }
 
 
