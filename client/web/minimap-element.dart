@@ -6,7 +6,7 @@ import 'app.dart' as app;
 
 /// An element in a page's minimap displayed on the right of the page.
 @CustomTag("dartdoc-minimap")
-class MinimapElement extends PolymerElement with ObservableMixin {
+class MinimapElement extends PolymerElement {
   MinimapElement() {
     new PathObserver(this, "viewer.isInherited").bindSync(
       (_) {

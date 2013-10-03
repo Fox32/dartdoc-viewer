@@ -6,7 +6,7 @@ import 'app.dart';
 import 'member.dart';
 
 @CustomTag("dartdoc-annotation")
-class AnnotationElement extends PolymerElement with ObservableMixin {
+class AnnotationElement extends PolymerElement {
   AnnotationElement() {
     new PathObserver(this, "annotations").bindSync(
         (_) {

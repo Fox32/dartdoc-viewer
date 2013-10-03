@@ -13,7 +13,7 @@ library category;
      * Used as a placeholder for an CategoryItem object.
      */
      @CustomTag("dartdoc-category")
-    class CategoryElement extends PolymerElement with ObservableMixin {
+    class CategoryElement extends PolymerElement {
 
       CategoryElement() {
         new PathObserver(this, "category.name").bindSync(

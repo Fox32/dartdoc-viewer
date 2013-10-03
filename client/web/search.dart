@@ -17,7 +17,7 @@ import 'results.dart';
  * Component implementing the Dartdoc_viewer search.
  */
 @CustomTag("search-box")
-class Search extends PolymerElement with ObservableMixin {
+class Search extends PolymerElement {
 
   Search() {
     new PathObserver(this, "results").bindSync(

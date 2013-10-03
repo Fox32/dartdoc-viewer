@@ -9,7 +9,7 @@ import 'app.dart';
 import 'member.dart';
 
 @CustomTag("dartdoc-parameter")
-class ParameterElement extends PolymerElement with ObservableMixin {
+class ParameterElement extends PolymerElement {
   ParameterElement() {
     new PathObserver(this, "parameters").bindSync(
         (_) {

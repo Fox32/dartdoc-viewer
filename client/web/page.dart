@@ -10,7 +10,7 @@ import 'app.dart' as app;
  * An HTML representation of a page
  */
 @CustomTag("dartdoc-page")
-class PageElement extends PolymerElement with ObservableMixin {
+class PageElement extends PolymerElement {
   @observable Home home;
 
   PageElement() {

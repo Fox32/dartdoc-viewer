@@ -9,7 +9,7 @@ import 'package:polymer/polymer.dart';
  * An HTML representation of a Search Result.
  */
 @CustomTag("search-result")
-class Result extends PolymerElement with ObservableMixin {
+class Result extends PolymerElement {
 
   Result() {
     bindProperty(this, #membertype, broadcastProperty);

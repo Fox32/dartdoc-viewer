@@ -4,7 +4,7 @@ import 'package:polymer/polymer.dart';
 import 'app.dart';
 
 @CustomTag("dartdoc-debug")
-class DebugElement extends PolymerElement with ObservableMixin {
+class DebugElement extends PolymerElement {
   DebugElement() {
     print("Created Debug Element");
     print("Viewer.currentPage = ${viewer.currentPage}");
