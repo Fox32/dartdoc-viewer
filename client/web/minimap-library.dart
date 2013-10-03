@@ -19,6 +19,7 @@ class MinimapElementLibrary extends MemberElement {
         notifyProperty(this, #errorItems);
         notifyProperty(this, #name);
         notifyProperty(this, #decoratedName);
+        notifyProperty(this, #linkHref);
       });
   }
 
@@ -40,5 +41,16 @@ class MinimapElementLibrary extends MemberElement {
 
   @observable decoratedName(thing) =>
       thing == null ? null : thing.decoratedName;
+
+  hideShow(event, detail, target) {
+//    shadowRoot.query("#class-minimap").xtag.hideShow();
+    var list = shadowRoot.query(target.hash);
+    if (list.classes.contains("in")) {
+      list.classes.remove("in");
+    } else {
+      list.classes.add("in");
+    }
+//    shadowRoot.query("#classes").classes.add("in");
+  }
 
 }
