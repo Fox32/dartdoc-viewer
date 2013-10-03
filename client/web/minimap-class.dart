@@ -4,6 +4,7 @@ import 'package:dartdoc_viewer/item.dart';
 import 'package:polymer/polymer.dart';
 import 'app.dart';
 import 'member.dart';
+import 'dart:html';
 
 /// An element in a page's minimap displayed on the right of the page.
 @CustomTag("dartdoc-minimap-class")
@@ -25,4 +26,8 @@ class MinimapElementClass extends MemberElement {
       (f(page).hasNonInherited ||  viewer.isInherited);
 
   @observable get name => check(() => page.name);
+
+  @observable String constantLink(String tail) {
+    return '${window.location.toString().split("#").first}#$tail';
+  }
 }

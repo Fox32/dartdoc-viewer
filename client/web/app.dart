@@ -103,7 +103,8 @@ class Viewer extends ObservableBase {
         // All ids are created using getIdName to avoid creating an invalid
         // HTML id from an operator or setter.
         hash = hash.substring(1, hash.length);
-        var e = documentzzz.query('#$hash');
+        var e = document.query('#$hash');
+
         if (e != null) {
           // Find the parent category element to make sure it is open.
           var category = e.parent;
