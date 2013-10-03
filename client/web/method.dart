@@ -20,6 +20,9 @@ class DartdocMethod extends MethodElement {
         });
   }
 
+  get item => super.item;
+  set item(x) => super.item = x;
+
   @observable String get modifiers => constantModifier + abstractModifier + staticModifier;
   @observable get constantModifier => item.isConstant ? 'const' : '';
   @observable get abstractModifier => item.isAbstract ? 'abstract' : '';

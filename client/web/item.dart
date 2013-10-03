@@ -30,6 +30,7 @@ class ItemElement extends MemberElement {
         });
   }
 
+  get item => super.item;
   set item(x) => super.item = (x == null || x is! Item) ? defaultItem() : x;
 
   defaultItem() => new Class.forPlaceholder("<p>loading</p>", "<p>loading</p>");

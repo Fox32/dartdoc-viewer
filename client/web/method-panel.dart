@@ -14,6 +14,10 @@ class MethodPanel extends MethodElement {
           notifyProperty(this, #modifiers);
         });
   }
+
+  set item(x) => super.item = x;
+  get item => super.item;
+
   @observable bool isExpanded = true;
   @observable bool nothingToExpand = true;
 

@@ -34,7 +34,7 @@ var validator = new NodeValidatorBuilder()
 //// display, so this class handles those two aspects shared by all members.
 class MemberElement extends PolymerElement with ObservableMixin {
 
-  @observable var item;
+  @observable @published var item;
 
   get viewer => app.viewer;
 

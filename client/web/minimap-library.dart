@@ -22,6 +22,9 @@ class MinimapElementLibrary extends MemberElement {
       });
   }
 
+  get item => super.item;
+  set item(x) => super.item = x;
+
   get viewer  => app.viewer;
   @observable get operatorItems => check(() => page.operators.content);
   @observable get variableItems => check(() => page.variables.content);

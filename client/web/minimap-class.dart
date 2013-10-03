@@ -17,6 +17,9 @@ class MinimapElementClass extends MemberElement {
   get page => viewer.currentPage;
   check(Function f) => page is Class ? f() : [];
 
+  get item => super.item;
+  set item(x) => super.item = x;
+
   get shouldShowConstructors => shouldShow((x) => x.constructors);
   get shouldShowFunctions => shouldShow((x) => x.functions);
   get shouldShowVariables => shouldShow((x) => x.variables);

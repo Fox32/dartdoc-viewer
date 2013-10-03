@@ -19,6 +19,9 @@ class CategoryInterior extends MemberElement {
         });
   }
 
+  get item => super.item;
+  set item(x) => super.item = x;
+
   @observable get variableShouldShow =>
     item is Variable && (!item.isInherited || viewer.isInherited);
   @observable get methodShouldShow =>

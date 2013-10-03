@@ -14,6 +14,9 @@ class HomeElement extends MemberElement {
         });
   }
 
+  get item => super.item;
+  set item(x) => super.item = x;
+
   @observable
   get libraries => item == null ? [] : item.libraries;
 

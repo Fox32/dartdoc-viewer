@@ -28,6 +28,7 @@ class LibraryElement extends MemberElement {
         });
   }
 
+  get item => super.item;
   set item(x) => super.item = x is Library ? x : defaultItem;
 
   get defaultItem => item = new Library.forPlaceholder({

@@ -12,12 +12,16 @@ class MinimapElement extends PolymerElement with ObservableMixin {
       (_) {
         notifyProperty(this, #shouldShow);
         notifyProperty(this, #addLink);
+        notifyProperty(this, #itemsToShow);
       });
   }
 
   @observable List<Item> items = [];
 
   get viewer => app.viewer;
+
+  @observable get itemsToShow => items.where(
+      (x) => !x.isInherited || viewer.isInherited);
 
   /// Creates a proper href String for an [Item].
   String link(linkItem) {

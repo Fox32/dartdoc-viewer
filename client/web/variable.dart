@@ -15,6 +15,7 @@ class VariableElement extends InheritedElement {
   @observable bool isExpanded = true;
   @observable bool nothingToExpand = true;
 
+  get item => super.item;
   set item(x) => super.item = (x is Variable ? x : null);
 
   void toggleExpand(event, handler, detail) {
