@@ -5,6 +5,6 @@ import 'dart:io';
 import 'dart:async';
 
 void main() {
-  build(entryPoints: ['web/index.html'])
-    .then((_) => print('Build finished!'));
+  lint().then((_) => deploy());
+  //  build(entryPoints: ['web/index.html']);
 }
