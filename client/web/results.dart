@@ -4,15 +4,16 @@ import 'package:dartdoc_viewer/data.dart';
 import 'package:dartdoc_viewer/item.dart';
 import '../lib/search.dart'; // #####
 import 'package:polymer/polymer.dart';
+import 'member.dart';
 
 /**
  * An HTML representation of a Search Result.
  */
 @CustomTag("search-result")
-class Result extends PolymerElement {
+class Result extends MemberElement {
 
   Result() {
-    new PathObserver(this, "membertype").bindSync(
+    new PathObserver(this, "item").bindSync(
         (_) {
           notifyProperty(this, #descriptiveName);
           notifyProperty(this, #descriptiveType);
@@ -20,11 +21,15 @@ class Result extends PolymerElement {
         });
   }
 
-  @observable String membertype = 'none';
-  @observable String qualifiedname = 'none';
+  get item => super.item;
+  set item(x) => super.item = x;
+
+  @observable String get membertype => item == null ? 'none' : item.type;
+  @observable String get qualifiedname => item == null ? 'none' : item.element;
 
   /// The name of this member.
   String get descriptiveName {
+    if (qualifiedname == null) return '';
     var name = qualifiedname.split('.');
     if (membertype == 'library') {
       if (name.first == 'dart') {

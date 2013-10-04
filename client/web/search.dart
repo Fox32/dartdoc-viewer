@@ -23,6 +23,7 @@ class Search extends PolymerElement {
     new PathObserver(this, "results").bindSync(
         (_) {
           notifyProperty(this, #dropdownOpen);
+          notifyProperty(this, #hasNoResults);
         });
     new PathObserver(this, "isFocused").bindSync(
         (_) {
@@ -30,12 +31,13 @@ class Search extends PolymerElement {
         });
   }
 
+  List<SearchResult> results = [];
 
-  ObservableList<SearchResult> results = toObservable(<SearchResult>[]);
-  String _lastQuery;
   @observable bool isFocused = false;
 
   @observable String searchQuery = "";
+
+  @observable bool get hasNoResults => results.isNotEmpty;
 
   @observable String get dropdownOpen =>
       !searchQuery.isEmpty && isFocused ? 'open' : '';
@@ -46,13 +48,19 @@ class Search extends PolymerElement {
     currentIndex = -1;
     results.clear();
     results.addAll(lookupSearchResults(searchQuery, viewer.isDesktop ? 10 : 5));
+    notifyProperty(this, #results);
+    notifyProperty(this, #dropdownOpen);
   }
 
   void onBlurCallback(_) {
-    if (document.activeElement == null ||
-        !this.contains(document.activeElement)) {
+    // TODO(alanknight): The below check fails with shadow root because the
+    // active element
+    // is always the main one. Is it ok to just not do this test and lose
+    // focus any time we get a blur callback?
+//    if (document.activeElement == null ||
+//        !this.contains(document.activeElement)) {
       isFocused = false;
-    }
+//    }
   }
 
   void onFocusCallback(_) {
@@ -63,7 +71,7 @@ class Search extends PolymerElement {
     if (!results.isEmpty) {
       String refId;
       if (target != null ) {
-        refId = target.parent.dataset['ref-id'];
+        refId = target.dataset['ref-id'];
       }
       if (refId == null || refId.isEmpty) {
         // If nothing is focused, use the first search result.
@@ -74,6 +82,7 @@ class Search extends PolymerElement {
       results.clear();
       dartdocMain.searchSubmitted();
       document.body.focus();
+      isFocused = false;
     }
   }
 
@@ -101,14 +110,13 @@ class Search extends PolymerElement {
         currentIndex--;
         document.query('#search$currentIndex').focus();
       } else if (currentIndex == 0) {
-        document.query('#q').focus();
+        q.focus();
       }
       e.preventDefault();
     } else if (e.keyCode == KeyCode.DOWN) {
       if (currentIndex < results.length - 1) {
         currentIndex++;
-        var x = document.query('#search*');
-        document.query('#search$currentIndex').focus();
+        shadowRoot.query('#search$currentIndex').focus();
       }
       e.preventDefault();
     }
@@ -117,12 +125,11 @@ class Search extends PolymerElement {
   /** Activate search on Ctrl+3 and S. */
   void shortcutHandler(KeyboardEvent event) {
     if (event.keyCode == KeyCode.THREE && event.ctrlKey) {
-      document.query('#q').focus();
+      q.focus();
       event.preventDefault();
-    } else if (event.target != document.query('#q')
-        && event.keyCode == KeyCode.S) {
+    } else if (event.target != q && event.keyCode == KeyCode.S) {
       // Allow writing 's' in the search input.
-      document.query('#q').focus();
+      q.focus();
       event.preventDefault();
     } else if (event.keyCode == KeyCode.ESC) {
       document.body.focus();
@@ -130,6 +137,8 @@ class Search extends PolymerElement {
       event.preventDefault();
     }
   }
+
+  get q => shadowRoot.query('#q');
 
   get applyAuthorStyles => true;
 }

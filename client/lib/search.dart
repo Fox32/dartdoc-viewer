@@ -83,9 +83,9 @@ List<SearchResult> lookupSearchResults(String query, int maxResults) {
   for (var r in resultSet) {
     /// If it is taking too long to compute the search results, time out and
     /// return an empty list of results.
-// ####   if (stopwatch.elapsedMilliseconds > 500) {
-//      return [];
-//    }
+   if (stopwatch.elapsedMilliseconds > 500) {
+      return [];
+    }
     int score = 0;
     var lowerCaseResult = r.toLowerCase();
     var type = index[r];
@@ -147,9 +147,9 @@ List<SearchResult> lookupSearchResults(String query, int maxResults) {
 
   /// If it is taking too long to compute the search results, time out and
   /// return an empty list of results.
-// ### if (stopwatch.elapsedMilliseconds > 500) {
-//    return [];
-//  }
+  if (stopwatch.elapsedMilliseconds > 500) {
+    return [];
+  }
   scoredResults.sort();
   updatePositions(scoredResults);
   if (scoredResults.length > maxResults) {

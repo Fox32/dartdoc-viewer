@@ -95,7 +95,7 @@ class ClassElement extends MemberElement {
       buttonThatMustBeStatic.classes.add("hidden");
     } else {
       p.append(p.createFragment('Subclasses: ' + text, validator: validator));
-      buttonThatMustBeStatic.remove("hidden");
+      buttonThatMustBeStatic.classes.remove("hidden");
     }
     p.append(buttonThatMustBeStatic);
     if (subclasses.length <= 3) return;
