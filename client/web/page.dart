@@ -14,7 +14,7 @@ class PageElement extends PolymerElement {
   @observable Home home;
 
   PageElement() {
-    new PathObserver(viewer, "currentPage").bindSync(
+    new PathObserver(this, "viewer.currentPage").bindSync(
         (_) {
           notifyProperty(this, #currentPage);
           notifyProperty(this, #currentPageIsLibrary);
@@ -23,7 +23,7 @@ class PageElement extends PolymerElement {
           notifyProperty(this, #currentPageIsTypedef);
           notifyProperty(this, #isHome);
         });
-    new PathObserver(viewer, "homePage").bindSync(
+    new PathObserver(this, "viewer.homePage").bindSync(
         (_) {
           notifyProperty(this, #hasHomePage);
         });
@@ -38,6 +38,7 @@ class PageElement extends PolymerElement {
   @observable get currentPageIsTypedef => viewer.currentPage is Typedef;
 
   @observable get currentPage => viewer.currentPage;
+  set currentPage(x) {}
 
   get viewer => app.viewer;
   bool get applyAuthorStyles => true;

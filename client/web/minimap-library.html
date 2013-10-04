@@ -12,7 +12,7 @@
       <ul>
         <template
           if="{{operatorItems.isNotEmpty}}">
-        <li><a href="#operators" on-click="hideShow">
+        <li><a href="{{currentLocation}}#operators" on-click="hideShow">
           Operators<b class="caret"></b>
         </a></li>
         <ul id="operators" class="collapse">
@@ -23,7 +23,7 @@
       </template>
       <template
           if="{{variableItems.isNotEmpty}}">
-        <li><a href="#properties" on-click="hideShow">
+        <li><a href="{{currentLocation}}#properties" on-click="hideShow">
           Properties<b class="caret"></b>
         </a></li>
         <ul id="properties" class="collapse">
@@ -34,7 +34,7 @@
       </template>
       <template
           if="{{functionItems.isNotEmpty}}">
-        <li><a href="#functions" on-click="hideShow">
+        <li><a href="{{currentLocation}}#functions" on-click="hideShow">
           Functions<b class="caret"></b>
         </a></li>
         <ul id="functions" class="collapse">
@@ -45,7 +45,7 @@
       </template>
       <template
           if="{{classItems.isNotEmpty}}">
-        <li><a href="{{linkHref}}#classes" on-click="hideShow">
+        <li><a href="{{currentLocation}}#classes" on-click="hideShow">
           Classes<b class="caret"></b>
         </a></li>
         <ul id="classes" class="collapse">
@@ -56,7 +56,7 @@
       </template>
       <template
           if="{{typedefItems.isNotEmpty}}">
-        <li><a href="#typedefs" on-click="hideShow">
+        <li><a href="{{currentLocation}}#typedefs" on-click="hideShow">
           Typedefs<b class="caret"></b>
         </a></li>
         <ul id="typedefs" class="collapse">
@@ -67,7 +67,7 @@
       </template>
       <template
           if="{{errorItems.isNotEmpty}}">
-        <li><a href="#exceptions" on-click="hideShow">
+        <li><a href="{{currentLocation}}#exceptions" on-click="hideShow">
           Exceptions<b class="caret"></b>
         </a></li>
         <ul id="exceptions" class="collapse">

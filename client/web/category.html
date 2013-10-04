@@ -9,9 +9,10 @@
    <template>
    <div class="accordion-heading">
       <a class="accordion-toggle {{accordionStyle}}"
+        on-click="hideShow"
         data-toggle="collapse"
         data-parent="{{accordionParent}}"
-        href="#accordion-{{stylizedName}}">
+        href="{{currentLocation}}#accordion-{{stylizedName}}">
         {{title}}
       </a>
     </div>

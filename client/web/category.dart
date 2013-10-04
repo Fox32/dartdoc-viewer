@@ -1,55 +1,57 @@
 library category;
 
 
-    import 'package:polymer/polymer.dart';
-    import 'package:dartdoc_viewer/item.dart';
-    import 'app.dart';
-    import 'member.dart';
-    import 'dart:html';
+import 'package:polymer/polymer.dart';
+import 'package:dartdoc_viewer/item.dart';
+import 'app.dart';
+import 'member.dart';
+import 'dart:html';
 
-    /**
-     * An HTML representation of a Category.
-     *
-     * Used as a placeholder for an CategoryItem object.
-     */
-     @CustomTag("dartdoc-category")
-    class CategoryElement extends PolymerElement {
+/**
+ * An HTML representation of a Category.
+ *
+ * Used as a placeholder for an CategoryItem object.
+ */
+ @CustomTag("dartdoc-category")
+class CategoryElement extends PolymerElement {
 
-      CategoryElement() {
-        new PathObserver(this, "category.name").bindSync(
-            (_) {
-              notifyProperty(this, #title);
-              notifyProperty(this, #stylizedName);
-            });
-        new PathObserver(viewer, "isDesktop").bindSync(
-            (_) {
-              notifyProperty(this, #accordionStyle);
-              notifyProperty(this, #accordionParent);
-              notifyProperty(this, #divClass);
-              notifyProperty(this, #divStyle);
-            });
-        new PathObserver(this, "category").bindSync(
-            (_) {
-              notifyProperty(this, #categoryContent);
-            });
-      }
+  CategoryElement() {
+    new PathObserver(this, "category.name").bindSync(
+        (_) {
+          notifyProperty(this, #title);
+          notifyProperty(this, #stylizedName);
+        });
+    new PathObserver(viewer, "isDesktop").bindSync(
+        (_) {
+          notifyProperty(this, #accordionStyle);
+          notifyProperty(this, #accordionParent);
+          notifyProperty(this, #divClass);
+          notifyProperty(this, #divStyle);
+          notifyProperty(this, #currentLocation);
+        });
+    new PathObserver(this, "category").bindSync(
+        (_) {
+          notifyProperty(this, #categoryContent);
+          notifyProperty(this, #currentLocation);
+        });
+  }
 
-      @observable Container category;
+  @observable Container category;
 
-      @observable String get title => category == null ? '' : category.name;
+  @observable String get title => category == null ? '' : category.name;
 
-      @observable String get stylizedName =>
-          category == null ? '' : category.name.replaceAll(' ', '-');
+  @observable String get stylizedName =>
+      category == null ? '' : category.name.replaceAll(' ', '-');
 
-      @observable get categoryContent => category == null ? [] : category.content;
+  @observable get categoryContent => category == null ? [] : category.content;
 
-      @observable get accordionStyle => viewer.isDesktop ? '' : 'collapsed';
-      @observable get accordionParent => viewer.isDesktop ? '' : '#accordion-grouping';
+  @observable get accordionStyle => viewer.isDesktop ? '' : 'collapsed';
+  @observable get accordionParent => viewer.isDesktop ? '' : '#accordion-grouping';
 
-      @observable get divClass => viewer.isDesktop ? 'in' : 'collapse';
-      @observable get divStyle => viewer.isDesktop ? 'auto' : '0px';
+  @observable get divClass => viewer.isDesktop ? 'in' : 'collapse';
+  @observable get divStyle => viewer.isDesktop ? 'auto' : '0px';
 
-      var validator = new NodeValidatorBuilder()
+  var validator = new NodeValidatorBuilder()
     ..allowHtml5(uriPolicy: new SameProtocolUriPolicy())
     ..allowCustomElement("method-panel", attributes: ["item"])
     ..allowCustomElement("dartdoc-item", attributes: ["item"])
@@ -57,7 +59,16 @@ library category;
     ..allowCustomElement("dartdoc-category-interior", attributes: ["item"])
     ..allowTagExtension("method-panel", "div", attributes: ["item"]);
 
-
-
-      bool get applyAuthorStyles => true;
+  hideShow(event, detail, target) {
+    var list = shadowRoot.query("#" + target.hash.split("#").last);
+    if (list.classes.contains("in")) {
+      list.classes.remove("in");
+    } else {
+      list.classes.add("in");
     }
+  }
+
+  @observable get currentLocation => window.location;
+
+  bool get applyAuthorStyles => true;
+}

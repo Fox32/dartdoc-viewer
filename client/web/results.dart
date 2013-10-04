@@ -12,12 +12,13 @@ import 'package:polymer/polymer.dart';
 class Result extends PolymerElement {
 
   Result() {
-    bindProperty(this, #membertype, broadcastProperty);
-    bindProperty(this, #qualifiedname, broadcastProperty);
+    new PathObserver(this, "membertype").bindSync(
+        (_) {
+          notifyProperty(this, #descriptiveName);
+          notifyProperty(this, #descriptiveType);
+          notifyProperty(this, #outerLibrary);
+        });
   }
-
-  broadcastProperty() => [#descriptiveName, #descriptiveType, #outerLibrary]
-      .forEach((property) => notifyProperty(this, property));
 
   @observable String membertype = 'none';
   @observable String qualifiedname = 'none';

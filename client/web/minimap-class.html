@@ -13,7 +13,7 @@ extends="article" attributes="item">
       <template
           if="{{operatorItems.isNotEmpty}}">
           <template if="{{shouldShowOperators}}">
-            <li><a href="#operators" data-toggle="collapse">
+            <li><a href="{{currentLocation}}#operators" on-click="hideShow">
               Operators<b class="caret"></b>
             </a></li>
             <ul id="operators" class="collapse">
@@ -26,7 +26,7 @@ extends="article" attributes="item">
         <template
           if="{{variableItems.isNotEmpty}}">
           <template if="{{shouldShowVariables}}">
-            <li><a href="#properties" data-toggle="collapse">
+            <li><a href="{{currentLocation}}#properties" on-click="hideShow">
               Properties<b class="caret"></b>
             </a></li>
             <ul id="properties" class="collapse">
@@ -39,7 +39,7 @@ extends="article" attributes="item">
         <template
           if="{{constructorItems.isNotEmpty}}">
           <template if="{{shouldShowConstructors}}">
-              <li><a href="#constructors" data-toggle="collapse">
+              <li><a href="{{currentLocation}}#constructors" on-click="hideShow">
               Constructors<b class="caret"></b>
             </a></li>
             <ul id="constructors" class="collapse">
@@ -52,7 +52,7 @@ extends="article" attributes="item">
         <template
           if="{{functionItems.isNotEmpty}}">
           <template if="{{shouldShowFunctions}}">
-            <li><a href="#functions" data-toggle="collapse">
+            <li><a href="{{currentLocation}}#functions"  on-click="hideShow">
               Functions<b class="caret"></b>
             </a></li>
             <ul id="functions" class="collapse">

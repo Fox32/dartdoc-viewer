@@ -4,7 +4,7 @@ dependencies:
   barback: any
   browser: any
   polymer: any
-#    path: /Users/alanknight/dart-git/dart/pkg/polymer
   polymer_expressions: any
-#    path: /Users/alanknight/dart-git/dart/pkg/polymer_expressions
   yaml: any
+dev_dependencies:
+  unittest: any

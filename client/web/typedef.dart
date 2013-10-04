@@ -8,13 +8,25 @@ import 'member.dart';
 
 @CustomTag("dartoc-typedef")
 class TypedefElement extends MemberElement {
+  TypedefElement() {
+    new PathObserver(this, "item").bindSync(
+        (_) {
+          notifyProperty(this, #required);
+          notifyProperty(this, #optional);
+          notifyProperty(this, #annotations);
+        });
+  }
+
+
   Typedef get item => super.item;
 
   // Required parameters.
-  List<Parameter> get required =>
+  @observable List<Parameter> get required =>
     item.parameters.where((parameter) => !parameter.isOptional).toList();
 
   // Optional parameters.
-  List<Parameter> get optional =>
+  @observable List<Parameter> get optional =>
     item.parameters.where((parameter) => parameter.isOptional).toList();
+
+  @observable get annotations => item.annotations;
 }

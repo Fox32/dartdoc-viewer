@@ -320,8 +320,8 @@ class Class extends LazyItem {
   bool isAbstract;
   String previewComment;
   AnnotationGroup annotations;
-  List<LinkableType> implements;
-  List<LinkableType> subclasses;
+  List<LinkableType> implements = [];
+  List<LinkableType> subclasses = [];
   List<String> generics = [];
 
   /// Creates a [Class] placeholder object with null fields.

@@ -45,8 +45,9 @@ class ClassElement extends MemberElement {
   @observable Category get methods => item.functions;
 
   @observable AnnotationGroup get annotations => item.annotations;
+  set annotations(x) {}
 
-  @observable List<LinkableType> get interfaces => item.implements;
+  @observable List<LinkableType> get interfaces => item == null ? [] : item.implements;
 
   @observable List<LinkableType> get subclasses => item.subclasses;
 
@@ -77,7 +78,9 @@ class ClassElement extends MemberElement {
       p.append(p.createFragment('Implements:&nbsp;' + makeLinks(interfaces)
                               + '&nbsp;'));
     }
-    p.append(p.createFragment('Extends:&nbsp;' + makeLinks([superClass])));
+    if (superClass != null) {
+      p.append(p.createFragment('Extends:&nbsp;' + makeLinks([superClass])));
+    }
   }
 
 

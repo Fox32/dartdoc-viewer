@@ -9,21 +9,40 @@ import 'dart:html';
 /// An element in a page's minimap displayed on the right of the page.
 @CustomTag("dartdoc-minimap-class")
 class MinimapElementClass extends MemberElement {
-  get operatorItems => check(() => page.operators.content);
-  get variableItems => check(() => page.variables.content);
-  get constructorItems => check(() => page.constructs.content);
-  get functionItems => check(() => page.functions.content);
+  MinimapElementClass() {
+    new PathObserver(this, "item").bindSync(
+        (_) {
+          notifyProperty(this, #operatorItems);
+          notifyProperty(this, #variableItems);
+          notifyProperty(this, #constructorItems);
+          notifyProperty(this, #functionItems);
+          notifyProperty(this, #page);
+          notifyProperty(this, #shouldShowConstructors);
+          notifyProperty(this, #shouldShowFunctions);
+          notifyProperty(this, #shouldShowVariables);
+          notifyProperty(this, #shouldShowOperators);
+          notifyProperty(this, #name);
+          notifyProperty(this, #constantLink);
+          notifyProperty(this, #currentLocation);
+        });
+  }
 
-  get page => viewer.currentPage;
+
+  @observable get operatorItems => check(() => page.operators.content);
+  @observable get variableItems => check(() => page.variables.content);
+  @observable get constructorItems => check(() => page.constructs.content);
+  @observable get functionItems => check(() => page.functions.content);
+
+  @observable get page => viewer.currentPage;
   check(Function f) => page is Class ? f() : [];
 
   get item => super.item;
   set item(x) => super.item = x;
 
-  get shouldShowConstructors => shouldShow((x) => x.constructors);
-  get shouldShowFunctions => shouldShow((x) => x.functions);
-  get shouldShowVariables => shouldShow((x) => x.variables);
-  get shouldShowOperators => shouldShow((x) => x.operators);
+  @observable get shouldShowConstructors => shouldShow((x) => x.constructors);
+  @observable get shouldShowFunctions => shouldShow((x) => x.functions);
+  @observable get shouldShowVariables => shouldShow((x) => x.variables);
+  @observable get shouldShowOperators => shouldShow((x) => x.operators);
 
   shouldShow(Function f) => page is Class &&
       (f(page).hasNonInherited ||  viewer.isInherited);
@@ -32,5 +51,16 @@ class MinimapElementClass extends MemberElement {
 
   @observable String constantLink(String tail) {
     return '${window.location.toString().split("#").first}#$tail';
+  }
+
+  @observable get currentLocation => window.location;
+
+  hideShow(event, detail, target) {
+    var list = shadowRoot.query("#" + target.hash.split("#").last);
+    if (list.classes.contains("in")) {
+      list.classes.remove("in");
+    } else {
+      list.classes.add("in");
+    }
   }
 }

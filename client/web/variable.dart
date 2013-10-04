@@ -11,6 +11,12 @@ import 'member.dart';
  */
 @CustomTag("dartdoc-variable")
 class VariableElement extends InheritedElement {
+  VariableElement() {
+    new PathObserver(this, "item").bindSync(
+        (_) {
+          notifyProperty(this, #annotations);
+        });
+  }
 
   @observable bool isExpanded = true;
   @observable bool nothingToExpand = true;
@@ -21,6 +27,9 @@ class VariableElement extends InheritedElement {
   void toggleExpand(event, handler, detail) {
     isExpanded = !isExpanded;
   }
+
+  @observable get annotations =>
+      item == null ? new AnnotationGroup([]) : item.annotations;
 
   bool get applyAuthorStyles => true;
 }
