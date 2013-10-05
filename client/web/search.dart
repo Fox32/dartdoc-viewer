@@ -71,7 +71,11 @@ class Search extends PolymerElement {
     if (!results.isEmpty) {
       String refId;
       if (target != null ) {
+        // We get either the li or a element depending if we click or
+        // hit enter, so check both.
         refId = target.dataset['ref-id'];
+        var parentRefId = target.parent.dataset['ref-id'];
+        if (refId == null) refId = parentRefId;
       }
       if (refId == null || refId.isEmpty) {
         // If nothing is focused, use the first search result.
@@ -108,17 +112,20 @@ class Search extends PolymerElement {
     if (e.keyCode == KeyCode.UP) {
       if (currentIndex > 0) {
         currentIndex--;
-        document.query('#search$currentIndex').focus();
+        shadowRoot.query('#search$currentIndex').focus();
       } else if (currentIndex == 0) {
         q.focus();
       }
       e.preventDefault();
     } else if (e.keyCode == KeyCode.DOWN) {
       if (currentIndex < results.length - 1) {
+        print(currentIndex);
         currentIndex++;
-        shadowRoot.query('#search$currentIndex').focus();
+        shadowRoot.query('#search$currentIndex').parent.focus();
       }
       e.preventDefault();
+    } else {
+      updateResults(e, null, null);
     }
   }
 
