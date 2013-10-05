@@ -17,6 +17,11 @@ class IndexElement extends PolymerElement {
           notifyProperty(this, #shouldShowClassMinimap);
           notifyProperty(this, #crumbs);
         });
+        new PathObserver(this, "viewer.isMinimap").bindSync(
+      (_) {
+        notifyProperty(this, #shouldShowLibraryMinimap);
+        notifyProperty(this, #shouldShowClassMinimap);
+      });
   }
 
   get pageContentClass {
@@ -70,5 +75,14 @@ class IndexElement extends PolymerElement {
   finalCrumb(item) =>
     new Element.html('<li class="active"><a class="btn-link">'
       '${item.decoratedName}</a></li>', validator: validator);
+
+  hideShowOptions(event, detail, target) {
+    var list = shadowRoot.query(".dropdown-menu").parent;
+    if (list.classes.contains("open")) {
+      list.classes.remove("open");
+    } else {
+      list.classes.add("open");
+    }
+  }
 
 }
