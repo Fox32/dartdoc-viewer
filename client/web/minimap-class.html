@@ -16,7 +16,7 @@ extends="article" attributes="item">
             <li><a href="{{currentLocation}}#operators" on-click="hideShow">
               Operators<b class="caret"></b>
             </a></li>
-            <ul id="operators" class="collapse">
+            <ul id="minimap-operators" class="collapse">
               <article is="dartdoc-minimap"
                 items="{{operatorItems}}">
               </article>
@@ -29,7 +29,7 @@ extends="article" attributes="item">
             <li><a href="{{currentLocation}}#properties" on-click="hideShow">
               Properties<b class="caret"></b>
             </a></li>
-            <ul id="properties" class="collapse">
+            <ul id="minimap-properties" class="collapse">
               <article is="dartdoc-minimap"
                 items="{{variableItems}}">
               </article>
@@ -42,7 +42,7 @@ extends="article" attributes="item">
               <li><a href="{{currentLocation}}#constructors" on-click="hideShow">
               Constructors<b class="caret"></b>
             </a></li>
-            <ul id="constructors" class="collapse">
+            <ul id="minimap-constructors" class="collapse">
               <article is="dartdoc-minimap"
                 items="{{constructorItems}}">
               </article>
@@ -55,7 +55,7 @@ extends="article" attributes="item">
             <li><a href="{{currentLocation}}#functions"  on-click="hideShow">
               Functions<b class="caret"></b>
             </a></li>
-            <ul id="functions" class="collapse">
+            <ul id="minimap-functions" class="collapse">
               <article is="dartdoc-minimap"
                 items="{{functionItems}}">
               </article>

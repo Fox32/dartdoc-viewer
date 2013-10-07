@@ -26,7 +26,7 @@ class ItemElement extends MemberElement {
           notifyProperty(this, #modifiers);
           notifyProperty(this, #shouldShowClassOrLibraryComment);
           notifyProperty(this, #shouldShowMethodComment);
-
+          notifyProperty(this, #idName);
         });
   }
 

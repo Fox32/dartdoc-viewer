@@ -104,21 +104,23 @@ class Viewer extends ObservableBase {
         // HTML id from an operator or setter.
         hash = hash.substring(1, hash.length);
         var root = document.query("#dartdoc-main");
-//        var e = queryEverywhere(root, '#$hash');
-        var e = document.query('#$hash');
+        var e = queryEverywhere(root, hash);
+//        var e = document.query('#$hash');
 
         if (e != null) {
           // Find the parent category element to make sure it is open.
-          var category = e.parent;
-          while (category != null &&
-              !category.classes.contains('accordion-body')) {
-            category = category.parent;
-          }
-          // Open the category if it is not open.
-          if (category != null && !category.classes.contains('in'))
-            category.classes.add('in');
-            category.attributes['style'] = 'height: auto;';
+//          var category = e.parent;
+//          while (category != null &&
+//              !category.classes.contains('accordion-body')) {
+//            category = category.parent;
+//          }
+//          // Open the category if it is not open.
+//          if (category != null && !category.classes.contains('in')) {
+//            category.classes.add('in');
+//            category.attributes['style'] = 'height: auto;';
+//          }
           e.scrollIntoView(ScrollAlignment.TOP);
+
           // The navigation bar at the top of the page is 60px wide,
           // so scroll down 60px once the browser scrolls to the member.
           window.scrollBy(0, -60);
@@ -128,13 +130,19 @@ class Viewer extends ObservableBase {
   }
 
   /// Query for an element by id in the main element and in all the shadow
-  /// roots.
-//  Element queryEverywhere(Element parent, String id) {
-//    if (parent.id == id) return parent;
-//    return parent.children.fold(
-//        (each) => queryEverywhere(each, id) != null
-//  }
-
+  /// roots. If it's not found, return null.
+  Element queryEverywhere(Element parent, String id) {
+    if (parent.id == id) return parent;
+    var shadowChildren =
+        parent.shadowRoot != null ? parent.shadowRoot.children : const [];
+    var allChildren = [parent.children, shadowChildren]
+        .expand((x) => x);
+    for (var e in allChildren) {
+      var found = queryEverywhere(e, id);
+      if (found != null) return found;
+    }
+    return null;
+  }
 
   /// Updates [currentPage] to be [page].
   void _updatePage(Item page, String hash) {

@@ -48,7 +48,7 @@ class MinimapElementLibrary extends MemberElement {
       thing == null ? null : thing.decoratedName;
 
   hideShow(event, detail, target) {
-    var list = shadowRoot.query("#" + target.hash.split("#").last);
+    var list = shadowRoot.query("#minimap-" + target.hash.split("#").last);
     if (list.classes.contains("in")) {
       list.classes.remove("in");
     } else {
