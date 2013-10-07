@@ -7,7 +7,7 @@ import 'app.dart' as app;
 import 'dart:html';
 
 @CustomTag("dartdoc-main")
-class IndexElement extends PolymerElement {
+class IndexElement extends DartdocElement {
 
   IndexElement() {
     new PathObserver(this, "viewer.currentPage").bindSync(

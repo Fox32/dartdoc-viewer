@@ -12,12 +12,13 @@ import 'package:dartdoc_viewer/item.dart';
 import '../lib/search.dart';
 import 'package:polymer/polymer.dart';
 import 'results.dart';
+import 'member.dart';
 
 /**
  * Component implementing the Dartdoc_viewer search.
  */
 @CustomTag("search-box")
-class Search extends PolymerElement {
+class Search extends DartdocElement {
 
   Search() {
     new PathObserver(this, "results").bindSync(

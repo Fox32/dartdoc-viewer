@@ -6,6 +6,6 @@ import 'dart:async';
 
 void main() {
   lint();
-  //.then((_) => deploy());
+    //    .then((_) => deploy());
   //  build(entryPoints: ['web/index.html']);
 }

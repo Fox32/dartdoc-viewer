@@ -8,7 +8,7 @@ import 'dart:html';
 
 /// An element in a page's minimap displayed on the right of the page.
 @CustomTag("dartdoc-library-panel")
-class LibraryPanel extends PolymerElement {
+class LibraryPanel extends DartdocElement {
   LibraryPanel() {
     new PathObserver(this, "viewer.currentPage").bindSync(
     (_) {

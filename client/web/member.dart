@@ -29,10 +29,15 @@ var uriPolicy = new SameProtocolUriPolicy();
 var validator = new NodeValidatorBuilder()
     ..allowHtml5(uriPolicy: uriPolicy);
 
+//// An abstract class for all Dartdoc elements.
+class DartdocElement extends PolymerElement {
+  get applyAuthorStyles => true;
+}
+
 //// This is a web component to be extended by all Dart members with comments.
 //// Each member has an [Item] associated with it as well as a comment to
 //// display, so this class handles those two aspects shared by all members.
-class MemberElement extends PolymerElement {
+class MemberElement extends DartdocElement {
 
   @observable @published var item;
 
@@ -133,8 +138,6 @@ class MemberElement extends PolymerElement {
     location.children.clear();
     location.children.add(createInner(type));
   }
-
-  bool get applyAuthorStyles => true;
 }
 
 //// A [MemberElement] that could be inherited from another [MemberElement].

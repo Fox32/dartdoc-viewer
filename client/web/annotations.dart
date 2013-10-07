@@ -6,7 +6,7 @@ import 'app.dart';
 import 'member.dart';
 
 @CustomTag("dartdoc-annotation")
-class AnnotationElement extends PolymerElement {
+class AnnotationElement extends DartdocElement {
   AnnotationElement() {
     new PathObserver(this, "annotations").bindSync(
         (_) {
@@ -15,8 +15,6 @@ class AnnotationElement extends PolymerElement {
   }
 
   @observable AnnotationGroup annotations;
-
-  bool get applyAuthorStyles => true;
 
   addAnnotations() {
     if (annotations == null || annotations.annotations.isEmpty) return '';

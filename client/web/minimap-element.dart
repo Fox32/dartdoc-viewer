@@ -3,10 +3,11 @@ library minimap_element;
 import 'package:dartdoc_viewer/item.dart';
 import 'package:polymer/polymer.dart';
 import 'app.dart' as app;
+import 'member.dart';
 
 /// An element in a page's minimap displayed on the right of the page.
 @CustomTag("dartdoc-minimap")
-class MinimapElement extends PolymerElement {
+class MinimapElement extends DartdocElement {
   MinimapElement() {
     new PathObserver(this, "viewer.isInherited").bindSync(
       (_) {
@@ -37,7 +38,4 @@ class MinimapElement extends PolymerElement {
         '<li><a href="#${link(item)}">${item.decoratedName}</a></li>');
     shadowRoot.append(fragment);
   }
-
-  bool get applyAuthorStyles => true;
-
 }

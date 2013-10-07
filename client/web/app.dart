@@ -103,6 +103,8 @@ class Viewer extends ObservableBase {
         // All ids are created using getIdName to avoid creating an invalid
         // HTML id from an operator or setter.
         hash = hash.substring(1, hash.length);
+        var root = document.query("#dartdoc-main");
+//        var e = queryEverywhere(root, '#$hash');
         var e = document.query('#$hash');
 
         if (e != null) {
@@ -124,6 +126,15 @@ class Viewer extends ObservableBase {
       });
     }
   }
+
+  /// Query for an element by id in the main element and in all the shadow
+  /// roots.
+//  Element queryEverywhere(Element parent, String id) {
+//    if (parent.id == id) return parent;
+//    return parent.children.fold(
+//        (each) => queryEverywhere(each, id) != null
+//  }
+
 
   /// Updates [currentPage] to be [page].
   void _updatePage(Item page, String hash) {

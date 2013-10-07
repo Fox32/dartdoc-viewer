@@ -13,7 +13,7 @@ import 'dart:html';
  * Used as a placeholder for an CategoryItem object.
  */
  @CustomTag("dartdoc-category")
-class CategoryElement extends PolymerElement {
+class CategoryElement extends DartdocElement {
 
   CategoryElement() {
     new PathObserver(this, "category.name").bindSync(
@@ -69,6 +69,4 @@ class CategoryElement extends PolymerElement {
   }
 
   @observable get currentLocation => window.location;
-
-  bool get applyAuthorStyles => true;
 }

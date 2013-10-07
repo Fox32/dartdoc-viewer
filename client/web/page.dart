@@ -5,12 +5,13 @@ import 'package:polymer/polymer.dart';
 import 'package:dartdoc_viewer/item.dart';
 
 import 'app.dart' as app;
+import 'member.dart';
 
 /**
  * An HTML representation of a page
  */
 @CustomTag("dartdoc-page")
-class PageElement extends PolymerElement {
+class PageElement extends DartdocElement {
   @observable Home home;
 
   PageElement() {
@@ -41,5 +42,4 @@ class PageElement extends PolymerElement {
   set currentPage(x) {}
 
   get viewer => app.viewer;
-  bool get applyAuthorStyles => true;
 }

@@ -9,7 +9,7 @@ import 'app.dart';
 import 'member.dart';
 
 @CustomTag("dartdoc-parameter")
-class ParameterElement extends PolymerElement {
+class ParameterElement extends DartdocElement {
   ParameterElement() {
     new PathObserver(this, "parameters").bindSync(
         (_) {
@@ -68,5 +68,4 @@ class ParameterElement extends PolymerElement {
     location.children.clear();
     location.children.add(outerSpan);
   }
-  bool get applyAuthorStyles => true;
 }
