@@ -3,7 +3,7 @@ library member;
 import 'dart:html';
 
 import 'package:dartdoc_viewer/item.dart';
-import '../lib/search.dart';
+import 'package:dartdoc_viewer/search.dart';
 import 'package:polymer/polymer.dart';
 
 import 'app.dart' as app;

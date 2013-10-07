@@ -16,7 +16,7 @@ import 'dart:json';
 import 'package:dartdoc_viewer/data.dart';
 import 'package:dartdoc_viewer/item.dart';
 import 'package:dartdoc_viewer/read_yaml.dart';
-import '../lib/search.dart';
+import 'package:dartdoc_viewer/search.dart';
 import 'package:polymer/polymer.dart';
 import 'index.dart';
 

@@ -9,7 +9,7 @@ import 'dart:html' hide Element;
 import 'dart:html' as html show Element; // #### Why?
 import 'app.dart';
 import 'package:dartdoc_viewer/item.dart';
-import '../lib/search.dart';
+import 'package:dartdoc_viewer/search.dart';
 import 'package:polymer/polymer.dart';
 import 'results.dart';
 import 'member.dart';
