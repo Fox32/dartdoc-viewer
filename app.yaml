@@ -14,14 +14,14 @@ handlers:
   static_dir: client/web/static
   
 - url: /
-  static_files: client/web/out/index.html
-  upload: web/out/index.html
+  static_files: client/out/index.html
+  upload: out/index.html
 
 - url: /docs/.*
   script: scripts.redirector.application
 
 - url: /
-  static_dir: client/web/out/
+  static_dir: client/out/
 
 skip_files:
 - ^(.*/)?docs/?
