@@ -16,19 +16,25 @@ class IndexElement extends DartdocElement {
           notifyProperty(this, #shouldShowLibraryMinimap);
           notifyProperty(this, #shouldShowClassMinimap);
           notifyProperty(this, #crumbs);
+          notifyProperty(this, #pageContentClass);
         });
-        new PathObserver(this, "viewer.isMinimap").bindSync(
+    new PathObserver(this, "viewer.isMinimap").bindSync(
       (_) {
         notifyProperty(this, #shouldShowLibraryMinimap);
         notifyProperty(this, #shouldShowClassMinimap);
+        notifyProperty(this, #pageContentClass);
+      });
+    new PathObserver(this, "viewer.isPanel").bindSync(
+      (_) {
+        notifyProperty(this, #pageContentClass);
       });
   }
 
-  get pageContentClass {
+  @observable get pageContentClass {
     if (!viewer.isDesktop) return '';
-    if (viewer.isPanel) return 'margin-left';
-    if (viewer.isMinimap) return 'margin-right';
-    return '';
+    var left = viewer.isPanel ? 'margin-left ' : '';
+    var right = viewer.isMinimap ? 'margin-right' : '';
+    return left + right;
   }
 
   query(String selectors) => shadowRoot.query(selectors);
