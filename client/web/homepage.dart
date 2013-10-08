@@ -11,6 +11,7 @@ class HomeElement extends MemberElement {
     new PathObserver(this, "item").bindSync(
         (_) {
           notifyProperty(this, #libraries);
+          notifyProperty(this, #addComment);
         });
   }
 
