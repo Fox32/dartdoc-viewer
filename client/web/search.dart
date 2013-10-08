@@ -97,16 +97,8 @@ class Search extends DartdocElement {
         .listen(onFocusCallback);
     html.Element.blurEvent.forTarget(xtag, useCapture: true)
         .listen(onBlurCallback);
-    onKeyPress.listen(onKeyPressCallback);
     onKeyDown.listen(handleUpDown);
     window.onKeyDown.listen(shortcutHandler);
-  }
-
-  void onKeyPressCallback(KeyboardEvent e) {
-    if (e.keyCode == KeyCode.ENTER) {
-      onSubmitCallback(e, null, e.target);
-      e.preventDefault();
-    }
   }
 
   void handleUpDown(KeyboardEvent e) {
@@ -115,15 +107,17 @@ class Search extends DartdocElement {
         currentIndex--;
         shadowRoot.query('#search$currentIndex').focus();
       } else if (currentIndex == 0) {
-        q.focus();
+        searchBox.focus();
       }
       e.preventDefault();
     } else if (e.keyCode == KeyCode.DOWN) {
       if (currentIndex < results.length - 1) {
-        print(currentIndex);
         currentIndex++;
         shadowRoot.query('#search$currentIndex').parent.focus();
       }
+      e.preventDefault();
+    } else if (e.keyCode == KeyCode.ENTER) {
+      onSubmitCallback(e, null, e.target);
       e.preventDefault();
     } else {
       updateResults(e, null, null);
@@ -133,11 +127,11 @@ class Search extends DartdocElement {
   /** Activate search on Ctrl+3 and S. */
   void shortcutHandler(KeyboardEvent event) {
     if (event.keyCode == KeyCode.THREE && event.ctrlKey) {
-      q.focus();
+      searchBox.focus();
       event.preventDefault();
-    } else if (event.target != q && event.keyCode == KeyCode.S) {
+    } else if (!isFocused && event.keyCode == KeyCode.S) {
       // Allow writing 's' in the search input.
-      q.focus();
+      searchBox.focus();
       event.preventDefault();
     } else if (event.keyCode == KeyCode.ESC) {
       document.body.focus();
@@ -146,7 +140,7 @@ class Search extends DartdocElement {
     }
   }
 
-  get q => shadowRoot.query('#q');
+  get searchBox => shadowRoot.query('#q');
 
   get applyAuthorStyles => true;
 }
