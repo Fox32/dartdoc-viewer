@@ -30,6 +30,10 @@ class Search extends DartdocElement {
         (_) {
           notifyProperty(this, #dropdownOpen);
         });
+    new PathObserver(this, "searchQuery").bindSync(
+        (_) {
+          updateResults();
+        });
   }
 
   List<SearchResult> results = [];
@@ -38,18 +42,21 @@ class Search extends DartdocElement {
 
   @observable String searchQuery = "";
 
-  @observable bool get hasNoResults => results.isNotEmpty;
+  @observable bool get hasNoResults => results.isEmpty;
 
   @observable String get dropdownOpen =>
       !searchQuery.isEmpty && isFocused ? 'open' : '';
 
   int currentIndex = -1;
 
-  void updateResults(event, detail, target) {
+  void updateResults() {
     currentIndex = -1;
     results.clear();
     results.addAll(lookupSearchResults(searchQuery, viewer.isDesktop ? 10 : 5));
+    // TODO(alanknight): If a change to results is already notifying the other
+    // properties above, why is it necessary to redundantly notify them here?
     notifyProperty(this, #results);
+    notifyProperty(this, #hasNoResults);
     notifyProperty(this, #dropdownOpen);
   }
 
@@ -119,8 +126,6 @@ class Search extends DartdocElement {
     } else if (e.keyCode == KeyCode.ENTER) {
       onSubmitCallback(e, null, e.target);
       e.preventDefault();
-    } else {
-      updateResults(e, null, null);
     }
   }
 
