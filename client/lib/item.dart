@@ -420,7 +420,9 @@ class Class extends LazyItem {
     out.write(name);
     if (generics.isNotEmpty) {
       out.write("<");
-      out.write(generics.join(",&nbsp;"));
+      // Use a non-breaking space character, not &nbsp; because this will
+      // get escaped.
+      out.write(generics.join(",\u{00A0}"));
       out.write(">");
     }
     return out.toString();
