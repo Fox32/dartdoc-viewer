@@ -10,7 +10,7 @@ import 'dart:html';
 @CustomTag("dartdoc-minimap-library")
 class MinimapElementLibrary extends MemberElement {
   MinimapElementLibrary() {
-    new PathObserver(this, "viewer.currentPage").bindSync(
+    new PathObserver(this, "item").bindSync(
       (_) {
         notifyProperty(this, #operatorItems);
         notifyProperty(this, #variableItems);
@@ -22,6 +22,7 @@ class MinimapElementLibrary extends MemberElement {
         notifyProperty(this, #decoratedName);
         notifyProperty(this, #linkHref);
         notifyProperty(this, #currentLocation);
+        notifyProperty(this, #idName);
       });
   }
 
@@ -38,11 +39,11 @@ class MinimapElementLibrary extends MemberElement {
 
   contents(thing) => thing == null ? [] : thing.content;
 
-  get page => viewer.currentPage;
-  check(Function f) => page is Library ? f() : [];
+  get page => item;
+  check(Function f) => page != null && page is Library ? f() : [];
   @observable get linkHref => check(() => page.linkHref);
   @observable get name => check(() => page.name);
-  @observable get currentLocation => window.location;
+  @observable get currentLocation => window.location.toString();
 
   @observable decoratedName(thing) =>
       thing == null ? null : thing.decoratedName;

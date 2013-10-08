@@ -18,6 +18,7 @@ class VariableHeading extends MemberElement {
           notifyProperty(this, #setterParameter);
           notifyProperty(this, #type);
           notifyProperty(this, #name);
+          notifyProperty(this, #idName);
         });
   }
 

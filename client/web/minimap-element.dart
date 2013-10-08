@@ -15,6 +15,15 @@ class MinimapElement extends DartdocElement {
         notifyProperty(this, #addLink);
         notifyProperty(this, #itemsToShow);
       });
+    new PathObserver(this, "viewer.currentPage").bindSync(
+      (_) {
+        notifyProperty(this, #shouldShow);
+        notifyProperty(this, #addLink);
+      });
+    new PathObserver(this, "items").bindSync(
+      (_) {
+        notifyProperty(this, #itemsToShow);
+      });
   }
 
   @observable List<Item> items = [];
