@@ -34,7 +34,7 @@ class CategoryElement extends DartdocElement {
           _flushCache();
           notifyProperty(this, #categoryContent);
           notifyProperty(this, #categoryVariables);
-          notifyProperty(this, #categoryClasses);
+          notifyProperty(this, #categoryMethods);
           notifyProperty(this, #categoryEverythingElse);
           notifyProperty(this, #currentLocation);
         });
