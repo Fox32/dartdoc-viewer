@@ -14,7 +14,6 @@ class LibraryPanel extends DartdocElement {
     (_) {
       notifyProperty(this, #createEntries);
     });
-
   }
 
   get viewer => app.viewer;
@@ -40,7 +39,7 @@ class LibraryPanel extends DartdocElement {
     var html = '<a href="#${linkHref(library)}" class="list-group-item'
         '${isActive ? ' active' : ''}">'
         '${library.decoratedName}</a>';
-    return new Element.html(html, validator: validator);
+    return new Element.html(html, treeSanitizer: sanitizer);
   }
 
   get applyAuthorStyles => true;

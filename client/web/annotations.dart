@@ -32,7 +32,7 @@ class AnnotationElement extends DartdocElement {
       out.write(annotations.supportedBrowsers.join(",&nbsp;"));
       out.write("</i><br/>");
     }
-    var fragment = createFragment(out.toString(), validator: validator);
+    var fragment = createFragment(out.toString(), treeSanitizer: sanitizer);
     shadowRoot.append(fragment);
   }
 

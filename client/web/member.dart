@@ -29,6 +29,12 @@ var uriPolicy = new SameProtocolUriPolicy();
 var validator = new NodeValidatorBuilder()
     ..allowHtml5(uriPolicy: uriPolicy);
 
+var sanitizer = new NullTreeSanitizer();
+
+class NullTreeSanitizer implements NodeTreeSanitizer {
+  void sanitizeTree(Node node) {}
+}
+
 //// An abstract class for all Dartdoc elements.
 class DartdocElement extends PolymerElement {
   get applyAuthorStyles => true;
@@ -77,7 +83,8 @@ class MemberElement extends DartdocElement {
         commentLocation = shadowRoot.query('.description');
       }
       commentLocation.children.clear();
-      var commentElement = new Element.html(comment, validator: validator);
+      var commentElement = new Element.html(comment,
+          treeSanitizer: sanitizer);
       var links = commentElement.queryAll('a');
       for (AnchorElement link in links) {
         if (link.href =='') {
@@ -89,12 +96,12 @@ class MemberElement extends DartdocElement {
             var index = link.text.indexOf('#');
             var newName = link.text.substring(index + 1, link.text.length);
             link.replaceWith(new Element.html('<i>$newName</i>',
-                validator: validator));
+                treeSanitizer: sanitizer));
           } else if (!index.keys.contains(link.text)) {
             // If markdown links to private or otherwise unknown members are
             // found, make them <i> tags instead of <a> tags for CSS.
             link.replaceWith(new Element.html('<i>${link.text}</i>',
-                validator: validator));
+                treeSanitizer: sanitizer));
           } else {
             var linkable = new LinkableType(link.text);
             link

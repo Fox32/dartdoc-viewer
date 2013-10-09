@@ -77,11 +77,13 @@ class IndexElement extends DartdocElement {
   normalCrumb(item) =>
       new Element.html('<li><a class="btn-link" '
         'href="#${item.linkHref}">'
-        '${item.decoratedName}</a></li>', validator: validator);
+        '${item.decoratedName}</a></li>',
+        treeSanitizer: sanitizer);
 
   finalCrumb(item) =>
     new Element.html('<li class="active"><a class="btn-link">'
-      '${item.decoratedName}</a></li>', validator: validator);
+      '${item.decoratedName}</a></li>',
+      treeSanitizer: sanitizer);
 
   hideShowOptions(event, detail, target) {
     var list = shadowRoot.query(".dropdown-menu").parent;
