@@ -13,9 +13,11 @@
       <dartdoc-annotation annotations="{{setterParameter.annotations}}">
       </dartdoc-annotation>
       <span class="setParam">
-        {{createType(setterParameter.type, 'variable-heading', 'setParam')}}
       </span>
       {{setterParameter.decoratedName}})
+    </template>
+    <template if="{{item.isSetter}}">
+      {{createType(setterParameter.type, 'variable-heading', 'setParam')}}
     </template>
     <template if="{{!item.isSetter}}">
       <span class="type">
@@ -26,3 +28,4 @@
   </template>
   <script type="application/dart" src="variable-heading.dart"></script>
 </polymer-element>
+

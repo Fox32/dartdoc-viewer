@@ -31,5 +31,7 @@ class VariableHeading extends MemberElement {
 
   @observable NestedType get type => item.type;
 
-  @observable String get name => item == null ? '' : item.name;
+  @observable String get name => item == null ? '' : nameWithoutSetter;
+  @observable String get nameWithoutSetter =>
+      item.isSetter ? item.name.substring(0, item.name.length - 1) : item.name;
 }

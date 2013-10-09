@@ -20,7 +20,7 @@ class AnnotationElement extends DartdocElement {
     if (annotations == null || annotations.annotations.isEmpty) return '';
     var out = new StringBuffer();
     for (var annotation in annotations.annotations) {
-      out.write('<i><a href="${annotation.link.location}">'
+      out.write('<i><a href="#${annotation.link.location}">'
           '${annotation.link.simpleType}</a></i>');
       var hasParams = annotation.parameters.isNotEmpty;
       if (hasParams) out.write("(");

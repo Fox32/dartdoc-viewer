@@ -29,7 +29,7 @@
         <template if="{{isInherited}}">
           This member is inherited from
           <template if="{{exists(inheritedFrom.location)}}">
-            <a href="#{{inheritedFrom.location}}">
+            <a href="#{{inheritedFrom.location}}#id_{{item.name}}">
               {{inheritedFrom.simpleType}}
             </a>
           </template>
@@ -51,7 +51,7 @@
           <template if="{{viewer.isInherited}}">
             This documentation is inherited from
             <template if="{{exists(commentFrom.location)}}">
-              <a href="#{{commentFrom.location}}">
+              <a href="#{{commentFrom.location}}#id_{{item.name}}">
                 {{commentFrom.simpleType}}
               </a>
             </template>
