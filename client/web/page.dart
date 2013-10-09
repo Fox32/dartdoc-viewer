@@ -23,6 +23,7 @@ class PageElement extends DartdocElement {
           notifyProperty(this, #currentPageIsClass);
           notifyProperty(this, #currentPageIsTypedef);
           notifyProperty(this, #isHome);
+          notifyProperty(this, #hasHomePage);
         });
     new PathObserver(this, "viewer.homePage").bindSync(
         (_) {
@@ -37,6 +38,7 @@ class PageElement extends DartdocElement {
   @observable get currentPageIsMethod => viewer.currentPage is Method;
   @observable get currentPageIsClass => viewer.currentPage is Class;
   @observable get currentPageIsTypedef => viewer.currentPage is Typedef;
+
 
   @observable get currentPage => viewer.currentPage;
   set currentPage(x) {}

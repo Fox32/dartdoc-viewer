@@ -4,33 +4,28 @@
 
 <polymer-element name="dartdoc-typedef" extends="article" attributes="item">
   <template>
-    <template if="{{item == null}}">
-      Loading Typedef...
-    </template>
-    <template if="{{item != null}}">
-
-      <div class="page-header"><h1>{{item.name}} typedef</h1></div>
+    
+      <div class="page-header"><h1>{{name}} typedef</h1></div>
 
       <!-- Comment -->
       <section class="description"></section>
       {{addComment('dartdoc-typedef')}}
 
-      <!-- Signature -->
+      <!-- Signature --> 
       <div class="panel">
         <dartdoc-annotation annotations="{{annotations}}">
         </dartdoc-annotation>
 
         <p class="panel-title">typedef
-          <a href="#{{item.type.location}}">
-            {{item.type.simpleType}}
-          </a>{{item.name}}
+          <a href="#{{location}}">
+            {{simpleType}}
+          </a>{{name}}
 
-          <small is="dartdoc-parameter" parameters="{{item.parameters}}">
+          <small is="dartdoc-parameter" parameters="{{parameters}}">
           </small>
         </p>
       </div>
 
-    </template>
   </template>
 
   <script type="application/dart" src="typedef.dart"></script>
