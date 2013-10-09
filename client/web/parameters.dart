@@ -17,6 +17,7 @@ class ParameterElement extends DartdocElement {
           notifyProperty(this, #optional);
           notifyProperty(this, #optionalOpeningDelimiter);
           notifyProperty(this, #optionalClosingDelimiter);
+          notifyProperty(this, #addAllParameters);
         });
   }
 
@@ -36,10 +37,19 @@ class ParameterElement extends DartdocElement {
   @observable get optionalClosingDelimiter =>
       optional.first.isNamed ? '}' : ']';
 
+  addAllParameters() {
+    var location = shadowRoot.query('.required');
+    if (location == null) return;
+    location.children.clear();
+    location.appendText('(');
+    addParameters(required, 'required', location);
+    addParameters(optional, 'optional', location);
+    location.appendText(')');
+  }
+
   /// Adds [elements] to the tag with class [className].
-  void addParameters(List<Parameter> elements, String className) {
+  void addParameters(List<Parameter> elements, String className, var location) {
     if (elements.isEmpty) return;
-    var location = shadowRoot.query('.$className');
     if (location == null) return;
     var outerSpan = new SpanElement();
     if (className == 'optional') {
@@ -65,7 +75,6 @@ class ParameterElement extends DartdocElement {
     if (className == 'optional') {
       outerSpan.appendText(optionalClosingDelimiter);
     }
-    location.children.clear();
     location.children.add(outerSpan);
   }
 }

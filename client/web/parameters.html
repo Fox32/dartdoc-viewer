@@ -4,15 +4,9 @@
 <polymer-element name="dartdoc-parameter"
     extends="small" attributes="parameters">
   <template>
-    (
-      <span class="required">
-      </span>
-      {{addParameters(required, 'required')}}
-
-      <span class="optional">
-      </span>
-      {{addParameters(optional, 'optional')}}
-    )
+     <span class="required">
+     </span>
+     {{addAllParameters()}}
   </template>
   <script type="application/dart" src="parameters.dart"></script>
 </polymer-element>
