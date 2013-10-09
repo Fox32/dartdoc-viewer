@@ -22,11 +22,18 @@
       style="height:{{divStyle}}">
      <div class="accordion-inner">
         <ul id="itemList" class="nav nav-pills nav-stacked">
-
-        <template repeat="{{item in categoryContent}}">
-            <dartdoc-category-interior item="{{item}}"></dartdoc-category-interior>
+        <template repeat="{{variable in categoryVariables}}">
+          <div is="dartdoc-variable" item="{{variable}}" class="panel"></div>
         </template>
-       
+        <template repeat="{{class in categoryEverythingElse}}">
+           <div is="dartdoc-item" class="panel" item="{{class}}"></div>
+        </template>
+        <template repeat="{{method in categoryMethods}}">
+           <div is="method-panel" class="panel hidden-sm" item="{{method}}">
+           </div><!--  ### What is this for?
+            <div is="dartdoc-item" class="visible-sm panel" item="{{method}}">
+            </div> -->
+        </template>       
         </ul>
       </div>
     </div>

@@ -31,7 +31,11 @@ class CategoryElement extends DartdocElement {
         });
     new PathObserver(this, "category").bindSync(
         (_) {
+          _flushCache();
           notifyProperty(this, #categoryContent);
+          notifyProperty(this, #categoryVariables);
+          notifyProperty(this, #categoryClasses);
+          notifyProperty(this, #categoryEverythingElse);
           notifyProperty(this, #currentLocation);
         });
   }
@@ -44,6 +48,34 @@ class CategoryElement extends DartdocElement {
       category == null ? '' : category.name.replaceAll(' ', '-');
 
   @observable get categoryContent => category == null ? [] : category.content;
+
+  @observable get categoryMethods {
+    if (_methodsCache != null) return _methodsCache;
+    _methodsCache = categoryContent.where((each) => each is Method).toList();
+    return _methodsCache;
+  }
+
+  @observable get categoryVariables {
+    if (_variablesCache != null) return _variablesCache;
+    _variablesCache = categoryContent.where((each) => each is Variable).toList();
+    return _variablesCache;
+  }
+
+  @observable get categoryEverythingElse {
+    if (_everythingElseCache != null) return _everythingElseCache;
+    _everythingElseCache = categoryContent.where(
+        (each) => each is! Variable && each is! Method).toList();
+    return _everythingElseCache;
+  }
+  var _methodsCache;
+  var _variablesCache;
+  var _everythingElseCache;
+
+  _flushCache() {
+    _methodsCache = null;
+    _variablesCache = null;
+    _everythingElseCache = null;
+  }
 
   @observable get accordionStyle => viewer.isDesktop ? '' : 'collapsed';
   @observable get accordionParent => viewer.isDesktop ? '' : '#accordion-grouping';
