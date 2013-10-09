@@ -78,9 +78,10 @@ class CategoryElement extends DartdocElement {
   }
 
   @observable get accordionStyle => viewer.isDesktop ? '' : 'collapsed';
-  @observable get accordionParent => viewer.isDesktop ? '' : '#accordion-grouping';
+  @observable get accordionParent =>
+      viewer.isDesktop ? '' : '#accordion-grouping';
 
-  @observable get divClass => viewer.isDesktop ? 'in' : 'collapse';
+  @observable get divClass => viewer.isDesktop ? 'collapse in' : 'collapse';
   @observable get divStyle => viewer.isDesktop ? 'auto' : '0px';
 
   var validator = new NodeValidatorBuilder()
