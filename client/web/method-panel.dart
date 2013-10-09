@@ -12,6 +12,7 @@ class MethodPanel extends MethodElement {
         (_) {
           notifyProperty(this, #annotations);
           notifyProperty(this, #modifiers);
+          notifyProperty(this, #shouldShowMethodComment);
         });
   }
 
@@ -30,4 +31,7 @@ class MethodPanel extends MethodElement {
   @observable get abstractModifier => item.isAbstract ? 'abstract' : '';
   @observable get staticModifier => item.isStatic ? 'static' : '';
   @observable get annotations => item.annotations;
+
+  @observable get shouldShowMethodComment =>
+    item != null && item.comment != '<span></span>';
 }

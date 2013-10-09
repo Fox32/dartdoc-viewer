@@ -17,6 +17,7 @@ class DartdocMethod extends MethodElement {
         (_) {
           notifyProperty(this, #annotations);
           notifyProperty(this, #modifiers);
+          notifyProperty(this, #shouldShowMethodComment);
         });
   }
 
@@ -28,4 +29,6 @@ class DartdocMethod extends MethodElement {
   get abstractModifier => item.isAbstract ? 'abstract' : '';
   get staticModifier => item.isStatic ? 'static' : '';
   @observable get annotations => item.annotations;
+  @observable get shouldShowMethodComment =>
+    item != null && item.comment != '<span></span>';
 }
