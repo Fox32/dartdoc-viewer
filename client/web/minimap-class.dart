@@ -22,11 +22,9 @@ class MinimapElementClass extends MemberElement {
           notifyProperty(this, #shouldShowVariables);
           notifyProperty(this, #shouldShowOperators);
           notifyProperty(this, #name);
-          notifyProperty(this, #constantLink);
           notifyProperty(this, #currentLocation);
         });
   }
-
 
   @observable get operatorItems => check(() => page.operators.content);
   @observable get variableItems => check(() => page.variables.content);
@@ -49,11 +47,7 @@ class MinimapElementClass extends MemberElement {
 
   @observable get name => check(() => page.name);
 
-  @observable String constantLink(String tail) {
-    return '${window.location.toString().split("#").first}#$tail';
-  }
-
-  @observable get currentLocation => window.location;
+  @observable get currentLocation => window.location.toString();
 
   hideShow(event, detail, target) {
     var list = shadowRoot.query("#minimap-" + target.hash.split("#").last);
