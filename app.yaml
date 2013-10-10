@@ -25,3 +25,4 @@ handlers:
 
 skip_files:
 - ^(.*/)?docs/?
+- out/web/*.map
