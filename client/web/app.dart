@@ -239,6 +239,8 @@ class Viewer extends ObservableBase {
     }
     var members = locationWithoutHash.split('.');
     var libraryName = members.first;
+    // Allow references to be of the form #dart:core and convert them.
+    libraryName = libraryName.replaceAll(':', '-');
     // Since library names can contain '.' characters, the library part
     // of the input contains '-' characters replacing the '.' characters
     // in the original qualified name to make finding a library easier. These
