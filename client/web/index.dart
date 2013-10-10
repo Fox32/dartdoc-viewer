@@ -27,6 +27,8 @@ class IndexElement extends DartdocElement {
     new PathObserver(this, "viewer.isPanel").bindSync(
       (_) {
         notifyProperty(this, #pageContentClass);
+        notifyProperty(this, #shouldShowLibraryMinimap);
+        notifyProperty(this, #shouldShowClassMinimap);
       });
   }
 

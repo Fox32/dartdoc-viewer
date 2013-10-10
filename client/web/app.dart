@@ -54,10 +54,14 @@ class Viewer extends ObservableBase {
   @observable var currentPage;
 
   /// State for whether or not the library list panel should be shown.
-  @observable bool isPanel = true;
+  bool _isPanel = true;
+  @observable bool get isPanel => isDesktop && _isPanel;
+  set isPanel(x) => _isPanel = x;
 
   /// State for whether or not the minimap panel should be shown.
-  @observable bool isMinimap = true;
+  bool _isMinimap = true;
+  @observable bool get isMinimap => isDesktop && _isMinimap;
+  set isMinimap(x) => _isMinimap = x;
 
   /// State for whether or not inherited members should be shown.
   @observable bool isInherited = true;
@@ -77,6 +81,11 @@ class Viewer extends ObservableBase {
     new PathObserver(this, "currentPage").bindSync(
       (_) {
         notifyProperty(this, #breadcrumbs);
+      });
+    new PathObserver(this, "isDesktop").bindSync(
+      (_) {
+        notifyProperty(this, #isMinimap);
+        notifyProperty(this, #isPanel);
       });
   }
 
