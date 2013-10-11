@@ -2,7 +2,7 @@ library category_item;
 
 import 'dart:async';
 import 'dart:html';
-import 'dart:json';
+import 'dart:convert';
 
 import 'package:dartdoc_viewer/data.dart';
 import 'package:dartdoc_viewer/read_yaml.dart';
@@ -225,7 +225,7 @@ abstract class LazyItem extends Item {
     var location = '$docsPath$qualifiedName.' + (isYaml ? 'yaml' : 'json');
     var data = retrieveFileContents(location);
     return data.then((response) {
-      var yaml = isYaml ? loadYaml(response) : parse(response);
+      var yaml = isYaml ? loadYaml(response) : JSON.decode(response);
       loadValues(yaml);
       buildHierarchy(this, this);
     });

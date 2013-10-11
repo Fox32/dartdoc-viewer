@@ -11,7 +11,7 @@ library dartdoc_viewer;
 
 import 'dart:async';
 import 'dart:html';
-import 'dart:json';
+import 'dart:convert';
 
 import 'package:dartdoc_viewer/data.dart';
 import 'package:dartdoc_viewer/item.dart';
@@ -73,7 +73,7 @@ class Viewer extends ObservableBase {
   Viewer._() {
     var manifest = retrieveFileContents(sourcePath);
     finished = manifest.then((response) {
-      var libraries = parse(response);
+      var libraries = JSON.decode(response);
       isYaml = libraries['filetype'] == 'yaml';
       homePage = new Home(libraries);
     });
