@@ -96,8 +96,10 @@ class CategoryElement extends DartdocElement {
     var list = shadowRoot.query("#" + target.hash.split("#").last);
     if (list.classes.contains("in")) {
       list.classes.remove("in");
+      list.style.height = '0px';
     } else {
       list.classes.add("in");
+      list.style.height = 'auto';
     }
   }
 
