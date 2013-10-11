@@ -295,12 +295,14 @@ class Viewer extends ObservableBase {
 
   /// Toggles the library panel
   void togglePanel() {
-    isPanel = !isPanel;
+    isPanel = !_isPanel;
+    notifyProperty(this, #isPanel);
   }
 
   /// Toggles the minimap panel
   void toggleMinimap() {
-    isMinimap = !isMinimap;
+    isMinimap = !_isMinimap;
+    notifyProperty(this, #isMinimap);
   }
 
   /// Toggles showing inherited members.
