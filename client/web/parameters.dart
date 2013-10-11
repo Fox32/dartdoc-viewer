@@ -65,8 +65,13 @@ class ParameterElement extends DartdocElement {
         outerSpan.append(anchor);
         outerSpan.appendText(' ');
       });
-      outerSpan.append(MemberElement.createInner(element.type));
-      outerSpan.appendText(' ${element.decoratedName}');
+      // Skip dynamic as an outer parameter type (but not as generic)
+      var space = '';
+      if (element.type.outer.simpleType != 'dynamic') {
+        outerSpan.append(MemberElement.createInner(element.type));
+        space = ' ';
+      }
+      outerSpan.appendText('$space${element.decoratedName}');
       if (className == 'required' && optional.isNotEmpty ||
           element != elements.last) {
         outerSpan.appendText(', ');
