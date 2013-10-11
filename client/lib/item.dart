@@ -367,7 +367,7 @@ class Class extends LazyItem {
       constructors = allMethods['constructors'];
     }
     variables = new Category.forVariables(yaml['variables'], getters, setters);
-    functions = new Category.forFunctions(methods, 'Functions');
+    functions = new Category.forFunctions(methods, 'Methods');
     operators = new Category.forFunctions(operates, 'Operators',
         isOperator: true);
     constructs = new Category.forFunctions(constructors, 'Constructors',
