@@ -37,7 +37,7 @@
 
       <p class="text-right"><dfn>
         <template if="{{isInherited}}">
-          This member is inherited from
+          Inherited from
           <template if="{{exists(inheritedFrom.location)}}">
             <a href="#{{inheritedFrom.location}}#id_{{item.name}}">
               {{inheritedFrom.simpleType}}
@@ -70,7 +70,7 @@
       <p class="text-right"><dfn>
         <template if="{{shouldShowMethodComment && hasInheritedComment && isExpanded}}">
           <template if="{{viewer.isInherited}}">
-            This documentation is inherited from
+            Comment inherited from
             <template if="{{exists(commentFrom.location)}}">
               <a href="#{{commentFrom.location}}#id_{{item.name}}">
                 {{commentFrom.simpleType}}
