@@ -3,7 +3,6 @@ library page;
 import 'dart:html';
 import 'package:polymer/polymer.dart';
 import 'package:dartdoc_viewer/item.dart';
-
 import 'app.dart' as app;
 import 'member.dart';
 
@@ -38,7 +37,6 @@ class PageElement extends DartdocElement {
   @observable get currentPageIsMethod => currentPage is Method;
   @observable get currentPageIsClass => currentPage is Class;
   @observable get currentPageIsTypedef => currentPage is Typedef;
-
 
   @observable get currentPage => viewer.currentPage;
   set currentPage(x) {}

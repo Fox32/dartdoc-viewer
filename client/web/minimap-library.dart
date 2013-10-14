@@ -55,5 +55,4 @@ class MinimapElementLibrary extends MemberElement {
       list.classes.add("in");
     }
   }
-
 }

@@ -5,8 +5,7 @@
 library search;
 
 import 'dart:async';
-import 'dart:html' hide Element;
-import 'dart:html' as html show Element; // #### Why?
+import 'dart:html';
 import 'app.dart';
 import 'package:dartdoc_viewer/item.dart';
 import 'package:dartdoc_viewer/search.dart';
@@ -53,22 +52,13 @@ class Search extends DartdocElement {
     currentIndex = -1;
     results.clear();
     results.addAll(lookupSearchResults(searchQuery, viewer.isDesktop ? 10 : 5));
-    // TODO(alanknight): If a change to results is already notifying the other
-    // properties above, why is it necessary to redundantly notify them here?
     notifyProperty(this, #results);
     notifyProperty(this, #hasNoResults);
     notifyProperty(this, #dropdownOpen);
   }
 
   void onBlurCallback(_) {
-    // TODO(alanknight): The below check fails with shadow root because the
-    // active element
-    // is always the main one. Is it ok to just not do this test and lose
-    // focus any time we get a blur callback?
-//    if (document.activeElement == null ||
-//        !this.contains(document.activeElement)) {
       isFocused = false;
-//    }
   }
 
   void onFocusCallback(_) {
@@ -100,9 +90,9 @@ class Search extends DartdocElement {
 
   void inserted() {
     super.inserted();
-    html.Element.focusEvent.forTarget(xtag, useCapture: true)
+    Element.focusEvent.forTarget(xtag, useCapture: true)
         .listen(onFocusCallback);
-    html.Element.blurEvent.forTarget(xtag, useCapture: true)
+    Element.blurEvent.forTarget(xtag, useCapture: true)
         .listen(onBlurCallback);
     onKeyDown.listen(handleUpDown);
     window.onKeyDown.listen(shortcutHandler);

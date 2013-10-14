@@ -17,7 +17,7 @@
 
           <span class="type">
           </span>
-
+          {{createMethodType()}}
           <template if="{{item.isOperator}}">operator</template>
           {{item.decoratedName}}
            <!-- Parameters -->
@@ -42,9 +42,9 @@
       <!-- Comment -->
       <section class="description">
       </section>
-         <template if="{{viewer.isInherited || !hasInheritedComment}}">
-          {{addComment('dartdoc-method')}}
-        </template>
+      <template if="{{viewer.isInherited || !hasInheritedComment}}">
+        {{addComment('dartdoc-method')}}
+      </template>
 
       <p class="text-right"><dfn>
         <template if="{{shouldShowMethodComment && hasInheritedComment}}">
