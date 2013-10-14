@@ -4,6 +4,7 @@ import 'package:polymer/polymer.dart';
 
 import 'app.dart';
 import 'member.dart';
+import 'package:dartdoc_viewer/item.dart';
 
 @CustomTag("method-panel")
 class MethodPanel extends MethodElement {
@@ -13,7 +14,15 @@ class MethodPanel extends MethodElement {
           notifyProperty(this, #annotations);
           notifyProperty(this, #modifiers);
           notifyProperty(this, #shouldShowMethodComment);
+          notifyProperty(this, #createType);
+          notifyProperty(this, #parameters);
         });
+  }
+
+  createType(NestedType type, String memberName, String className) {
+    if (!item.isConstructor) {
+      super.createType(type, memberName, className);
+    }
   }
 
   set item(x) => super.item = x;

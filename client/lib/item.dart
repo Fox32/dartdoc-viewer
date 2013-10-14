@@ -668,6 +668,8 @@ class NestedType {
       innerMap.forEach((element) => inner.add(new NestedType(element)));
     }
   }
+
+  get isDynamic => outer.isDynamic;
 }
 
 /**
@@ -691,4 +693,6 @@ class LinkableType {
 
   /// The [Item] describing this type if it has been loaded, otherwise null.
   String get location => type;
+
+  get isDynamic => simpleType == 'dynamic';
 }

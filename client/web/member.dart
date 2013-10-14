@@ -143,7 +143,9 @@ class MemberElement extends DartdocElement {
     var location = shadowRoot.query('.$className');
     if (location == null) return;
     location.children.clear();
-    location.children.add(createInner(type));
+    if (!type.isDynamic) {
+      location.children.add(createInner(type));
+    }
   }
 }
 
@@ -197,5 +199,5 @@ class MethodElement extends InheritedElement {
 
   Method get item => super.item;
 
-  List<Parameter> get parameters => item.parameters;
+  @observable List<Parameter> get parameters => item.parameters;
 }

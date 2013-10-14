@@ -7,9 +7,6 @@
 <!-- TODO(tmandel): Reduce redundancy here and in method.html -->
 <polymer-element name="method-panel" attributes="item" extends="div">
   <template>
-    <template if="{{item == null}}">
-      Loading Method Panel...
-    </template>
       <a id="{{idName}}">
       </a>
       <div class="panel-heading">
@@ -21,11 +18,9 @@
         <p>
           <span>
             {{modifiers}}
-            <template if="{{!item.isConstructor}}">
-              <span class="type">
-              </span>
-              {{createType(item.type, 'method-panel', 'type')}}
-            </template>
+            <span class="type">
+            </span>
+            {{createType(item.type, 'method-panel', 'type')}}
             <template if="{{item.isOperator}}">operator</template>
             <b>{{item.decoratedName}}</b>
              <!-- Parameters -->
