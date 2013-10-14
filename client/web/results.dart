@@ -66,6 +66,4 @@ class Result extends MemberElement {
       libraryName = libraryName.replaceFirst(':dom:', ':');
     return 'library $libraryName';
   }
-
-  bool get applyAuthorStyles => true;
 }

@@ -56,8 +56,6 @@ class IndexElement extends DartdocElement {
   toggleInherited(event, detail, target) => viewer.toggleInherited();
   toggleMinimap(event, detail, target) => viewer.toggleMinimap();
 
-  get applyAuthorStyles => true;
-
   @observable get shouldShowLibraryMinimap =>
       viewer.currentPage is Library && viewer.isMinimap;
 

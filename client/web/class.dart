@@ -59,8 +59,6 @@ class ClassElement extends MemberElement {
     shadowRoot.query('#${item.name}-subclass-button').classes.add('hidden');
   }
 
-  bool get applyAuthorStyles => true;
-
   @observable String get nameWithGeneric => item.nameWithGeneric;
   @observable String get name => item.name;
 

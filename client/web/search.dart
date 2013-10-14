@@ -146,6 +146,4 @@ class Search extends DartdocElement {
   }
 
   get searchBox => shadowRoot.query('#q');
-
-  get applyAuthorStyles => true;
 }

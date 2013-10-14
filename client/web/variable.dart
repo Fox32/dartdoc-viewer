@@ -30,6 +30,4 @@ class VariableElement extends InheritedElement {
 
   @observable get annotations =>
       item == null ? new AnnotationGroup([]) : item.annotations;
-
-  bool get applyAuthorStyles => true;
 }

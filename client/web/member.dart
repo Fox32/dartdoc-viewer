@@ -198,6 +198,4 @@ class MethodElement extends InheritedElement {
   Method get item => super.item;
 
   List<Parameter> get parameters => item.parameters;
-
-  get applyAuthorStyles => true;
 }

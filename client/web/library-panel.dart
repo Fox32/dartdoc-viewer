@@ -41,6 +41,4 @@ class LibraryPanel extends DartdocElement {
         '${library.decoratedName}</a>';
     return new Element.html(html, treeSanitizer: sanitizer);
   }
-
-  get applyAuthorStyles => true;
 }

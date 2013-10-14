@@ -56,6 +56,4 @@ class ItemElement extends MemberElement {
       (item is Class || item is Library) && item.previewComment != null;
   @observable get shouldShowMethodComment =>
       item is Method && item.comment != '<span></span>';
-
- get applyAuthorStyles => true;
  }
