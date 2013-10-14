@@ -30,24 +30,11 @@
     </p>
     <!-- Comment -->
     <template if="{{viewer.isInherited || !hasInheritedComment}}">
-
-     {{addComment('dartdoc-variable', !isExpanded)}}
-      
-    </template>
-
-    <template if="{{!nothingToExpand}}">
-      <a on-click="toggleExpand" class="btn-link">
-        <template if="{{isExpanded}}">
-          ...Show less
-        </template>
-        <template if="{{!isExpanded}}">
-          ...Show more
-        </template>
-      </a>
+     {{addComment('dartdoc-variable')}}
     </template>
 
     <p class="text-right"><dfn>
-      <template if="{{hasInheritedComment && isExpanded}}">
+      <template if="{{hasInheritedComment}}">
         <template if="{{viewer.isInherited}}">
           Comment inherited from
           <template if="{{exists(commentFrom.location)}}">
