@@ -67,7 +67,7 @@ class ParameterElement extends DartdocElement {
       });
       // Skip dynamic as an outer parameter type (but not as generic)
       var space = '';
-      if (element.type.outer.simpleType != 'dynamic') {
+      if (element.type.isDynamic) {
         outerSpan.append(MemberElement.createInner(element.type));
         space = ' ';
       }
