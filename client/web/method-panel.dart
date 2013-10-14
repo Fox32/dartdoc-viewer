@@ -16,6 +16,8 @@ class MethodPanel extends MethodElement {
           notifyProperty(this, #shouldShowMethodComment);
           notifyProperty(this, #createType);
           notifyProperty(this, #parameters);
+          notifyProperty(this, #isInherited);
+          notifyProperty(this, #hasInheritedComment);
         });
   }
 
@@ -27,13 +29,6 @@ class MethodPanel extends MethodElement {
 
   set item(x) => super.item = x;
   get item => super.item;
-
-  @observable bool isExpanded = true;
-  @observable bool nothingToExpand = true;
-
-  void toggleExpand(event, detail, target) {
-    isExpanded = !isExpanded;
-  }
 
   @observable String get modifiers => constantModifier + abstractModifier + staticModifier;
   @observable get constantModifier => item.isConstant ? 'const' : '';

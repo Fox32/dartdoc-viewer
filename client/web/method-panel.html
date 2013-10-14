@@ -47,22 +47,12 @@
         </section>
       <!-- Comment -->
       <template if="{{viewer.isInherited || !hasInheritedComment}}">
-        {{addComment('method-panel', !isExpanded)}}
-      </template>
-
-      <template if="{{!nothingToExpand}}">
-        <a on-click="toggleExpand" class="btn-link">
-          <template if="{{isExpanded}}">
-            ...Show less
-          </template>
-          <template if="{{!isExpanded}}">
-            ...Show more
-          </template>
-        </a>
+        {{addComment('method-panel', false)}}
       </template>
 
       <p class="text-right"><dfn>
-        <template if="{{shouldShowMethodComment && hasInheritedComment && isExpanded}}">
+        <template if="{{shouldShowMethodComment && 
+            hasInheritedComment}}">
           <template if="{{viewer.isInherited}}">
             Comment inherited from
             <template if="{{exists(commentFrom.location)}}">
