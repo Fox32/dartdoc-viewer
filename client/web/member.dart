@@ -38,6 +38,8 @@ class NullTreeSanitizer implements NodeTreeSanitizer {
 //// An abstract class for all Dartdoc elements.
 class DartdocElement extends PolymerElement {
   get applyAuthorStyles => true;
+
+  get viewer => app.viewer;
 }
 
 //// This is a web component to be extended by all Dart members with comments.
@@ -46,8 +48,6 @@ class DartdocElement extends PolymerElement {
 class MemberElement extends DartdocElement {
 
   @observable @published var item;
-
-  get viewer => app.viewer;
 
   /// A valid string for an HTML id made from this [Item]'s name.
   @observable String get idName {

@@ -48,7 +48,6 @@ class IndexElement extends DartdocElement {
   }
 
   @observable get item => viewer.currentPage.item;
-  @observable get viewer => app.viewer;
   @observable get pageNameSeparator => decoratedName == '' ? '' : ' - ';
   @observable get decoratedName =>
       viewer.currentPage == null ? '' : viewer.currentPage.decoratedName;

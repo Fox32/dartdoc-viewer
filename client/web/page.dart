@@ -31,17 +31,15 @@ class PageElement extends DartdocElement {
         });
   }
 
-  @observable get isHome => viewer.currentPage is Home;
+  @observable get isHome => currentPage is Home;
   @observable get hasHomePage => viewer.homePage != null;
 
-  @observable get currentPageIsLibrary => viewer.currentPage is Library;
-  @observable get currentPageIsMethod => viewer.currentPage is Method;
-  @observable get currentPageIsClass => viewer.currentPage is Class;
-  @observable get currentPageIsTypedef => viewer.currentPage is Typedef;
+  @observable get currentPageIsLibrary => currentPage is Library;
+  @observable get currentPageIsMethod => currentPage is Method;
+  @observable get currentPageIsClass => currentPage is Class;
+  @observable get currentPageIsTypedef => currentPage is Typedef;
 
 
   @observable get currentPage => viewer.currentPage;
   set currentPage(x) {}
-
-  get viewer => app.viewer;
 }

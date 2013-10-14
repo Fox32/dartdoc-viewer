@@ -28,8 +28,6 @@ class MinimapElement extends DartdocElement {
 
   @observable List<Item> items = [];
 
-  get viewer => app.viewer;
-
   @observable get itemsToShow => items.where(
       (x) => !x.isInherited || viewer.isInherited);
 
