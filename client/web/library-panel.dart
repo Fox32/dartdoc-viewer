@@ -16,6 +16,11 @@ class LibraryPanel extends DartdocElement {
     });
   }
 
+  enteredView() {
+    super.enteredView();
+    createEntries();
+  }
+
   linkHref(library) => library == null ? '' : library.linkHref;
 
   @observable createEntries() {
