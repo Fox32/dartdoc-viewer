@@ -19,6 +19,7 @@ class MethodPanel extends MethodElement {
           notifyProperty(this, #isInherited);
           notifyProperty(this, #hasInheritedComment);
         });
+    style.setProperty('display', 'block');
   }
 
   createType(NestedType type, String memberName, String className) {

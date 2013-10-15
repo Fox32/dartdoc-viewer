@@ -35,30 +35,30 @@
       <div class="accordion" id="accordion-grouping">
         <template if="{{operators.content.isNotEmpty}}">
           <template if="{{operators.hasNonInherited || viewer.isInherited}}">
-            <div is="dartdoc-category" category="{{operators}}" 
+            <dartdoc-category category="{{operators}}" 
                 class="accordion-group">
-            </div>
+            </dartdoc-category>
           </template>
         </template>
         <template if="{{variables.content.isNotEmpty}}">
           <template if="{{variables.hasNonInherited || viewer.isInherited}}">
-            <div is="dartdoc-category" category="{{variables}}" 
+            <dartdoc-category category="{{variables}}" 
                 class="accordion-group">
-            </div>
+            </dartdoc-category>
           </template>
         </template>
         <template if="{{constructors.content.isNotEmpty}}">
           <template if="{{constructors.hasNonInherited || viewer.isInherited}}">
-            <div is="dartdoc-category" category="{{constructors}}"
+            <dartdoc-category category="{{constructors}}"
               class="accordion-group">
-            </div>
+            </dartdoc-category>
           </template>
         </template>
         <template if="{{methods.content.isNotEmpty}}">
           <template if="{{methods.hasNonInherited || viewer.isInherited}}">
-            <div is="dartdoc-category" category="{{methods}}"
+            <dartdoc-category category="{{methods}}"
                 class="accordion-group">
-            </div>
+            </dartdoc-category>
           </template>
         </template>
       </div>

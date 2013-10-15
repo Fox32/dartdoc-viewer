@@ -21,14 +21,16 @@
      <div class="accordion-inner">
         <ul id="itemList" class="nav nav-pills nav-stacked">
         <template repeat="{{variable in categoryVariables}}">
-          <div is="dartdoc-variable" item="{{variable}}" class="panel"></div>
+          <dartdoc-variable item="{{variable}}" class="panel">
+          </dartdoc-variable>
         </template>
         <template repeat="{{class in categoryEverythingElse}}">
-           <div is="dartdoc-item" class="panel" item="{{class}}"></div>
+           <dartdoc-item class="panel" item="{{class}}">
+           </dartdoc-item>
         </template>
         <template repeat="{{method in categoryMethods}}">
-           <div is="method-panel" class="panel" item="{{method}}">
-           </div>
+           <method-panel class="panel" item="{{method}}">
+           </method-panel>
         </template>       
         </ul>
       </div>

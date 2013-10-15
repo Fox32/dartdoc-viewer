@@ -180,6 +180,7 @@ class InheritedElement extends MemberElement {
 
   /// Returns whether [location] exists within the search index.
   bool exists(String location) {
+    if (location == null) return false;
     return index.keys.contains(location.replaceAll('-','.'));
   }
 

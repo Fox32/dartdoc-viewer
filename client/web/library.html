@@ -12,34 +12,34 @@
       {{addComment('dartdoc-library')}}
       <div class="accordion" id="accordion-grouping">
         <template if="{{item.operators.content.isNotEmpty}}">
-          <div is="dartdoc-category" category="{{item.operators}}" 
+          <dartdoc-category category="{{item.operators}}" 
             class="accordion-group">
-          </div>
+          </dartdoc-category>
         </template>
         <template if="{{item.variables.content.isNotEmpty}}">
-          <div is="dartdoc-category" category="{{item.variables}}" 
+          <dartdoc-category category="{{item.variables}}" 
             class="accordion-group">
-          </div>
+          </dartdoc-category>
         </template>
         <template if="{{item.functions.content.isNotEmpty}}">
-          <div is="dartdoc-category" category="{{item.functions}}" 
+          <dartdoc-category category="{{item.functions}}" 
             class="accordion-group">
-          </div>
+          </dartdoc-category>
         </template>
         <template if="{{item.classes.content.isNotEmpty}}">
-          <div is="dartdoc-category" category="{{item.classes}}" 
+          <dartdoc-category category="{{item.classes}}" 
             class="accordion-group"> 
-          </div>
+          </dartdoc-category>
         </template>
         <template if="{{item.typedefs.content.isNotEmpty}}">
-          <div is="dartdoc-category" category="{{item.typedefs}}" 
+          <dartdoc-category category="{{item.typedefs}}" 
             class="accordion-group">
-          </div>
+          </dartdoc-category>
         </template>
         <template if="{{item.errors.content.isNotEmpty}}">
-          <div is="dartdoc-category" category="{{item.errors}}" 
+          <dartdoc-category category="{{item.errors}}" 
             class="accordion-group">
-          </div>
+          </dartdoc-category>
         </template>
       </div>
   </template>

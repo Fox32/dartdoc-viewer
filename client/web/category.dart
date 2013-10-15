@@ -38,6 +38,7 @@ class CategoryElement extends DartdocElement {
           notifyProperty(this, #categoryEverythingElse);
           notifyProperty(this, #currentLocation);
         });
+    style.setProperty('display', 'block');
   }
 
   @observable Container category;

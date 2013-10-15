@@ -28,6 +28,7 @@ class ItemElement extends MemberElement {
           notifyProperty(this, #shouldShowMethodComment);
           notifyProperty(this, #idName);
         });
+    style.setProperty('display', 'block');
   }
 
   get item => super.item;

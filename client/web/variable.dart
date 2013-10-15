@@ -16,6 +16,7 @@ class VariableElement extends InheritedElement {
         (_) {
           notifyProperty(this, #annotations);
         });
+    style.setProperty('display', 'block');
   }
 
   get item => super.item;
