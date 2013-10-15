@@ -10,7 +10,7 @@ import 'member.dart';
 
 @CustomTag("dartdoc-parameter")
 class ParameterElement extends DartdocElement {
-  ParameterElement() {
+  ParameterElement.created() : super.created() {
     new PathObserver(this, "parameters").bindSync(
         (_) {
           notifyProperty(this, #required);

@@ -7,7 +7,7 @@ import 'member.dart';
 
 @CustomTag("dartdoc-annotation")
 class AnnotationElement extends DartdocElement {
-  AnnotationElement() {
+  AnnotationElement.created() : super.created() {
     new PathObserver(this, "annotations").bindSync(
         (_) {
           notifyProperty(this, #addAnnotations);

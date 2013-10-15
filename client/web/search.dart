@@ -19,7 +19,7 @@ import 'member.dart';
 @CustomTag("search-box")
 class Search extends DartdocElement {
 
-  Search() {
+  Search.created() : super.created() {
     new PathObserver(this, "results").bindSync(
         (_) {
           notifyProperty(this, #dropdownOpen);

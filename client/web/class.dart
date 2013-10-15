@@ -8,7 +8,7 @@ import 'member.dart';
 
 @CustomTag("dartdoc-class")
 class ClassElement extends MemberElement {
-  ClassElement() {
+  ClassElement.created() : super.created() {
     item = new Class.forPlaceholder('loading', 'loading');
     new PathObserver(this, "item").bindSync(
         (_) {

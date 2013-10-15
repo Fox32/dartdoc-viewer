@@ -9,7 +9,7 @@ import 'member.dart';
 
 @CustomTag("dartdoc-library")
 class LibraryElement extends MemberElement {
-  LibraryElement() {
+  LibraryElement.created() : super.created() {
     item = defaultItem;
   }
 

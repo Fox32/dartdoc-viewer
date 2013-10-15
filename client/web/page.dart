@@ -13,7 +13,7 @@ import 'member.dart';
 class PageElement extends DartdocElement {
   @observable Home home;
 
-  PageElement() {
+  PageElement.created() : super.created() {
     new PathObserver(this, "viewer.currentPage").bindSync(
         (_) {
           notifyProperty(this, #currentPage);

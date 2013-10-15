@@ -14,7 +14,7 @@ import 'member.dart';
  */
  @CustomTag("dartdoc-item")
 class ItemElement extends MemberElement {
-  ItemElement() {
+  ItemElement.created() : super.created() {
     item = defaultItem();
     new PathObserver(this, "item").bindSync(
         (_) {

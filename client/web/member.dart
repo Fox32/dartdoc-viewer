@@ -41,6 +41,8 @@ class NullTreeSanitizer implements NodeTreeSanitizer {
 
 //// An abstract class for all Dartdoc elements.
 class DartdocElement extends PolymerElement {
+  DartdocElement.created() : super.created();
+
   get applyAuthorStyles => true;
 
   get viewer => app.viewer;
@@ -50,7 +52,7 @@ class DartdocElement extends PolymerElement {
 //// Each member has an [Item] associated with it as well as a comment to
 //// display, so this class handles those two aspects shared by all members.
 class MemberElement extends DartdocElement {
-  MemberElement() {
+  MemberElement.created() : super.created() {
     new PathObserver(this, "item").bindSync(
         (_) {
           notifyProperty(this, #addComment);
@@ -156,6 +158,8 @@ class MemberElement extends DartdocElement {
 
 //// A [MemberElement] that could be inherited from another [MemberElement].
 class InheritedElement extends MemberElement {
+  InheritedElement.created() : super.created();
+
   LinkableType inheritedFrom;
   LinkableType commentFrom;
 
@@ -186,7 +190,7 @@ class InheritedElement extends MemberElement {
 }
 
 class MethodElement extends InheritedElement {
-  MethodElement() {
+  MethodElement.created() : super.created() {
     item = new Method({
       "name" : "Loading",
       "qualifiedName" : "Loading",

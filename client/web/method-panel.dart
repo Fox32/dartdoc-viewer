@@ -8,7 +8,7 @@ import 'package:dartdoc_viewer/item.dart';
 
 @CustomTag("method-panel")
 class MethodPanel extends MethodElement {
-  MethodPanel() {
+  MethodPanel.created() : super.created() {
     new PathObserver(this, "item").bindSync(
         (_) {
           notifyProperty(this, #annotations);

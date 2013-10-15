@@ -9,7 +9,7 @@ import 'dart:html';
 @CustomTag("dartdoc-main")
 class IndexElement extends DartdocElement {
 
-  IndexElement() {
+  IndexElement.created() : super.created() {
     new PathObserver(this, "viewer.currentPage").bindSync(
         (_) {
           notifyProperty(this, #viewer);
