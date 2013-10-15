@@ -27,7 +27,7 @@ class DartdocMethod extends MethodElement {
     }
   }
 
-  @observable String get modifiers => constantModifier + abstractModifier
+  @observable String get modifiers => constantModifier
       + staticModifier;
   get constantModifier => item.isConstant ? 'const' : '';
   get abstractModifier => item.isAbstract ? 'abstract' : '';

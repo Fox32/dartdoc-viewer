@@ -31,7 +31,7 @@ class MethodPanel extends MethodElement {
   get item => super.item;
 
   @observable String get modifiers =>
-      constantModifier + abstractModifier + staticModifier;
+      constantModifier + staticModifier;
   @observable get constantModifier => item.isConstant ? 'const' : '';
   @observable get abstractModifier => item.isAbstract ? 'abstract' : '';
   @observable get staticModifier => item.isStatic ? 'static' : '';
