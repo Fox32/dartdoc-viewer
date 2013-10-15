@@ -8,7 +8,7 @@ import 'member.dart';
 
 @CustomTag("dartdoc-typedef")
 class TypedefElement extends MemberElement {
-  TypedefElement() {
+  TypedefElement.created() : super.created() {
     new PathObserver(this, "item").bindSync(
         (_) {
           notifyProperty(this, #required);

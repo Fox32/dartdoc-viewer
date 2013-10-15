@@ -11,7 +11,7 @@ import 'member.dart';
  */
 @CustomTag("variable-heading")
 class VariableHeading extends MemberElement {
-  VariableHeading() {
+  VariableHeading.created() : super.created() {
     new PathObserver(this, "item").bindSync(
         (_) {
           notifyProperty(this, #getter);

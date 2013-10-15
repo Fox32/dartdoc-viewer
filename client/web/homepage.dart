@@ -7,7 +7,7 @@ import 'member.dart';
 
 @CustomTag("dartdoc-homepage")
 class HomeElement extends MemberElement {
-  HomeElement() {
+  HomeElement.created() : super.created() {
     new PathObserver(this, "item").bindSync(
         (_) {
           notifyProperty(this, #libraries);

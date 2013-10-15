@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <link rel="import" href="parameters.html">
 
-<polymer-element name="dartdoc-item" attributes="item" extends="div">
+<polymer-element name="dartdoc-item" attributes="item">
   <template>
     <ul class="nav nav-pills nav-stacked">
       <li>
@@ -20,8 +20,8 @@
               {{modifiers}}
               <b>{{item.decoratedName}}</b>
                <!-- Parameters -->
-              <small is="dartdoc-parameter" parameters="{{parameters}}">
-              </small>
+              <dartdoc-parameter parameters="{{parameters}}">
+              </dartdoc-parameter>
             </span>
           </template>
         </a>

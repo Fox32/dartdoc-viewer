@@ -40,24 +40,26 @@ class NullTreeSanitizer implements NodeTreeSanitizer {
 }
 
 //// An abstract class for all Dartdoc elements.
-class DartdocElement extends PolymerElement {
+@reflectable class DartdocElement extends PolymerElement {
+  DartdocElement.created() : super.created();
+
   get applyAuthorStyles => true;
 
-  get viewer => app.viewer;
+  @observable get viewer => app.viewer;
 }
 
 //// This is a web component to be extended by all Dart members with comments.
 //// Each member has an [Item] associated with it as well as a comment to
 //// display, so this class handles those two aspects shared by all members.
-class MemberElement extends DartdocElement {
-  MemberElement() {
+@reflectable class MemberElement extends DartdocElement {
+  MemberElement.created() : super.created() {
     new PathObserver(this, "item").bindSync(
         (_) {
           notifyProperty(this, #addComment);
         });
   }
 
-  @observable @published var item;
+  @published var item;
 
   /// A valid string for an HTML id made from this [Item]'s name.
   @observable String get idName {
@@ -155,7 +157,9 @@ class MemberElement extends DartdocElement {
 }
 
 //// A [MemberElement] that could be inherited from another [MemberElement].
-class InheritedElement extends MemberElement {
+@reflectable class InheritedElement extends MemberElement {
+  InheritedElement.created() : super.created();
+
   LinkableType inheritedFrom;
   LinkableType commentFrom;
 
@@ -176,6 +180,7 @@ class InheritedElement extends MemberElement {
 
   /// Returns whether [location] exists within the search index.
   bool exists(String location) {
+    if (location == null) return false;
     return index.keys.contains(location.replaceAll('-','.'));
   }
 
@@ -185,8 +190,8 @@ class InheritedElement extends MemberElement {
   }
 }
 
-class MethodElement extends InheritedElement {
-  MethodElement() {
+@reflectable class MethodElement extends InheritedElement {
+  MethodElement.created() : super.created() {
     item = new Method({
       "name" : "Loading",
       "qualifiedName" : "Loading",

@@ -11,11 +11,12 @@ import 'member.dart';
  */
 @CustomTag("dartdoc-variable")
 class VariableElement extends InheritedElement {
-  VariableElement() {
+  VariableElement.created() : super.created() {
     new PathObserver(this, "item").bindSync(
         (_) {
           notifyProperty(this, #annotations);
         });
+    style.setProperty('display', 'block');
   }
 
   get item => super.item;

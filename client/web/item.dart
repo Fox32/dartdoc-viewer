@@ -14,7 +14,7 @@ import 'member.dart';
  */
  @CustomTag("dartdoc-item")
 class ItemElement extends MemberElement {
-  ItemElement() {
+  ItemElement.created() : super.created() {
     item = defaultItem();
     new PathObserver(this, "item").bindSync(
         (_) {
@@ -28,6 +28,7 @@ class ItemElement extends MemberElement {
           notifyProperty(this, #shouldShowMethodComment);
           notifyProperty(this, #idName);
         });
+    style.setProperty('display', 'block');
   }
 
   get item => super.item;

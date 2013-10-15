@@ -31,8 +31,7 @@ String sourcePath = '../../docs/library_list.json';
 const int desktopSizeBoundary = 1006;
 
 /// The [Viewer] object being displayed.
-  final Viewer viewer = new Viewer._();
-
+final Viewer viewer = new Viewer._();
 
   IndexElement _dartdocMain;
   IndexElement dartdocMain =
@@ -333,7 +332,7 @@ void navigate(event) {
 }
 
 /// Handles browser navigation.
-main() {
+@initMethod _init() {
   _pathname = window.location.pathname;
 
   window.onResize.listen((event) {

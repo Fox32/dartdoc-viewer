@@ -15,7 +15,7 @@ import 'dart:html';
  @CustomTag("dartdoc-category")
 class CategoryElement extends DartdocElement {
 
-  CategoryElement() {
+  CategoryElement.created() : super.created() {
     new PathObserver(this, "category.name").bindSync(
         (_) {
           notifyProperty(this, #title);
@@ -38,6 +38,7 @@ class CategoryElement extends DartdocElement {
           notifyProperty(this, #categoryEverythingElse);
           notifyProperty(this, #currentLocation);
         });
+    style.setProperty('display', 'block');
   }
 
   @observable Container category;

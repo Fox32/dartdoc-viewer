@@ -8,7 +8,7 @@ import 'member.dart';
 
 @CustomTag("dartdoc-class")
 class ClassElement extends MemberElement {
-  ClassElement() {
+  ClassElement.created() : super.created() {
     item = new Class.forPlaceholder('loading', 'loading');
     new PathObserver(this, "item").bindSync(
         (_) {
@@ -16,6 +16,10 @@ class ClassElement extends MemberElement {
           notifyProperty(this, #operators);
           notifyProperty(this, #constructors);
           notifyProperty(this, #methods);
+          notifyProperty(this, #variablesIsNotEmpty);
+          notifyProperty(this, #operatorsIsNotEmpty);
+          notifyProperty(this, #constructorsIsNotEmpty);
+          notifyProperty(this, #methodsIsNotEmpty);
           notifyProperty(this, #annotations);
           notifyProperty(this, #interfaces);
           notifyProperty(this, #subclasses);
@@ -32,12 +36,15 @@ class ClassElement extends MemberElement {
   @observable Class get item => super.item;
 
   @observable Category get variables => item.variables;
-
   @observable Category get operators => item.operators;
-
   @observable Category get constructors => item.constructs;
-
   @observable Category get methods => item.functions;
+  @observable bool get variablesIsNotEmpty => _isNotEmpty(variables);
+  @observable bool get operatorsIsNotEmpty => _isNotEmpty(operators);
+  @observable bool get constructorsIsNotEmpty => _isNotEmpty(constructors);
+  @observable bool get methodsIsNotEmpty => _isNotEmpty(methods);
+
+  _isNotEmpty(x) => x == null ? false : x.content.isNotEmpty;
 
   @observable AnnotationGroup get annotations => item.annotations;
   set annotations(_) {}

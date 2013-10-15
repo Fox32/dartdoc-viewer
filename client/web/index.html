@@ -52,7 +52,7 @@
                 Options <b class="caret"></b>
               </a>
               <ul class="dropdown-menu">
-                <template if="{{viewer.currentPage != viewer.homePage}}">
+                <template if="{{!isHomePage}}">
                   <li class="visible-lg"><a on-click="togglePanel">
                     <template if="{{viewer.isPanel}}">Hide Libraries</template>
                     <template if="{{!viewer.isPanel}}">Show Libraries</template>
@@ -79,22 +79,22 @@
   
     <div class="main-body">
       <template if="{{viewer.currentPage != null && viewer.isPanel}}">
-        <div is="dartdoc-library-panel"></div>
+        <dartdoc-library-panel></dartdoc-library-panel>
       </template>
   
     <main id="page-content" class="{{pageContentClass}}">
-      <article id="dartdoc-page" is="dartdoc-page" home="{{viewer.homePage}}">
-      </article>
+      <dartdoc-page id="dartdoc-page" home="{{homePage}}">
+      </dartdoc-page>
     </main>
   
     <template if="{{shouldShowLibraryMinimap}}">
-        <article is="dartdoc-minimap-library" item={{viewer.currentPage}}>
-        </article>
+        <dartdoc-minimap-library item={{viewer.currentPage}}>
+        </dartdoc-minimap-library>
     </template>
 
     <template if="{{shouldShowClassMinimap}}">
-      <article is="dartdoc-minimap-class" item={{viewer.currentPage}}>
-      </article>
+      <dartdoc-minimap-class item={{viewer.currentPage}}>
+      </dartdoc-minimap-class>
     </template>
   
   </div>

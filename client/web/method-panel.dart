@@ -8,7 +8,7 @@ import 'package:dartdoc_viewer/item.dart';
 
 @CustomTag("method-panel")
 class MethodPanel extends MethodElement {
-  MethodPanel() {
+  MethodPanel.created() : super.created() {
     new PathObserver(this, "item").bindSync(
         (_) {
           notifyProperty(this, #annotations);
@@ -19,6 +19,7 @@ class MethodPanel extends MethodElement {
           notifyProperty(this, #isInherited);
           notifyProperty(this, #hasInheritedComment);
         });
+    style.setProperty('display', 'block');
   }
 
   createType(NestedType type, String memberName, String className) {
@@ -31,7 +32,7 @@ class MethodPanel extends MethodElement {
   get item => super.item;
 
   @observable String get modifiers =>
-      constantModifier + abstractModifier + staticModifier;
+      constantModifier + staticModifier;
   @observable get constantModifier => item.isConstant ? 'const' : '';
   @observable get abstractModifier => item.isAbstract ? 'abstract' : '';
   @observable get staticModifier => item.isStatic ? 'static' : '';

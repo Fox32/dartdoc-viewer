@@ -12,7 +12,7 @@ import 'member.dart';
 @CustomTag("search-result")
 class Result extends MemberElement {
 
-  Result() {
+  Result.created() : super.created() {
     new PathObserver(this, "item").bindSync(
         (_) {
           notifyProperty(this, #descriptiveName);

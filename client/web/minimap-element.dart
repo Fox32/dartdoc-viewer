@@ -8,7 +8,7 @@ import 'member.dart';
 /// An element in a page's minimap displayed on the right of the page.
 @CustomTag("dartdoc-minimap")
 class MinimapElement extends DartdocElement {
-  MinimapElement() {
+  MinimapElement.created() : super.created() {
     new PathObserver(this, "viewer.isInherited").bindSync(
       (_) {
         notifyProperty(this, #shouldShow);

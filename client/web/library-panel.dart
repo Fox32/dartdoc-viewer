@@ -9,11 +9,16 @@ import 'dart:html';
 /// An element in a page's minimap displayed on the right of the page.
 @CustomTag("dartdoc-library-panel")
 class LibraryPanel extends DartdocElement {
-  LibraryPanel() {
+  LibraryPanel.created() : super.created() {
     new PathObserver(this, "viewer.currentPage").bindSync(
     (_) {
       notifyProperty(this, #createEntries);
     });
+  }
+
+  enteredView() {
+    super.enteredView();
+    createEntries();
   }
 
   linkHref(library) => library == null ? '' : library.linkHref;
