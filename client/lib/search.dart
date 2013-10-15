@@ -36,6 +36,8 @@ class SearchResult implements Comparable {
   int compareTo(SearchResult other) => other.score.compareTo(score);
 
   SearchResult(this.element, this.type, this.score);
+
+  toString() => "SearchResult($element, $type, $score)";
 }
 
 /// The value of each type of member.
