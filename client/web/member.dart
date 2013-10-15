@@ -31,6 +31,10 @@ var validator = new NodeValidatorBuilder()
 
 var sanitizer = new NullTreeSanitizer();
 
+// TODO(alanknight): Switch to using the validator, verify it doesn't slow
+// things down too much, and that it's not disallowing valid content.
+/// A sanitizer that allows anything to maximize speed and not disallow any
+/// tags.
 class NullTreeSanitizer implements NodeTreeSanitizer {
   void sanitizeTree(Node node) {}
 }
@@ -46,6 +50,12 @@ class DartdocElement extends PolymerElement {
 //// Each member has an [Item] associated with it as well as a comment to
 //// display, so this class handles those two aspects shared by all members.
 class MemberElement extends DartdocElement {
+  MemberElement() {
+    new PathObserver(this, "item").bindSync(
+        (_) {
+          notifyProperty(this, #addComment);
+        });
+  }
 
   @observable @published var item;
 
@@ -57,17 +67,12 @@ class MemberElement extends DartdocElement {
     return app.viewer.toHash(name);
   }
 
-  void addCommentOrSkip(String elementName, [preview = false]) {
-    var commentLocation = shadowRoot.query('.description');
-    if (commentLocation == null) return;
-    addComment(elementName, preview, commentLocation);
-  }
-
   /// Adds [item]'s comment to the the [elementName] element with markdown
   /// links converted to working links.
-  void addComment(String elementName, [bool preview = false, commentLocation]) {
+  void addComment(String elementName, [bool preview = false]) {
     if (item == null) return;
     var comment = item.comment;
+    var commentLocation = shadowRoot.query('.description');
     if (preview && (item is Class || item is Library))
       comment = item.previewComment;
     if (preview && (item is Method || item is Variable)) {
@@ -178,7 +183,6 @@ class InheritedElement extends MemberElement {
   LinkableType findInheritance(String qualifiedName) {
     return new LinkableType(ownerName(qualifiedName));
   }
-
 }
 
 class MethodElement extends InheritedElement {
@@ -192,11 +196,11 @@ class MethodElement extends InheritedElement {
     }, isConstructor: true);
   }
 
-  // TODO(alanknight): This is a workaround for bindings firing even when
-  // their surrounding test isn't true. So ignore values of the wrong type
-  // temporarily.
+  // TODO(alanknight): Remove this and other workarounds for bindings firing
+  // even when their surrounding test isn't true. This ignores values of the
+  // wrong type. IOssue 13386 and/or 13445
+  // TODO(alanknight): Remove duplicated subclass methods. Issue 13937
   set item(x) => super.item = (x is Method) ? x : item;
-
   Method get item => super.item;
 
   @observable List<Parameter> get parameters => item.parameters;

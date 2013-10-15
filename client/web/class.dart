@@ -22,18 +22,13 @@ class ClassElement extends MemberElement {
           notifyProperty(this, #superClass);
           notifyProperty(this, #nameWithGeneric);
           notifyProperty(this, #name);
-          notifyProperty(this, #addComment);
           notifyProperty(this, #addInterfaceLinks);
           notifyProperty(this, #addSubclassLinks);
           notifyProperty(this, #isNotObject);
         });
   }
 
-  // TODO(alanknight): This is a workaround for bindings firing even when
-  // their surrounding test isn't true. So ignore values of the wrong type
-  // temporarily.
   set item(x) => super.item = (x is Class) ? x : item;
-
   @observable Class get item => super.item;
 
   @observable Category get variables => item.variables;
@@ -47,7 +42,8 @@ class ClassElement extends MemberElement {
   @observable AnnotationGroup get annotations => item.annotations;
   set annotations(x) {}
 
-  @observable List<LinkableType> get interfaces => item == null ? [] : item.implements;
+  @observable List<LinkableType> get interfaces =>
+      item == null ? [] : item.implements;
 
   @observable List<LinkableType> get subclasses => item.subclasses;
 
@@ -81,7 +77,6 @@ class ClassElement extends MemberElement {
     }
   }
 
-
   @observable addSubclassLinks() {
     var p = shadowRoot.query("#subclasses");
     // Remove all the children except the '...' button, which we can't
@@ -109,5 +104,4 @@ class ClassElement extends MemberElement {
     classes
         .map((x) =>'<a href="#${x.location}">${x.simpleType}</a>')
         .join(",&nbsp;");
-
 }

@@ -31,7 +31,7 @@ String sourcePath = '../../docs/library_list.json';
 const int desktopSizeBoundary = 1006;
 
 /// The [Viewer] object being displayed.
-  Viewer viewer = new Viewer._();
+  final Viewer viewer = new Viewer._();
 
 
   IndexElement _dartdocMain;
@@ -112,12 +112,11 @@ class Viewer extends ObservableBase {
         // All ids are created using getIdName to avoid creating an invalid
         // HTML id from an operator or setter.
         hash = hash.substring(1, hash.length);
-        var root = document.query("#dartdoc-main");
-        var e = queryEverywhere(root, hash);
-//        var e = document.query('#$hash');
+        var e = queryEverywhere(dartdocMain, hash);
 
         if (e != null) {
-          // Find the parent category element to make sure it is open.
+        // TODO(alanknight): Open the element automatically when scrolled to.
+//      Find the parent category element to make sure it is open.
 //          var category = e.parent;
 //          while (category != null &&
 //              !category.classes.contains('accordion-body')) {
@@ -248,6 +247,8 @@ class Viewer extends ObservableBase {
     }
     var members = locationWithoutHash.split('.');
     var libraryName = members.first;
+    // TODO(alanknight): A better implementation would be to match on either
+    // the link name or on the displayed name of a component.
     // Allow references to be of the form #dart:core and convert them.
     libraryName = libraryName.replaceAll(':', '-');
     // Since library names can contain '.' characters, the library part

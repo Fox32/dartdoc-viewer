@@ -62,6 +62,7 @@ class IndexElement extends DartdocElement {
 
   get breadcrumbs => viewer.breadcrumbs;
 
+  /// Add the breadcrumbs programmatically.
   @observable crumbs() {
     var root = shadowRoot.query("#navbar");
     if (root == null) return;

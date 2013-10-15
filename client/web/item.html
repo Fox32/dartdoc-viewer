@@ -33,7 +33,7 @@
         </p>
     </template>
     <template if="{{shouldShowClassOrLibraryComment}}">
-    {{addCommentOrSkip('dartdoc-item', true)}}  
+    {{addComment('dartdoc-item', true)}}  
     </template>
 
     <template if="{{shouldShowMethodComment}}">
@@ -42,7 +42,7 @@
       </p>
     </template>
     <template if="{{shouldShowMethodComment}}">
-      {{addCommentOrSkip('dartdoc-item', true)}}
+      {{addComment('dartdoc-item', true)}}
     </template>
 
   </template>

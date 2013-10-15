@@ -11,14 +11,11 @@ class HomeElement extends MemberElement {
     new PathObserver(this, "item").bindSync(
         (_) {
           notifyProperty(this, #libraries);
-          notifyProperty(this, #addComment);
         });
   }
 
   get item => super.item;
   set item(x) => super.item = x;
 
-  @observable
-  get libraries => item == null ? [] : item.libraries;
-
+  @observable get libraries => item == null ? [] : item.libraries;
 }

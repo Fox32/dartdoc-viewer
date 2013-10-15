@@ -4,6 +4,8 @@ import 'app.dart';
 import 'member.dart';
 import 'package:polymer/polymer.dart';
 
+// TODO(alanknight): These pages are almost impossible to get to right now.
+// We should either delete them or make them navigable.
 @CustomTag("dartdoc-method")
 class DartdocMethod extends MethodElement {
   DartdocMethod() {

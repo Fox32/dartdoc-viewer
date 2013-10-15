@@ -21,8 +21,8 @@ class LibraryPanel extends DartdocElement {
   @observable createEntries() {
     var mainElement = shadowRoot.query("#library-panel");
     if (mainElement == null) return;
-    // TODO(alanknight): I think we could get away with checking if the children
-    // have been added at all, we don't have to re-do it every time.
+    // TODO(alanknight): Can we get away with checking if the children
+    // have been added at all, so we don't have to re-do it every time.
     mainElement.children.clear();
     for (var library in viewer.homePage.libraries) {
       var isFirst =

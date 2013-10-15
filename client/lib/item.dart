@@ -17,10 +17,8 @@ const docsPath = '../../docs/';
  */
 
 class Container extends ObservableBase {
-  @observable
-  String name;
-  @observable
-  String comment = '<span></span>';
+  @observable String name;
+  @observable String comment = '<span></span>';
 
   Container(this.name, [this.comment]);
 
@@ -427,7 +425,6 @@ class Class extends LazyItem {
     }
     return out.toString();
   }
-
 }
 
 /**
