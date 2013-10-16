@@ -61,6 +61,7 @@ Map<String, int> value = {
  * the appropriate qualified name to return for the search query.
  */
 List<SearchResult> lookupSearchResults(String query, int maxResults) {
+  if (query == '') return [];
 
   var stopwatch = new Stopwatch()..start();
 
