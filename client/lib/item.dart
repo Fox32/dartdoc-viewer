@@ -10,13 +10,13 @@ import 'package:polymer/polymer.dart';
 import 'package:yaml/yaml.dart';
 
 // TODO(tmandel): Don't hardcode in a path if it can be avoided.
-const docsPath = '../../docs/';
+@reflectable const docsPath = '../../docs/';
 
 /**
  * Anything that holds values and can be displayed.
  */
 
-class Container extends ObservableBase {
+@reflectable class Container extends ObservableBase {
   @observable String name;
   @observable String comment = '<span></span>';
 
@@ -26,13 +26,13 @@ class Container extends ObservableBase {
 }
 
 // Wraps a comment in span element to make it a single HTML Element.
-String _wrapComment(String comment) {
+@reflectable String _wrapComment(String comment) {
   if (comment == null) comment = '';
   return '<span>$comment</span>';
 }
 
 /// Returns the qualified name of [qualifiedName]'s owner.
-String ownerName(String qualifiedName) {
+@reflectable String ownerName(String qualifiedName) {
   var index = qualifiedName.lastIndexOf('.');
   return index != -1 ? qualifiedName.substring(0, index) : '';
 }
@@ -40,7 +40,7 @@ String ownerName(String qualifiedName) {
 /**
  * A [Container] that contains other [Container]s to be displayed.
  */
-class Category extends Container {
+@reflectable class Category extends Container {
 
   List<Container> content = [];
   Set<String> memberNames = new Set<String>();
@@ -120,7 +120,7 @@ class Category extends Container {
 /**
  * A [Container] synonymous with a page.
  */
-class Item extends Container {
+@reflectable class Item extends Container {
   /// A list of [Item]s representing the path to this [Item].
   List<Item> path = [];
   @observable String qualifiedName;
@@ -159,7 +159,7 @@ class Item extends Container {
 }
 
 /// Sorts each inner [List] by qualified names.
-void _sort(List<List<Item>> items) {
+@reflectable void _sort(List<List<Item>> items) {
   items.forEach((item) {
     item.sort((Item a, Item b) =>
       a.decoratedName.compareTo(b.decoratedName));
@@ -169,7 +169,7 @@ void _sort(List<List<Item>> items) {
 /**
  * An [Item] containing all of the [Library] and [Placeholder] objects.
  */
-class Home extends Item {
+@reflectable class Home extends Item {
 
   /// All libraries being viewed from the homepage.
   List<Item> libraries = [];
@@ -196,7 +196,7 @@ class Home extends Item {
 }
 
 /// Runs through the member structure and creates path information.
-void buildHierarchy(Item page, Item previous) {
+@reflectable void buildHierarchy(Item page, Item previous) {
   if (page.path.isEmpty) {
     page.path
       ..addAll(previous.path)
@@ -208,7 +208,7 @@ void buildHierarchy(Item page, Item previous) {
 /**
  * An [Item] that is lazily loaded.
  */
-abstract class LazyItem extends Item {
+@reflectable abstract class LazyItem extends Item {
 
   bool isLoaded = false;
   String previewComment;
@@ -236,7 +236,7 @@ abstract class LazyItem extends Item {
 /**
  * An [Item] that describes a single Dart library.
  */
-class Library extends LazyItem {
+@reflectable class Library extends LazyItem {
 
   Category classes;
   Category errors;
@@ -307,7 +307,7 @@ class Library extends LazyItem {
 /**
  * An [Item] that describes a single Dart class.
  */
-class Class extends LazyItem {
+@reflectable class Class extends LazyItem {
 
   Category functions;
   Category variables;
@@ -430,7 +430,7 @@ class Class extends LazyItem {
 /**
  * A collection of [Annotation]s.
  */
-class AnnotationGroup {
+@reflectable class AnnotationGroup {
 
   List<String> supportedBrowsers = [];
   List<Annotation> annotations = [];
@@ -454,7 +454,7 @@ class AnnotationGroup {
 /**
  * A single annotation to an [Item].
  */
-class Annotation {
+@reflectable class Annotation {
 
   String qualifiedName;
   LinkableType link;
@@ -470,7 +470,7 @@ class Annotation {
 /**
  * An [Item] that describes a Dart member with parameters.
  */
-class Parameterized extends Item {
+@reflectable class Parameterized extends Item {
 
   List<Parameter> parameters;
 
@@ -492,7 +492,7 @@ class Parameterized extends Item {
 /**
  * An [Item] that describes a single Dart typedef.
  */
-class Typedef extends Parameterized {
+@reflectable class Typedef extends Parameterized {
 
   LinkableType type;
   AnnotationGroup annotations;
@@ -508,7 +508,7 @@ class Typedef extends Parameterized {
 /**
  * An [Item] that describes a single Dart method.
  */
-class Method extends Parameterized {
+@reflectable class Method extends Parameterized {
 
   bool isStatic;
   bool isAbstract;
@@ -559,7 +559,7 @@ class Method extends Parameterized {
 /**
  * A single parameter to a [Method].
  */
-class Parameter {
+@reflectable class Parameter {
 
   String name;
   bool isOptional;
@@ -594,7 +594,7 @@ class Parameter {
 /**
  * A [Container] that describes a single Dart variable.
  */
-class Variable extends Item {
+@reflectable class Variable extends Item {
 
   bool isFinal;
   bool isStatic;
@@ -651,7 +651,7 @@ class Variable extends Item {
 /**
  * A Dart type that potentially contains generic parameters.
  */
-class NestedType {
+@reflectable class NestedType {
   LinkableType outer;
   List<NestedType> inner = [];
 
@@ -672,7 +672,7 @@ class NestedType {
 /**
  * A Dart type that should link to other [Item]s.
  */
-class LinkableType {
+@reflectable class LinkableType {
 
   /// The resolved qualified name of the type this [LinkableType] represents.
   String type;

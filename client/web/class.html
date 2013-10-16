@@ -33,28 +33,28 @@
       {{addComment('dartdoc-class')}}
 
       <div class="accordion" id="accordion-grouping">
-        <template if="{{operators.content.isNotEmpty}}">
+        <template if="{{operatorsIsNotEmpty}}">
           <template if="{{operators.hasNonInherited || viewer.isInherited}}">
             <dartdoc-category category="{{operators}}" 
                 class="accordion-group">
             </dartdoc-category>
           </template>
         </template>
-        <template if="{{variables.content.isNotEmpty}}">
+        <template if="{{variablesIsNotEmpty}}">
           <template if="{{variables.hasNonInherited || viewer.isInherited}}">
             <dartdoc-category category="{{variables}}" 
                 class="accordion-group">
             </dartdoc-category>
           </template>
         </template>
-        <template if="{{constructors.content.isNotEmpty}}">
+        <template if="{{constructorsIsNotEmpty}}">
           <template if="{{constructors.hasNonInherited || viewer.isInherited}}">
             <dartdoc-category category="{{constructors}}"
               class="accordion-group">
             </dartdoc-category>
           </template>
         </template>
-        <template if="{{methods.content.isNotEmpty}}">
+        <template if="{{methodsIsNotEmpty}}">
           <template if="{{methods.hasNonInherited || viewer.isInherited}}">
             <dartdoc-category category="{{methods}}"
                 class="accordion-group">

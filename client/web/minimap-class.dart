@@ -16,6 +16,14 @@ class MinimapElementClass extends MemberElement {
           notifyProperty(this, #variableItems);
           notifyProperty(this, #constructorItems);
           notifyProperty(this, #functionItems);
+          notifyProperty(this, #operators);
+          notifyProperty(this, #variables);
+          notifyProperty(this, #constructors);
+          notifyProperty(this, #functions);
+          notifyProperty(this, #operatorItemsIsNotEmpty);
+          notifyProperty(this, #variableItemsIsNotEmpty);
+          notifyProperty(this, #constructorItemsIsNotEmpty);
+          notifyProperty(this, #functionItemsIsNotEmpty);
           notifyProperty(this, #page);
           notifyProperty(this, #shouldShowConstructors);
           notifyProperty(this, #shouldShowFunctions);
@@ -30,6 +38,18 @@ class MinimapElementClass extends MemberElement {
   @observable get variableItems => check(() => page.variables.content);
   @observable get constructorItems => check(() => page.constructs.content);
   @observable get functionItems => check(() => page.functions.content);
+
+  @observable get operators => check(() => page.operators);
+  @observable get variables => check(() => page.variables);
+  @observable get constructors => check(() => page.constructs);
+  @observable get functions => check(() => page.functions);
+
+  @observable get operatorItemsIsNotEmpty => _isNotEmpty(operators);
+  @observable get variableItemsIsNotEmpty => _isNotEmpty(variables);
+  @observable get constructorItemsIsNotEmpty => _isNotEmpty(constructors);
+  @observable get functionItemsIsNotEmpty => _isNotEmpty(functions);
+
+  _isNotEmpty(x) => x == null || page is! Class ? false : x.content.isNotEmpty;
 
   @observable get page => viewer.currentPage;
   check(Function f) => page is Class ? f() : [];

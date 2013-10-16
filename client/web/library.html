@@ -11,32 +11,32 @@
       <section class="description"></section>
       {{addComment('dartdoc-library')}}
       <div class="accordion" id="accordion-grouping">
-        <template if="{{item.operators.content.isNotEmpty}}">
+        <template if="{{operatorsIsNotEmpty}}">
           <dartdoc-category category="{{item.operators}}" 
             class="accordion-group">
           </dartdoc-category>
         </template>
-        <template if="{{item.variables.content.isNotEmpty}}">
+        <template if="{{variablesIsNotEmpty}}">
           <dartdoc-category category="{{item.variables}}" 
             class="accordion-group">
           </dartdoc-category>
         </template>
-        <template if="{{item.functions.content.isNotEmpty}}">
+        <template if="{{functionsIsNotEmpty}}">
           <dartdoc-category category="{{item.functions}}" 
             class="accordion-group">
           </dartdoc-category>
         </template>
-        <template if="{{item.classes.content.isNotEmpty}}">
+        <template if="{{classesIsNotEmpty}}">
           <dartdoc-category category="{{item.classes}}" 
             class="accordion-group"> 
           </dartdoc-category>
         </template>
-        <template if="{{item.typedefs.content.isNotEmpty}}">
+        <template if="{{typedefsIsNotEmpty}}">
           <dartdoc-category category="{{item.typedefs}}" 
             class="accordion-group">
           </dartdoc-category>
         </template>
-        <template if="{{item.errors.content.isNotEmpty}}">
+        <template if="{{errorsIsNotEmpty}}">
           <dartdoc-category category="{{item.errors}}" 
             class="accordion-group">
           </dartdoc-category>

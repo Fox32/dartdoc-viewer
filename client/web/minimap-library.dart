@@ -18,6 +18,12 @@ class MinimapElementLibrary extends MemberElement {
         notifyProperty(this, #classItems);
         notifyProperty(this, #typedefItems);
         notifyProperty(this, #errorItems);
+        notifyProperty(this, #operatorItemsIsNotEmpty);
+        notifyProperty(this, #variableItemsIsNotEmpty);
+        notifyProperty(this, #functionItemsIsNotEmpty);
+        notifyProperty(this, #classItemsIsNotEmpty);
+        notifyProperty(this, #typedefItemsIsNotEmpty);
+        notifyProperty(this, #errorItemsIsNotEmpty);
         notifyProperty(this, #name);
         notifyProperty(this, #decoratedName);
         notifyProperty(this, #linkHref);
@@ -35,6 +41,12 @@ class MinimapElementLibrary extends MemberElement {
   @observable get classItems => check(() => contents(page.classes));
   @observable get typedefItems => check(() => contents(page.typedefs));
   @observable get errorItems => check(() => contents(page.errors));
+  @observable get operatorItemsIsNotEmpty => operatorItems.isNotEmpty;
+  @observable get variableItemsIsNotEmpty => variableItems.isNotEmpty;
+  @observable get functionItemsIsNotEmpty => functionItems.isNotEmpty;
+  @observable get classItemsIsNotEmpty => classItems.isNotEmpty;
+  @observable get typedefItemsIsNotEmpty => typedefItems.isNotEmpty;
+  @observable get errorItemsIsNotEmpty => errorItems.isNotEmpty;
 
   contents(thing) => thing == null ? [] : thing.content;
 

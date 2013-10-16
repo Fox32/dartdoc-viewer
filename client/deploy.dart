@@ -20,7 +20,7 @@ compileToJs(_) {
   var result =
     Process.runSync(dart2js, [ // '--minify',
         '-o', 'out/web/index.html_bootstrap.dart.js',
-	 'out/web/index.html_bootstrap.dart', 
+	'out/web/index.html_bootstrap.dart', '--suppress-hints', 
       '--package-root=/Users/alanknight/dart-git/dart/xcodebuild/ReleaseIA32/packages'], runInShell: true);
   print(result.stdout);
   print("Done");

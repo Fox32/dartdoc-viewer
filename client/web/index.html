@@ -52,7 +52,7 @@
                 Options <b class="caret"></b>
               </a>
               <ul class="dropdown-menu">
-                <template if="{{viewer.currentPage != viewer.homePage}}">
+                <template if="{{!isHomePage}}">
                   <li class="visible-lg"><a on-click="togglePanel">
                     <template if="{{viewer.isPanel}}">Hide Libraries</template>
                     <template if="{{!viewer.isPanel}}">Show Libraries</template>
@@ -83,7 +83,7 @@
       </template>
   
     <main id="page-content" class="{{pageContentClass}}">
-      <dartdoc-page id="dartdoc-page" home="{{viewer.homePage}}">
+      <dartdoc-page id="dartdoc-page" home="{{homePage}}">
       </dartdoc-page>
     </main>
   

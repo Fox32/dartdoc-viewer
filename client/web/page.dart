@@ -13,23 +13,29 @@ import 'member.dart';
 class PageElement extends DartdocElement {
   @observable Home home;
 
-  PageElement.created() : super.created() {
+  PageElement.created() : super.created();
+
+  enteredView() {
+    super.enteredView();
     new PathObserver(this, "viewer.currentPage").bindSync(
-        (_) {
-          notifyProperty(this, #currentPage);
-          notifyProperty(this, #currentPageIsLibrary);
-          notifyProperty(this, #currentPageIsMethod);
-          notifyProperty(this, #currentPageIsClass);
-          notifyProperty(this, #currentPageIsTypedef);
-          notifyProperty(this, #isHome);
-          notifyProperty(this, #hasHomePage);
-        });
+    (_) {
+      notifyProperty(this, #currentPage);
+      notifyProperty(this, #currentPageIsLibrary);
+      notifyProperty(this, #currentPageIsMethod);
+      notifyProperty(this, #currentPageIsClass);
+      notifyProperty(this, #currentPageIsTypedef);
+      notifyProperty(this, #isHome);
+      notifyProperty(this, #hasHomePage);
+    });
     new PathObserver(this, "viewer.homePage").bindSync(
         (_) {
           notifyProperty(this, #hasHomePage);
-        });
+          notifyProperty(this, #homePage);
+          notifyProperty(this, #isHome);
+    });
   }
 
+  @observable get homePage => viewer.homePage;
   @observable get isHome => currentPage is Home;
   @observable get hasHomePage => viewer.homePage != null;
 

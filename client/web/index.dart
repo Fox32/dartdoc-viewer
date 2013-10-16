@@ -9,15 +9,19 @@ import 'dart:html';
 @CustomTag("dartdoc-main")
 class IndexElement extends DartdocElement {
 
-  IndexElement.created() : super.created() {
+  IndexElement.created() : super.created();
+
+  enteredView() {
+    super.enteredView();
     new PathObserver(this, "viewer.currentPage").bindSync(
-        (_) {
-          notifyProperty(this, #viewer);
-          notifyProperty(this, #shouldShowLibraryMinimap);
-          notifyProperty(this, #shouldShowClassMinimap);
-          notifyProperty(this, #crumbs);
-          notifyProperty(this, #pageContentClass);
-        });
+      (_) {
+        notifyProperty(this, #viewer);
+        notifyProperty(this, #shouldShowLibraryMinimap);
+        notifyProperty(this, #shouldShowClassMinimap);
+        notifyProperty(this, #crumbs);
+        notifyProperty(this, #pageContentClass);
+        notifyProperty(this, #isHomePage);
+      });
     new PathObserver(this, "viewer.isMinimap").bindSync(
       (_) {
         notifyProperty(this, #shouldShowLibraryMinimap);
@@ -58,7 +62,12 @@ class IndexElement extends DartdocElement {
   @observable get shouldShowLibraryMinimap =>
       viewer.currentPage is Library && viewer.isMinimap;
 
-  get shouldShowClassMinimap => viewer.currentPage is Class && viewer.isMinimap;
+  @observable get shouldShowClassMinimap =>
+      viewer.currentPage is Class && viewer.isMinimap;
+  @observable get isHomePage => viewer.currentPage == viewer.homePage;
+  @observable get homePage => viewer.homePage;
+  set homePage(x) {}
+  @observable get viewer => super.viewer;
 
   get breadcrumbs => viewer.breadcrumbs;
 
@@ -93,5 +102,4 @@ class IndexElement extends DartdocElement {
       list.classes.add("open");
     }
   }
-
 }
