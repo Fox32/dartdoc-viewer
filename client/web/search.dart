@@ -88,8 +88,8 @@ class Search extends DartdocElement {
     }
   }
 
-  void inserted() {
-    super.inserted();
+  void enteredView() {
+    super.enteredView();
     Element.focusEvent.forTarget(xtag, useCapture: true)
         .listen(onFocusCallback);
     Element.blurEvent.forTarget(xtag, useCapture: true)
