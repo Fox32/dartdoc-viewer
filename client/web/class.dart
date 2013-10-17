@@ -5,35 +5,26 @@ import 'package:polymer/polymer.dart';
 
 import 'app.dart';
 import 'member.dart';
+@MirrorsUsed()
+import 'dart:mirrors';
 
 @CustomTag("dartdoc-class")
 class ClassElement extends MemberElement {
-  ClassElement.created() : super.created() {
-    item = new Class.forPlaceholder('loading', 'loading');
-    new PathObserver(this, "item").bindSync(
-        (_) {
-          notifyProperty(this, #variables);
-          notifyProperty(this, #operators);
-          notifyProperty(this, #constructors);
-          notifyProperty(this, #methods);
-          notifyProperty(this, #variablesIsNotEmpty);
-          notifyProperty(this, #operatorsIsNotEmpty);
-          notifyProperty(this, #constructorsIsNotEmpty);
-          notifyProperty(this, #methodsIsNotEmpty);
-          notifyProperty(this, #annotations);
-          notifyProperty(this, #interfaces);
-          notifyProperty(this, #subclasses);
-          notifyProperty(this, #superClass);
-          notifyProperty(this, #nameWithGeneric);
-          notifyProperty(this, #name);
-          notifyProperty(this, #addInterfaceLinks);
-          notifyProperty(this, #addSubclassLinks);
-          notifyProperty(this, #isNotObject);
-        });
-  }
+  ClassElement.created() : super.created();
 
-  set item(newItem) => super.item = (newItem is Class) ? newItem : item;
-  @observable Class get item => super.item;
+  get defaultItem => new Class.forPlaceholder('loading', 'loading');
+
+  get observables => const [#variables, #operators, #constructors, #methods,
+    #variablesIsNotEmpty, #operatorsIsNotEmpty, #constructorsIsNotEmpty,
+    #methodsIsNotEmpty, #annotations, #interfaces, #subclasses, #superClass,
+    #nameWithGeneric, #name, #isNotObject];
+
+  get methodsToCall => const [#addInterfaceLinks, #addSubclassLinks];
+
+  bool wrongClass(newItem) => newItem is! Class;
+
+  get item => super.item;
+  set item(newItem) => super.item = newItem;
 
   @observable Category get variables => item.variables;
   @observable Category get operators => item.operators;

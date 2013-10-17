@@ -9,24 +9,16 @@ import 'member.dart';
 
 @CustomTag("dartdoc-library")
 class LibraryElement extends MemberElement {
-  LibraryElement.created() : super.created() {
-    item = defaultItem;
-    new PathObserver(this, "item").bindSync(
-    (_) {
-      notifyProperty(this, #operators);
-      notifyProperty(this, #variables);
-      notifyProperty(this, #functions);
-      notifyProperty(this, #classes);
-      notifyProperty(this, #typedefs);
-      notifyProperty(this, #errors);
-      notifyProperty(this, #operatorsIsNotEmpty);
-      notifyProperty(this, #variablesIsNotEmpty);
-      notifyProperty(this, #functionsIsNotEmpty);
-      notifyProperty(this, #classesIsNotEmpty);
-      notifyProperty(this, #typedefsIsNotEmpty);
-      notifyProperty(this, #errorsIsNotEmpty);
-    });
-  }
+  LibraryElement.created() : super.created();
+
+  get observables => const [#operators, #variables, #functions, #classes,
+      #typedefs, #errors, #operatorsIsNotEmpty, #variablesIsNotEmpty,
+      #functionsIsNotEmpty, #classesIsNotEmpty, #typedefsIsNotEmpty,
+      #errorsIsNotEmpty];
+  wrongClass(newItem) => newItem is! Library;
+
+  get item => super.item;
+  set item(newItem) => super.item = newItem;
 
   @observable get operators =>
      item.operators == null ? [] : item.operators.content;
@@ -46,10 +38,7 @@ class LibraryElement extends MemberElement {
   @observable get typedefsIsNotEmpty => typedefs.isNotEmpty;
   @observable get errorsIsNotEmpty => errors.isNotEmpty;
 
-  get item => super.item;
-  set item(newItem) => super.item = newItem is Library ? newItem : defaultItem;
-
-  get defaultItem => item = new Library.forPlaceholder({
+  get defaultItem => new Library.forPlaceholder({
       "name" : 'loading',
       "preview" : 'loading',
     });

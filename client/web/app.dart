@@ -50,7 +50,16 @@ class Viewer extends Observable {
   /// The current page being shown. An Item.
   /// TODO(alanknight): Restore the type declaration here and structure the code
   /// so we can avoid the warnings from casting to subclasses.
-  @observable var currentPage;
+  var _currentPage;
+  @observable get currentPage => _currentPage;
+  set currentPage(newPage) {
+    var oldPage = _currentPage;
+    _currentPage = newPage;
+    notifyPropertyChange(#breadcrumbs, null, breadcrumbs);
+    notifyPropertyChange(#currentPage, oldPage, newPage);
+
+  }
+//  @observable var currentPage;
 
   /// State for whether or not the library list panel should be shown.
   bool _isPanel = true;
@@ -77,14 +86,10 @@ class Viewer extends Observable {
       homePage = new Home(libraries);
     });
 
-    new PathObserver(this, "currentPage").bindSync(
-      (_) {
-        notifyProperty(this, #breadcrumbs);
-      });
     new PathObserver(this, "isDesktop").bindSync(
       (_) {
-        notifyProperty(this, #isMinimap);
-        notifyProperty(this, #isPanel);
+        notifyPropertyChange(#isMinimap, null, isMinimap);
+        notifyPropertyChange(#isPanel, null, isPanel);
       });
   }
 

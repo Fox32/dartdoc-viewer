@@ -9,40 +9,28 @@ import 'dart:html';
 /// An element in a page's minimap displayed on the right of the page.
 @CustomTag("dartdoc-minimap-class")
 class MinimapElementClass extends MemberElement {
-  MinimapElementClass.created() : super.created() {
-    new PathObserver(this, "item").bindSync(
-        (_) {
-          notifyProperty(this, #operatorItems);
-          notifyProperty(this, #variableItems);
-          notifyProperty(this, #constructorItems);
-          notifyProperty(this, #functionItems);
-          notifyProperty(this, #operators);
-          notifyProperty(this, #variables);
-          notifyProperty(this, #constructors);
-          notifyProperty(this, #functions);
-          notifyProperty(this, #operatorItemsIsNotEmpty);
-          notifyProperty(this, #variableItemsIsNotEmpty);
-          notifyProperty(this, #constructorItemsIsNotEmpty);
-          notifyProperty(this, #functionItemsIsNotEmpty);
-          notifyProperty(this, #page);
-          notifyProperty(this, #shouldShowConstructors);
-          notifyProperty(this, #shouldShowFunctions);
-          notifyProperty(this, #shouldShowVariables);
-          notifyProperty(this, #shouldShowOperators);
-          notifyProperty(this, #name);
-          notifyProperty(this, #currentLocation);
-        });
-  }
+  MinimapElementClass.created() : super.created();
 
-  @observable get operatorItems => check(() => page.operators.content);
-  @observable get variableItems => check(() => page.variables.content);
-  @observable get constructorItems => check(() => page.constructs.content);
-  @observable get functionItems => check(() => page.functions.content);
+  get observables => [#operatorItems, #variableItems, #constructorItems,
+      #functionItems, #operators, #variables, #constructors, #functions,
+      #operatorItemsIsNotEmpty, #variableItemsIsNotEmpty,
+      #constructorItemsIsNotEmpty, #functionItemsIsNotEmpty, #page,
+      #shouldShowConstructors, #shouldShowFunctions, #shouldShowVariables,
+      #shouldShowOperators, #name, #currentLocation];
 
-  @observable get operators => check(() => page.operators);
-  @observable get variables => check(() => page.variables);
-  @observable get constructors => check(() => page.constructs);
-  @observable get functions => check(() => page.functions);
+  wrongClass(newItem) => newItem is! Class;
+
+  get defaultItem => new Class.forPlaceholder('loading', 'loading');
+
+  @observable get operatorItems => page.operators.content;
+  @observable get variableItems => page.variables.content;
+  @observable get constructorItems => page.constructs.content;
+  @observable get functionItems => page.functions.content;
+
+  @observable get operators => page.operators;
+  @observable get variables => page.variables;
+  @observable get constructors => page.constructs;
+  @observable get functions => page.functions;
 
   @observable get operatorItemsIsNotEmpty => _isNotEmpty(operators);
   @observable get variableItemsIsNotEmpty => _isNotEmpty(variables);
@@ -52,7 +40,6 @@ class MinimapElementClass extends MemberElement {
   _isNotEmpty(x) => x == null || page is! Class ? false : x.content.isNotEmpty;
 
   @observable get page => viewer.currentPage;
-  check(Function f) => page is Class ? f() : [];
 
   get item => super.item;
   set item(newItem) => super.item = newItem;
@@ -65,7 +52,7 @@ class MinimapElementClass extends MemberElement {
   shouldShow(Function f) => page is Class &&
       (f(page).hasNonInherited ||  viewer.isInherited);
 
-  @observable get name => check(() => page.name);
+  @observable get name => page.name;
 
   @observable get currentLocation => window.location.toString();
 

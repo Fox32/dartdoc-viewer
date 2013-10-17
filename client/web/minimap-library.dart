@@ -32,15 +32,25 @@ class MinimapElementLibrary extends MemberElement {
       });
   }
 
-  get item => super.item;
-  set item(newItem) => super.item = newItem;
+  get observables => [#operatorItems, #variableItems, #functionItems,
+    #classItems, #typedefItems, #errorItems, #operatorItemsIsNotEmpty,
+    #variableItemsIsNotEmpty, #functionItemsIsNotEmpty, #classItemsIsNotEmpty,
+    #typedefItemsIsNotEmpty, #errorItemsIsNotEmpty, #name, #decoratedName,
+    #linkHref, #currentLocation, #idName];
 
-  @observable get operatorItems => check(() => contents(page.operators));
-  @observable get variableItems => check(() => contents(page.variables));
-  @observable get functionItems => check(() => contents(page.functions));
-  @observable get classItems => check(() => contents(page.classes));
-  @observable get typedefItems => check(() => contents(page.typedefs));
-  @observable get errorItems => check(() => contents(page.errors));
+  wrongClass(newItem) => newItem is! Library;
+
+  get defaultItem => new Library.forPlaceholder({
+    "name" : 'loading',
+    "preview" : 'loading',
+  });
+
+  @observable get operatorItems => contents(item.operators);
+  @observable get variableItems => contents(item.variables);
+  @observable get functionItems => contents(item.functions);
+  @observable get classItems => contents(item.classes);
+  @observable get typedefItems => contents(item.typedefs);
+  @observable get errorItems => contents(item.errors);
   @observable get operatorItemsIsNotEmpty => operatorItems.isNotEmpty;
   @observable get variableItemsIsNotEmpty => variableItems.isNotEmpty;
   @observable get functionItemsIsNotEmpty => functionItems.isNotEmpty;
@@ -50,11 +60,12 @@ class MinimapElementLibrary extends MemberElement {
 
   contents(thing) => thing == null ? [] : thing.content;
 
-  get page => item;
-  check(Function f) => page != null && page is Library ? f() : [];
-  @observable get linkHref => check(() => page.linkHref);
-  @observable get name => check(() => page.name);
+  @observable get linkHref => item.linkHref;
+  @observable get name => item.name;
   @observable get currentLocation => window.location.toString();
+
+  get item => super.item;
+  set item(newItem) => super.item = newItem;
 
   @observable decoratedName(thing) =>
       thing == null ? null : thing.decoratedName;

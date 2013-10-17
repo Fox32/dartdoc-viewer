@@ -15,26 +15,20 @@ import 'member.dart';
  @CustomTag("dartdoc-item")
 class ItemElement extends MemberElement {
   ItemElement.created() : super.created() {
-    item = defaultItem();
-    new PathObserver(this, "item").bindSync(
-        (_) {
-          notifyProperty(this, #title);
-          notifyProperty(this, #parameters);
-          notifyProperty(this, #type);
-          notifyProperty(this, #linkHref);
-          notifyProperty(this, #isMethod);
-          notifyProperty(this, #modifiers);
-          notifyProperty(this, #shouldShowClassOrLibraryComment);
-          notifyProperty(this, #shouldShowMethodComment);
-          notifyProperty(this, #idName);
-        });
     style.setProperty('display', 'block');
   }
 
-  get item => super.item;
-  set item(x) => super.item = (x == null || x is! Item) ? defaultItem() : x;
+  get observables => const [#title, #parameters, #type, #linkHref, #isMethod,
+      #modifiers, #shouldShowClassOrLibraryComment, #shouldShowMethodComment,
+      #idName];
 
-  defaultItem() => new Class.forPlaceholder("<p>loading</p>", "<p>loading</p>");
+  wrongClass(newItem) => newItem is! Item;
+
+  get defaultItem =>
+      new Class.forPlaceholder("<p>loading</p>", "<p>loading</p>");
+
+  get item => super.item;
+  set item(newItem) => super.item = newItem;
 
   @observable get linkHref => item.linkHref;
   @observable String get title => item.decoratedName;

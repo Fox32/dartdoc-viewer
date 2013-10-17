@@ -33,6 +33,7 @@ class PageElement extends DartdocElement {
           notifyProperty(this, #homePage);
           notifyProperty(this, #isHome);
     });
+    style.setProperty('display', 'block');
   }
 
   @observable get homePage => viewer.homePage;

@@ -12,15 +12,15 @@ import 'member.dart';
 @CustomTag("dartdoc-variable")
 class VariableElement extends InheritedElement {
   VariableElement.created() : super.created() {
-    new PathObserver(this, "item").bindSync(
-        (_) {
-          notifyProperty(this, #annotations);
-        });
     style.setProperty('display', 'block');
   }
 
+  get observables => const [#annotations];
+  get defaultItem => new Variable({'type' : [null]})..name = 'loading';
+  wrongClass(newItem) => newItem is! Variable;
+
   get item => super.item;
-  set item(newItem) => super.item = (newItem is Variable ? newItem : null);
+  set item(newItem) => super.item = newItem;
 
   @observable get annotations =>
       item == null ? new AnnotationGroup([]) : item.annotations;

@@ -5,7 +5,8 @@ import 'dart:html';
 import 'package:dartdoc_viewer/item.dart';
 import 'package:dartdoc_viewer/search.dart';
 import 'package:polymer/polymer.dart';
-
+@MirrorsUsed()
+import 'dart:mirrors';
 import 'app.dart' as app;
 
 class SameProtocolUriPolicy implements UriPolicy {
@@ -51,15 +52,34 @@ class NullTreeSanitizer implements NodeTreeSanitizer {
 //// This is a web component to be extended by all Dart members with comments.
 //// Each member has an [Item] associated with it as well as a comment to
 //// display, so this class handles those two aspects shared by all members.
-@reflectable class MemberElement extends DartdocElement {
+@reflectable abstract class MemberElement extends DartdocElement {
   MemberElement.created() : super.created() {
-    new PathObserver(this, "item").bindSync(
-        (_) {
-          notifyProperty(this, #addComment);
-        });
+    _item = defaultItem;
   }
 
-  @published var item;
+  List<Symbol> get observables;
+  List<Symbol> get methodsToCall => [#addComment];
+  bool wrongClass(newItem);
+  get defaultItem;
+  var _item;
+
+  @published set item(newItem) {
+    if (newItem == null || wrongClass(newItem)) return;
+    var oldItem = item;
+    var oldValues = new Map.fromIterables(
+        observables,
+        observables.map((symbol) => reflect(this).getField(symbol)));
+    _item = newItem;
+    var newValues = new Map.fromIterables(
+        observables,
+        observables.map((symbol) => reflect(this).getField(symbol)));
+    observables.forEach((symbol) =>
+      notifyPropertyChange(symbol, oldValues[symbol], newValues[symbol]));
+    notifyPropertyChange(#item, oldItem, item);
+    methodsToCall.forEach((symbol) =>
+      notifyPropertyChange(symbol, null, 'changeNoMatterWhat'));
+  }
+  @published get item => _item;
 
   /// A valid string for an HTML id made from this [Item]'s name.
   @observable String get idName {
@@ -157,7 +177,7 @@ class NullTreeSanitizer implements NodeTreeSanitizer {
 }
 
 //// A [MemberElement] that could be inherited from another [MemberElement].
-@reflectable class InheritedElement extends MemberElement {
+@reflectable abstract class InheritedElement extends MemberElement {
   InheritedElement.created() : super.created();
 
   LinkableType inheritedFrom;
@@ -191,22 +211,24 @@ class NullTreeSanitizer implements NodeTreeSanitizer {
 }
 
 @reflectable class MethodElement extends InheritedElement {
-  MethodElement.created() : super.created() {
-    item = new Method({
+
+  get observables => const [];
+  bool wrongClass(newItem) => newItem is! Method;
+
+  MethodElement.created() : super.created();
+
+  get defaultItem => new Method({
       "name" : "Loading",
       "qualifiedName" : "Loading",
       "comment" : "",
       "parameters" : null,
       "return" : [null],
     }, isConstructor: true);
-  }
 
   // TODO(alanknight): Remove this and other workarounds for bindings firing
   // even when their surrounding test isn't true. This ignores values of the
   // wrong type. IOssue 13386 and/or 13445
   // TODO(alanknight): Remove duplicated subclass methods. Issue 13937
-  set item(newItem) => super.item = (newItem is Method) ? newItem : item;
-  Method get item => super.item;
 
   @observable List<Parameter> get parameters => item.parameters;
 }
