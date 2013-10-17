@@ -14,7 +14,7 @@ class LibraryElement extends MemberElement {
   }
 
   get item => super.item;
-  set item(x) => super.item = x is Library ? x : defaultItem;
+  set item(newItem) => super.item = newItem is Library ? newItem : defaultItem;
 
   get defaultItem => item = new Library.forPlaceholder({
       "name" : 'loading',

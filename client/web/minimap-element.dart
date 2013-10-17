@@ -29,7 +29,7 @@ class MinimapElement extends DartdocElement {
   @observable List<Item> items = [];
 
   @observable get itemsToShow => items.where(
-      (x) => !x.isInherited || viewer.isInherited);
+      (item) => !item.isInherited || viewer.isInherited);
 
   /// Creates a proper href String for an [Item].
   String link(linkItem) {

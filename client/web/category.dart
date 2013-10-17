@@ -57,7 +57,8 @@ class CategoryElement extends DartdocElement {
 
   @observable get categoryVariables {
     if (_variablesCache != null) return _variablesCache;
-    _variablesCache = categoryContent.where((each) => each is Variable).toList();
+    _variablesCache = categoryContent.where(
+        (each) => each is Variable).toList();
     return _variablesCache;
   }
 
@@ -67,9 +68,9 @@ class CategoryElement extends DartdocElement {
         (each) => each is! Variable && each is! Method).toList();
     return _everythingElseCache;
   }
-  var _methodsCache;
-  var _variablesCache;
-  var _everythingElseCache;
+  var _methodsCache = null;
+  var _variablesCache = null;
+  var _everythingElseCache = null;
 
   _flushCache() {
     _methodsCache = null;

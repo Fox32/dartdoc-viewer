@@ -35,7 +35,7 @@ class MinimapElementClass extends MemberElement {
   check(Function f) => page is Class ? f() : [];
 
   get item => super.item;
-  set item(x) => super.item = x;
+  set item(newItem) => super.item = newItem;
 
   @observable get shouldShowConstructors => shouldShow((x) => x.constructors);
   @observable get shouldShowFunctions => shouldShow((x) => x.functions);

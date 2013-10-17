@@ -16,8 +16,8 @@ class AnnotationElement extends DartdocElement {
 
   @observable AnnotationGroup annotations;
 
-  addAnnotations() {
-    if (annotations == null || annotations.annotations.isEmpty) return '';
+  void addAnnotations() {
+    if (annotations == null || annotations.annotations.isEmpty) return;
     var out = new StringBuffer();
     for (var annotation in annotations.annotations) {
       out.write('<i><a href="#${annotation.link.location}">'
@@ -28,13 +28,11 @@ class AnnotationElement extends DartdocElement {
       if (hasParams) out.write(")");
     }
     if (annotations.supportedBrowsers.isNotEmpty) {
-      out.write("<br/><i>Supported on:");
+      out.write("<br/><i>Supported on: ");
       out.write(annotations.supportedBrowsers.join(",&nbsp;"));
       out.write("</i><br/>");
     }
     var fragment = createFragment(out.toString(), treeSanitizer: sanitizer);
     shadowRoot.append(fragment);
   }
-
-
 }

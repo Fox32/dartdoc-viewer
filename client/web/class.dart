@@ -28,7 +28,7 @@ class ClassElement extends MemberElement {
         });
   }
 
-  set item(x) => super.item = (x is Class) ? x : item;
+  set item(newItem) => super.item = (newItem is Class) ? newItem : item;
   @observable Class get item => super.item;
 
   @observable Category get variables => item.variables;
@@ -40,11 +40,10 @@ class ClassElement extends MemberElement {
   @observable Category get methods => item.functions;
 
   @observable AnnotationGroup get annotations => item.annotations;
-  set annotations(x) {}
+  set annotations(_) {}
 
   @observable List<LinkableType> get interfaces =>
       item == null ? [] : item.implements;
-
   @observable List<LinkableType> get subclasses => item.subclasses;
 
   @observable LinkableType get superClass => item.superClass;
@@ -102,6 +101,6 @@ class ClassElement extends MemberElement {
 
   makeLinks(Iterable classes) =>
     classes
-        .map((x) =>'<a href="#${x.location}">${x.simpleType}</a>')
+        .map((cls) =>'<a href="#${cls.location}">${cls.simpleType}</a>')
         .join(",&nbsp;");
 }

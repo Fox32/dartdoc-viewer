@@ -19,7 +19,7 @@ class VariableElement extends InheritedElement {
   }
 
   get item => super.item;
-  set item(x) => super.item = (x is Variable ? x : null);
+  set item(newItem) => super.item = (newItem is Variable ? newItem : null);
 
   @observable get annotations =>
       item == null ? new AnnotationGroup([]) : item.annotations;

@@ -137,8 +137,8 @@ class Viewer extends ObservableBase {
     }
   }
 
-  /// Query for an element by id in the main element and in all the shadow
-  /// roots. If it's not found, return null.
+  /// Query for an element by [id] in [parent] and in all the shadow
+  /// roots. If it's not found, return [null].
   Element queryEverywhere(Element parent, String id) {
     if (parent.id == id) return parent;
     var shadowChildren =

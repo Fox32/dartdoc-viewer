@@ -67,11 +67,10 @@ List<SearchResult> lookupSearchResults(String query, int maxResults) {
   var scoredResults = <SearchResult>[];
   var resultSet = new Set<String>();
   var queryList = query.trim().toLowerCase().split(' ');
-  for (var q in queryList) {
-    for (var key in index.keys) {
-      if (key.toLowerCase().contains(q)) {
+  for (var key in index.keys) {
+    var lower = key.toLowercase();
+    if (queryList.any((q) => lower.contains(q))) {
         resultSet.add(key);
-      }
     }
   }
 

@@ -200,7 +200,7 @@ class MethodElement extends InheritedElement {
   // even when their surrounding test isn't true. This ignores values of the
   // wrong type. IOssue 13386 and/or 13445
   // TODO(alanknight): Remove duplicated subclass methods. Issue 13937
-  set item(x) => super.item = (x is Method) ? x : item;
+  set item(newItem) => super.item = (newItem is Method) ? newItem : item;
   Method get item => super.item;
 
   @observable List<Parameter> get parameters => item.parameters;
