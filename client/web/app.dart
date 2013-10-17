@@ -38,7 +38,7 @@ final Viewer viewer = new Viewer._();
       _dartdocMain == null ? _dartdocMain = query("#dartdoc-main").xtag : null;
 
 /// The Dartdoc Viewer application state.
-class Viewer extends ObservableBase {
+class Viewer extends Observable {
 
   @observable bool isDesktop = window.innerWidth > desktopSizeBoundary;
 

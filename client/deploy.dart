@@ -6,8 +6,8 @@ import 'dart:async';
 import 'package:path/path.dart';
 
 void main() {
-  lint()
-    .then((_) => deploy()).then(compileToJs);
+  lint(entryPoints: ['web/index.html'])
+    .then((_) => deploy(entryPoints: ['web/index.html'])).then(compileToJs);
 }
 
 compileToJs(_) {

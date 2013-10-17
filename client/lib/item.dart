@@ -16,7 +16,7 @@ import 'package:yaml/yaml.dart';
  * Anything that holds values and can be displayed.
  */
 
-@reflectable class Container extends ObservableBase {
+@reflectable class Container extends Observable {
   @observable String name;
   @observable String comment = '<span></span>';
 
