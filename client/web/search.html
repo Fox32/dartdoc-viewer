@@ -25,11 +25,11 @@ BSD-style license that can be found in the LICENSE file.
             <!-- A tabIndex of 0 allows for tab navigation through results -->
             <li tabindex="0"
                 class="search-result">
-                <search-result item="{{result}}"
+                <a is="search-result" item="{{result}}"
                   on-click="onSubmitCallback"
                   id="search{{result.position}}"
                   data-ref-id="{{result.element}}" >
-              </search-result>
+              </a>
             </li>
           </template>
           <!-- TODO(janicejl): Add "...add More" link to show more results.-->

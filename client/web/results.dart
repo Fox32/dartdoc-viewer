@@ -5,12 +5,13 @@ import 'package:dartdoc_viewer/item.dart';
 import 'package:dartdoc_viewer/search.dart';
 import 'package:polymer/polymer.dart';
 import 'member.dart';
+import 'dart:html';
 
 /**
  * An HTML representation of a Search Result.
  */
 @CustomTag("search-result")
-class Result extends MemberElement {
+class Result extends AnchorElement with Polymer, Observable {
 
   Result.created() : super.created() {
     new PathObserver(this, "item").bindSync(
@@ -21,8 +22,9 @@ class Result extends MemberElement {
         });
   }
 
-  get item => super.item;
-  set item(x) => super.item = x;
+  @published var item;
+
+  get applyAuthorStyles => true;
 
   @observable String get membertype => item == null ? 'none' : item.type;
   @observable String get qualifiedname => item == null ? 'none' : item.element;

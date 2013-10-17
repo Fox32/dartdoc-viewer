@@ -70,7 +70,7 @@ import 'package:polymer/polymer.dart';
   var resultSet = new Set<String>();
   var queryList = query.trim().toLowerCase().split(' ');
   for (var key in index.keys) {
-    var lower = key.toLowercase();
+    var lower = key.toLowerCase();
     if (queryList.any((q) => lower.contains(q))) {
         resultSet.add(key);
     }
