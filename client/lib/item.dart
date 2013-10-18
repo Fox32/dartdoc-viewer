@@ -559,6 +559,8 @@ import 'package:yaml/yaml.dart';
 
   String get decoratedName => isConstructor ?
       (name != '' ? '$className.$name' : className) : name;
+
+  toString() => decoratedName;
 }
 
 /**

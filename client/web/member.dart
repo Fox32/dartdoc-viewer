@@ -68,10 +68,10 @@ class NullTreeSanitizer implements NodeTreeSanitizer {
 
   get observableValues => new Map.fromIterables(
       observables,
-      observables.map((symbol) => _mirror.getField(symbol).reflectee));
+      observables.map((symbol) => mirror.getField(symbol).reflectee));
 
   InstanceMirror _cachedMirror;
-  get _mirror =>
+  get mirror =>
       _cachedMirror == null ? _cachedMirror = reflect(this) : _cachedMirror;
 }
 
@@ -87,7 +87,8 @@ class NullTreeSanitizer implements NodeTreeSanitizer {
   get defaultItem;
   var _item;
 
-  Iterable<Symbol> get observables => concat(super.observables, const [#item]);
+  Iterable<Symbol> get observables =>
+      concat(super.observables, const [#item, #idName]);
 
   Iterable<Symbol> get methodsToCall =>
       concat(super.methodsToCall, const [#addComment]);
@@ -197,10 +198,15 @@ class NullTreeSanitizer implements NodeTreeSanitizer {
 @reflectable abstract class InheritedElement extends MemberElement {
   InheritedElement.created() : super.created();
 
-  LinkableType inheritedFrom;
-  LinkableType commentFrom;
+  @observable LinkableType inheritedFrom;
+  @observable LinkableType commentFrom;
 
-  inserted() {
+  get observables => concat(super.observables,
+      const [#inheritedFrom, #commentFrom, #exists, #isInherited,
+             #hasInheritedComment]);
+
+  enteredView() {
+    super.enteredView();
     if (isInherited) {
       inheritedFrom = findInheritance(item.inheritedFrom);
     }
@@ -209,14 +215,14 @@ class NullTreeSanitizer implements NodeTreeSanitizer {
     }
   }
 
-  bool get isInherited =>
+  @observable bool get isInherited =>
       item != null && item.inheritedFrom != '' && item.inheritedFrom != null;
 
-  bool get hasInheritedComment =>
+  @observable bool get hasInheritedComment =>
       item != null && item.commentFrom != '' && item.commentFrom != null;
 
   /// Returns whether [location] exists within the search index.
-  bool exists(String location) {
+  @observable bool exists(String location) {
     if (location == null) return false;
     return index.keys.contains(location.replaceAll('-','.'));
   }
