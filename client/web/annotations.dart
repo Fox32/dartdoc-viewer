@@ -7,14 +7,14 @@ import 'member.dart';
 
 @CustomTag("dartdoc-annotation")
 class AnnotationElement extends DartdocElement {
-  AnnotationElement() {
-    new PathObserver(this, "annotations").bindSync(
-        (_) {
-          notifyProperty(this, #addAnnotations);
-        });
-  }
+  AnnotationElement.created() : super.created();
 
-  @observable AnnotationGroup annotations;
+  get methodsToCall => concat(super.methodsToCall, const [#addAnnotations]);
+  AnnotationGroup _annotations;
+  @published get annotations => _annotations;
+  @published set annotations(newAnnotations) {
+    notifyObservables(() => _annotations = newAnnotations);
+  }
 
   void addAnnotations() {
     if (annotations == null || annotations.annotations.isEmpty) return;

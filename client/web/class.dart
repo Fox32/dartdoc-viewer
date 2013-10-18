@@ -5,39 +5,39 @@ import 'package:polymer/polymer.dart';
 
 import 'app.dart';
 import 'member.dart';
+@MirrorsUsed()
+import 'dart:mirrors';
 
 @CustomTag("dartdoc-class")
 class ClassElement extends MemberElement {
-  ClassElement() {
-    item = new Class.forPlaceholder('loading', 'loading');
-    new PathObserver(this, "item").bindSync(
-        (_) {
-          notifyProperty(this, #variables);
-          notifyProperty(this, #operators);
-          notifyProperty(this, #constructors);
-          notifyProperty(this, #methods);
-          notifyProperty(this, #annotations);
-          notifyProperty(this, #interfaces);
-          notifyProperty(this, #subclasses);
-          notifyProperty(this, #superClass);
-          notifyProperty(this, #nameWithGeneric);
-          notifyProperty(this, #name);
-          notifyProperty(this, #addInterfaceLinks);
-          notifyProperty(this, #addSubclassLinks);
-          notifyProperty(this, #isNotObject);
-        });
-  }
+  ClassElement.created() : super.created();
 
-  set item(newItem) => super.item = (newItem is Class) ? newItem : item;
-  @observable Class get item => super.item;
+  get defaultItem => new Class.forPlaceholder('loading', 'loading');
+
+  get observables => concat(super.observables,
+    const [#variables, #operators, #constructors, #methods,
+    #variablesIsNotEmpty, #operatorsIsNotEmpty, #constructorsIsNotEmpty,
+    #methodsIsNotEmpty, #annotations, #interfaces, #subclasses, #superClass,
+    #nameWithGeneric, #name, #isNotObject]);
+
+  get methodsToCall => concat(super.methodsToCall,
+      const [#addInterfaceLinks, #addSubclassLinks]);
+
+  bool wrongClass(newItem) => newItem is! Class;
+
+  get item => super.item;
+  set item(newItem) => super.item = newItem;
 
   @observable Category get variables => item.variables;
-
   @observable Category get operators => item.operators;
-
   @observable Category get constructors => item.constructs;
-
   @observable Category get methods => item.functions;
+  @observable bool get variablesIsNotEmpty => _isNotEmpty(variables);
+  @observable bool get operatorsIsNotEmpty => _isNotEmpty(operators);
+  @observable bool get constructorsIsNotEmpty => _isNotEmpty(constructors);
+  @observable bool get methodsIsNotEmpty => _isNotEmpty(methods);
+
+  _isNotEmpty(x) => x == null ? false : x.content.isNotEmpty;
 
   @observable AnnotationGroup get annotations => item.annotations;
   set annotations(_) {}

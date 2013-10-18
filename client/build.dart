@@ -5,5 +5,5 @@ import 'dart:io';
 import 'dart:async';
 
 void main() {
-  lint();
+  lint(entryPoints: ['web/index.html']);
 }

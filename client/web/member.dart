@@ -5,7 +5,8 @@ import 'dart:html';
 import 'package:dartdoc_viewer/item.dart';
 import 'package:dartdoc_viewer/search.dart';
 import 'package:polymer/polymer.dart';
-
+@MirrorsUsed()
+import 'dart:mirrors';
 import 'app.dart' as app;
 
 class SameProtocolUriPolicy implements UriPolicy {
@@ -40,24 +41,62 @@ class NullTreeSanitizer implements NodeTreeSanitizer {
 }
 
 //// An abstract class for all Dartdoc elements.
-class DartdocElement extends PolymerElement {
+@reflectable abstract class DartdocElement extends PolymerElement {
+  DartdocElement.created() : super.created();
+
   get applyAuthorStyles => true;
 
-  get viewer => app.viewer;
+  @observable get viewer => app.viewer;
+
+  /// Find the old values of all of our [observables], run the function
+  /// [thingToDo], then find new values and call [notifyPropertyChange] for
+  /// each with the old and new values. Also notify all [methodsToCall].
+  notifyObservables(Function thingToDo) {
+    var oldValues = observableValues;
+    thingToDo();
+    var newValues = observableValues;
+    observables.forEach((symbol) =>
+      notifyPropertyChange(symbol, oldValues[symbol], newValues[symbol]));
+    methodsToCall.forEach((symbol) =>
+      notifyPropertyChange(symbol, null, 'changeNoMatterWhat'));
+  }
+
+  List<Symbol> get observables => const [];
+  List<Symbol> get methodsToCall => const [#addComment];
+  Iterable concat(Iterable list1, Iterable list2)
+      => [list1, list2].expand((x) => x);
+
+  get observableValues => new Map.fromIterables(
+      observables,
+      observables.map((symbol) => _mirror.getField(symbol).reflectee));
+
+  InstanceMirror _cachedMirror;
+  get _mirror =>
+      _cachedMirror == null ? _cachedMirror = reflect(this) : _cachedMirror;
 }
 
 //// This is a web component to be extended by all Dart members with comments.
 //// Each member has an [Item] associated with it as well as a comment to
 //// display, so this class handles those two aspects shared by all members.
-class MemberElement extends DartdocElement {
-  MemberElement() {
-    new PathObserver(this, "item").bindSync(
-        (_) {
-          notifyProperty(this, #addComment);
-        });
+@reflectable abstract class MemberElement extends DartdocElement {
+  MemberElement.created() : super.created() {
+    _item = defaultItem;
   }
 
-  @observable @published var item;
+  bool wrongClass(newItem);
+  get defaultItem;
+  var _item;
+
+  Iterable<Symbol> get observables => concat(super.observables, const [#item]);
+
+  Iterable<Symbol> get methodsToCall =>
+      concat(super.methodsToCall, const [#addComment]);
+
+  @published set item(newItem) {
+    if (newItem == null || wrongClass(newItem)) return;
+    notifyObservables(() => _item = newItem);
+  }
+  @published get item => _item;
 
   /// A valid string for an HTML id made from this [Item]'s name.
   @observable String get idName {
@@ -75,7 +114,7 @@ class MemberElement extends DartdocElement {
     var commentLocation = shadowRoot.query('.description');
     if (preview && (item is Class || item is Library))
       comment = item.previewComment;
-    if (preview && (item is Method || item is Variable)) {
+    if (preview && (item is Method || item is Variable || item is Typedef)) {
       var index = item.comment.indexOf('</p>');
       // All comments when read in from the YAML is surrounded by a <span> tag.
       // This finds the first paragraph, and surrounds it with a span tag for
@@ -155,7 +194,9 @@ class MemberElement extends DartdocElement {
 }
 
 //// A [MemberElement] that could be inherited from another [MemberElement].
-class InheritedElement extends MemberElement {
+@reflectable abstract class InheritedElement extends MemberElement {
+  InheritedElement.created() : super.created();
+
   LinkableType inheritedFrom;
   LinkableType commentFrom;
 
@@ -176,6 +217,7 @@ class InheritedElement extends MemberElement {
 
   /// Returns whether [location] exists within the search index.
   bool exists(String location) {
+    if (location == null) return false;
     return index.keys.contains(location.replaceAll('-','.'));
   }
 
@@ -185,23 +227,24 @@ class InheritedElement extends MemberElement {
   }
 }
 
-class MethodElement extends InheritedElement {
-  MethodElement() {
-    item = new Method({
+@reflectable class MethodElement extends InheritedElement {
+
+  bool wrongClass(newItem) => newItem is! Method;
+
+  MethodElement.created() : super.created();
+
+  get defaultItem => new Method({
       "name" : "Loading",
       "qualifiedName" : "Loading",
       "comment" : "",
       "parameters" : null,
       "return" : [null],
     }, isConstructor: true);
-  }
 
   // TODO(alanknight): Remove this and other workarounds for bindings firing
   // even when their surrounding test isn't true. This ignores values of the
   // wrong type. IOssue 13386 and/or 13445
   // TODO(alanknight): Remove duplicated subclass methods. Issue 13937
-  set item(newItem) => super.item = (newItem is Method) ? newItem : item;
-  Method get item => super.item;
 
   @observable List<Parameter> get parameters => item.parameters;
 }

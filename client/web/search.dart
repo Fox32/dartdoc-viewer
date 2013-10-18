@@ -19,27 +19,18 @@ import 'member.dart';
 @CustomTag("search-box")
 class Search extends DartdocElement {
 
-  Search() {
-    new PathObserver(this, "results").bindSync(
-        (_) {
-          notifyProperty(this, #dropdownOpen);
-          notifyProperty(this, #hasNoResults);
-        });
-    new PathObserver(this, "isFocused").bindSync(
-        (_) {
-          notifyProperty(this, #dropdownOpen);
-        });
-    new PathObserver(this, "searchQuery").bindSync(
-        (_) {
-          updateResults();
-        });
-  }
+  Search.created() : super.created();
 
   List<SearchResult> results = [];
 
   @observable bool isFocused = false;
 
-  @observable String searchQuery = "";
+  String _searchQuery = "";
+  @published get searchQuery => _searchQuery;
+  @published set searchQuery(newQuery) {
+    _searchQuery = newQuery;
+    updateResults();
+  }
 
   @observable bool get hasNoResults => results.isEmpty;
 
@@ -52,13 +43,14 @@ class Search extends DartdocElement {
     currentIndex = -1;
     results.clear();
     results.addAll(lookupSearchResults(searchQuery, viewer.isDesktop ? 10 : 5));
-    notifyProperty(this, #results);
-    notifyProperty(this, #hasNoResults);
-    notifyProperty(this, #dropdownOpen);
+    notifyPropertyChange(#results, null, results);
+    notifyPropertyChange(#hasNoResults, null, hasNoResults);
+    notifyPropertyChange(#dropdownOpen, null, dropdownOpen);
   }
 
   void onBlurCallback(_) {
-      isFocused = false;
+    isFocused = false;
+    notifyPropertyChange(#dropdownOpen, 'open', '');
   }
 
   void onFocusCallback(_) {
@@ -88,8 +80,8 @@ class Search extends DartdocElement {
     }
   }
 
-  void inserted() {
-    super.inserted();
+  void enteredView() {
+    super.enteredView();
     Element.focusEvent.forTarget(xtag, useCapture: true)
         .listen(onFocusCallback);
     Element.blurEvent.forTarget(xtag, useCapture: true)
