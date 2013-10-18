@@ -94,7 +94,7 @@ class Search extends DartdocElement {
     if (e.keyCode == KeyCode.UP) {
       if (currentIndex > 0) {
         currentIndex--;
-        shadowRoot.query('#search$currentIndex').focus();
+        shadowRoot.querySelector('#search$currentIndex').focus();
       } else if (currentIndex == 0) {
         searchBox.focus();
       }
@@ -102,11 +102,12 @@ class Search extends DartdocElement {
     } else if (e.keyCode == KeyCode.DOWN) {
       if (currentIndex < results.length - 1) {
         currentIndex++;
-        shadowRoot.query('#search$currentIndex').parent.focus();
+        shadowRoot.querySelector('#search$currentIndex').parent.focus();
       }
       e.preventDefault();
     } else if (e.keyCode == KeyCode.ENTER) {
-      onSubmitCallback(e, null, e.target);
+      onSubmitCallback(e, null,
+          shadowRoot.querySelector('#search$currentIndex'));
       e.preventDefault();
     }
   }
@@ -127,5 +128,5 @@ class Search extends DartdocElement {
     }
   }
 
-  get searchBox => shadowRoot.query('#q');
+  get searchBox => shadowRoot.querySelector('#q');
 }

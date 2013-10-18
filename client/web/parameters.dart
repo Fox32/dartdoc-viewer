@@ -37,7 +37,7 @@ class ParameterElement extends DartdocElement {
       optional.isEmpty ? '' : optional.first.isNamed ? '}' : ']';
 
   addAllParameters() {
-    var location = shadowRoot.query('.required');
+    var location = shadowRoot.querySelector('.required');
     if (location == null) return;
     location.children.clear();
     location.appendText('(');

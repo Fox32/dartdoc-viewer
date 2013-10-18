@@ -47,7 +47,7 @@ class IndexElement extends DartdocElement {
     return left + right;
   }
 
-  query(String selectors) => shadowRoot.query(selectors);
+  query(String selectors) => shadowRoot.querySelector(selectors);
 
   searchSubmitted() {
     query('#nav-collapse-button').classes.add('collapsed');
@@ -81,7 +81,7 @@ class IndexElement extends DartdocElement {
 
   /// Add the breadcrumbs programmatically.
   @observable void crumbs() {
-    var root = shadowRoot.query("#navbar");
+    var root = shadowRoot.querySelector("#navbar");
     if (root == null) return;
     root.children.clear();
     if (breadcrumbs.length < 2) return;
@@ -103,7 +103,7 @@ class IndexElement extends DartdocElement {
       treeSanitizer: sanitizer);
 
   hideShowOptions(event, detail, target) {
-    var list = shadowRoot.query(".dropdown-menu").parent;
+    var list = shadowRoot.querySelector(".dropdown-menu").parent;
     if (list.classes.contains("open")) {
       list.classes.remove("open");
     } else {

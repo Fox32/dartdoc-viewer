@@ -112,7 +112,7 @@ class NullTreeSanitizer implements NodeTreeSanitizer {
   void addComment(String elementName, [bool preview = false]) {
     if (item == null) return;
     var comment = item.comment;
-    var commentLocation = shadowRoot.query('.description');
+    var commentLocation = shadowRoot.querySelector('.description');
     if (preview && (item is Class || item is Library))
       comment = item.previewComment;
     if (preview && (item is Method || item is Variable || item is Typedef)) {
@@ -125,12 +125,12 @@ class NullTreeSanitizer implements NodeTreeSanitizer {
     }
     if (comment != '' && comment != null) {
       if (commentLocation == null) {
-        commentLocation = shadowRoot.query('.description');
+        commentLocation = shadowRoot.querySelector('.description');
       }
       commentLocation.children.clear();
       var commentElement = new Element.html(comment,
           treeSanitizer: sanitizer);
-      var links = commentElement.queryAll('a');
+      var links = commentElement.querySelectorAll('a');
       for (AnchorElement link in links) {
         if (link.href =='') {
           if (link.text.contains('#')) {
@@ -185,7 +185,7 @@ class NullTreeSanitizer implements NodeTreeSanitizer {
   /// and adds it to [memberName]'s tag with class [className].
   void createType(NestedType type, String memberName, String className) {
     if (type == null) return;
-    var location = shadowRoot.query('.$className');
+    var location = shadowRoot.querySelector('.$className');
     if (location == null) return;
     location.children.clear();
     if (!type.isDynamic) {

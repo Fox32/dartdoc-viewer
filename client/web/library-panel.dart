@@ -24,7 +24,7 @@ class LibraryPanel extends DartdocElement {
   linkHref(library) => library == null ? '' : library.linkHref;
 
   @observable void createEntries() {
-    var mainElement = shadowRoot.query("#library-panel");
+    var mainElement = shadowRoot.querySelector("#library-panel");
     if (mainElement == null) return;
     // TODO(alanknight): Can we get away with checking if the children
     // have been added at all, so we don't have to re-do it every time.

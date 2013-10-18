@@ -17,6 +17,7 @@ class AnnotationElement extends DartdocElement {
   }
 
   void addAnnotations() {
+    shadowRoot.children.clear();
     if (annotations == null || annotations.annotations.isEmpty) return;
     var out = new StringBuffer();
     for (var annotation in annotations.annotations) {

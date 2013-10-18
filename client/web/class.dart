@@ -49,9 +49,10 @@ class ClassElement extends MemberElement {
   @observable LinkableType get superClass => item.superClass;
 
   void showSubclass(event, detail, target) {
-    shadowRoot.query('#${item.name}-subclass-hidden').classes
+    shadowRoot.querySelector('#${item.name}-subclass-hidden').classes
         .remove('hidden');
-    shadowRoot.query('#${item.name}-subclass-button').classes.add('hidden');
+    shadowRoot.querySelector(
+        '#${item.name}-subclass-button').classes.add('hidden');
   }
 
   @observable String get nameWithGeneric => item.nameWithGeneric;
@@ -64,7 +65,7 @@ class ClassElement extends MemberElement {
   }
 
   @observable addInterfaceLinks() {
-    var p = shadowRoot.query("#interfaces");
+    var p = shadowRoot.querySelector("#interfaces");
     if (p == null) return;
     p.children.clear();
     if (interfaces.isNotEmpty) {
@@ -77,10 +78,10 @@ class ClassElement extends MemberElement {
   }
 
   @observable addSubclassLinks() {
-    var p = shadowRoot.query("#subclasses");
+    var p = shadowRoot.querySelector("#subclasses");
     // Remove all the children except the '...' button, which we can't
     // create dynamically because the on-click handler won't get registered.
-    var buttonThatMustBeStatic = p.query(".btn-link");
+    var buttonThatMustBeStatic = p.querySelector(".btn-link");
     p.children.clear();
     var text = makeLinks(subclasses.take(3));
     if (subclasses.isEmpty) {
@@ -95,7 +96,7 @@ class ClassElement extends MemberElement {
     p.append(p.createFragment(
          '<span id="${item.name}-subclass-hidden" class="hidden">,&nbsp;'
          '</span>', treeSanitizer: sanitizer));
-    var q = shadowRoot.query("#${item.name}-subclass-hidden");
+    var q = shadowRoot.querySelector("#${item.name}-subclass-hidden");
     q.append(q.createFragment(makeLinks(subclasses.skip(3))));
   }
 
