@@ -2,7 +2,6 @@
 
 import 'package:polymer/builder.dart';
 import 'dart:io';
-import 'dart:async';
 import 'package:path/path.dart';
 
 void main() {
@@ -16,7 +15,8 @@ compileToJs(_) {
   var result =
     Process.runSync(dart2js, [ // '--minify',
         '-o', 'out/web/index.html_bootstrap.dart.js',
-        'out/web/index.html_bootstrap.dart', '--suppress-hints'], runInShell: true);
+        'out/web/index.html_bootstrap.dart', '--suppress-hints'],
+        runInShell: true);
   print(result.stdout);
   print("Done");
 }
