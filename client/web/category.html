@@ -21,18 +21,6 @@
       style="height:{{divStyle}}">
      <div class="accordion-inner">
         <ul id="itemList" class="nav nav-pills nav-stacked">
-        <template repeat="{{variable in categoryVariables}}">
-          <dartdoc-variable item="{{variable}}" class="panel">
-          </dartdoc-variable>
-        </template>
-        <template repeat="{{class in categoryEverythingElse}}">
-           <dartdoc-item class="panel" item="{{class}}">
-           </dartdoc-item>
-        </template>
-        <template repeat="{{method in categoryMethods}}">
-           <method-panel class="panel" item="{{method}}">
-           </method-panel>
-        </template>       
         </ul>
       </div>
     </div>

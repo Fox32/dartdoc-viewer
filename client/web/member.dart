@@ -97,7 +97,7 @@ class NullTreeSanitizer implements NodeTreeSanitizer {
     if (newItem == null || wrongClass(newItem)) return;
     notifyObservables(() => _item = newItem);
   }
-  @published get item => _item;
+  @published get item => _item == null ? _item = defaultItem : _item;
 
   /// A valid string for an HTML id made from this [Item]'s name.
   @observable String get idName {
@@ -202,7 +202,7 @@ class NullTreeSanitizer implements NodeTreeSanitizer {
   @observable LinkableType commentFrom;
 
   get observables => concat(super.observables,
-      const [#inheritedFrom, #commentFrom, #exists, #isInherited,
+      const [#inheritedFrom, #commentFrom, #isInherited,
              #hasInheritedComment]);
 
   enteredView() {

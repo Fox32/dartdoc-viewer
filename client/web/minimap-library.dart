@@ -15,8 +15,10 @@ class MinimapElementLibrary extends MemberElement {
     const [#operatorItems, #variableItems, #functionItems,
     #classItems, #typedefItems, #errorItems, #operatorItemsIsNotEmpty,
     #variableItemsIsNotEmpty, #functionItemsIsNotEmpty, #classItemsIsNotEmpty,
-    #typedefItemsIsNotEmpty, #errorItemsIsNotEmpty, #name, #decoratedName,
+    #typedefItemsIsNotEmpty, #errorItemsIsNotEmpty, #name,
     #linkHref, #currentLocation, #idName]);
+
+  get methodsToCall => concat(super.methodsToCall, const [#decoratedName]);
 
   wrongClass(newItem) => newItem is! Library;
 

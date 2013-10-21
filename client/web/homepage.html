@@ -6,11 +6,7 @@
       <section class="description"></section>
       {{addComment('dartdoc-homepage')}}
       <div class="page-header"><h1>Libraries</h1></div>
-      <template repeat="{{library in libraries}}"> 
-        <dartdoc-item class="panel" item="{{library}}">
-        </dartdoc-item>
-      </template>
-
+      <div id="librariesGoHere"></div>
   </template>
 
   <script type="application/dart" src="homepage.dart"></script>

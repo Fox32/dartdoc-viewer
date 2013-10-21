@@ -28,6 +28,25 @@ class CategoryElement extends DartdocElement {
     style.setProperty('display', 'block');
   }
 
+  addChildren() {
+    var elements = [];
+    var types = { 'dartdoc-variable' : categoryVariables,
+      'dartdoc-item' : categoryEverythingElse,
+      'method-panel' : categoryMethods
+    };
+    types.forEach((tagName, items) {
+      for (var subItem in items) {
+        var newItem = document.createElement(tagName);
+        newItem.item = subItem;
+        newItem.classes.add("panel");
+        elements.add(newItem);
+      }
+    });
+    var root = shadowRoot.querySelector("#itemList");
+    root.children.clear();
+    root.children.addAll(elements);
+  }
+
   get observables => concat(super.observables,
     const [#category, #categoryContent, #categoryVariables,
     #categoryMethods, #categoryEverythingElse, #currentLocation, #title,
@@ -36,12 +55,14 @@ class CategoryElement extends DartdocElement {
   Container _category;
   @published Container get category => _category;
   @published set category(newCategory) {
-    if (newCategory == null || newCategory is! Container) return;
+    if (newCategory == null || newCategory is! Container ||
+        newCategory == _category) return;
     _flushCache();
     notifyObservables(() {
       _category = newCategory;
       _flushCache();
     });
+    addChildren();
   }
 
   @observable String get title => category == null ? '' : category.name;
