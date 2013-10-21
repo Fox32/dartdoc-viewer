@@ -109,10 +109,13 @@ class NullTreeSanitizer implements NodeTreeSanitizer {
 
   /// Adds [item]'s comment to the the [elementName] element with markdown
   /// links converted to working links.
-  void addComment(String elementName, [bool preview = false]) {
+  void addComment(String elementName, [bool preview = false,
+      Element commentLocation]) {
     if (item == null) return;
     var comment = item.comment;
-    var commentLocation = shadowRoot.querySelector('.description');
+    if (commentLocation == null) {
+      commentLocation = shadowRoot.querySelector('.description');
+    }
     if (preview && (item is Class || item is Library))
       comment = item.previewComment;
     if (preview && (item is Method || item is Variable || item is Typedef)) {
