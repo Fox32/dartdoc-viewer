@@ -25,7 +25,11 @@ class HomeElement extends MemberElement {
     addChildren();
   }
 
+  /// Dynamically generate elements for all of our libraries, for performance
+  /// reasons.
   addChildren() {
+    // TODO(alanknight): Move this and other occurences of addChildren back
+    // into templates if they get acceptable performance.
     var elements = [];
     for (var library in libraries) {
       var newItem = document.createElement('dartdoc-item');

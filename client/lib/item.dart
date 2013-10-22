@@ -22,7 +22,7 @@ import 'package:yaml/yaml.dart';
 
   Container(this.name, [this.comment]);
 
-  toString() => "$runtimeType($name)";
+  String toString() => "$runtimeType($name)";
 }
 
 // Wraps a comment in span element to make it a single HTML Element.
@@ -560,7 +560,7 @@ import 'package:yaml/yaml.dart';
   String get decoratedName => isConstructor ?
       (name != '' ? '$className.$name' : className) : name;
 
-  toString() => decoratedName;
+  String toString() => decoratedName;
 }
 
 /**

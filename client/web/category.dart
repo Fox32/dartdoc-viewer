@@ -30,7 +30,8 @@ class CategoryElement extends DartdocElement {
 
   addChildren() {
     var elements = [];
-    var types = { 'dartdoc-variable' : categoryVariables,
+    var types = {
+      'dartdoc-variable' : categoryVariables,
       'dartdoc-item' : categoryEverythingElse,
       'method-panel' : categoryMethods
     };

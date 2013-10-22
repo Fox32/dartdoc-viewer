@@ -33,10 +33,10 @@ const int desktopSizeBoundary = 1006;
 /// The [Viewer] object being displayed.
 final Viewer viewer = new Viewer._();
 
-  IndexElement _dartdocMain;
-  IndexElement dartdocMain = _dartdocMain == null
-      ? _dartdocMain = querySelector("#dartdoc-main").xtag
-      : null;
+IndexElement _dartdocMain;
+IndexElement dartdocMain = _dartdocMain == null
+    ? _dartdocMain = querySelector("#dartdoc-main").xtag
+    : null;
 
 /// The Dartdoc Viewer application state.
 class Viewer extends Observable {

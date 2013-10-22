@@ -62,6 +62,9 @@ class ItemElement extends MemberElement {
   }
 
   addChildren() {
+    // TODO(alanknight): Some of what was being done in the template is nicer
+    // in code, but it would be much better if we could move some of this
+    // back to a template once performance improves.
     var out = new StringBuffer();
     var mainAnchor = new AnchorElement()
       ..href = "#$linkHref"
