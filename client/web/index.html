@@ -53,16 +53,14 @@
                 Options <b class="caret"></b>
               </a>
               <ul class="dropdown-menu">
-                <template if="{{!isHomePage}}">
-                  <li class="visible-lg"><a on-click="togglePanel">
-                    <template if="{{viewer.isPanel}}">Hide Libraries</template>
-                    <template if="{{!viewer.isPanel}}">Show Libraries</template>
-                  </a></li>
-                  <li class="visible-lg"><a on-click="toggleMinimap">
-                    <template if="{{viewer.isMinimap}}">Hide Minimap</template>
-                    <template if="{{!viewer.isMinimap}}">Show Minimap</template>
-                  </a></li>
-                </template>
+                <li class="visible-lg"><a on-click="togglePanel">
+                  <template if="{{viewer.isPanel}}">Hide Libraries</template>
+                  <template if="{{!viewer.isPanel}}">Show Libraries</template>
+                </a></li>
+                <li class="visible-lg"><a on-click="toggleMinimap">
+                  <template if="{{viewer.isMinimap}}">Hide Minimap</template>
+                  <template if="{{!viewer.isMinimap}}">Show Minimap</template>
+                </a></li>
                 <li><a on-click="toggleInherited">
                   <template if="{{viewer.isInherited}}">Hide Inherited
                   </template>
@@ -104,7 +102,6 @@
 
 <script type="application/dart" src="app.dart"></script>
 <script type="application/dart" src="index.dart"></script>
-
 
 <dartdoc-main id="dartdoc-main"></dartdoc-main>
 </body>

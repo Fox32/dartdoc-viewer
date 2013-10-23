@@ -3,7 +3,7 @@ library index;
 import 'package:dartdoc_viewer/item.dart';
 import 'package:polymer/polymer.dart';
 import 'member.dart';
-import 'app.dart' as app;
+import 'app.dart';
 import 'dart:html';
 
 @CustomTag("dartdoc-main")
@@ -21,7 +21,6 @@ class IndexElement extends DartdocElement {
             shouldShowClassMinimap);
         notifyPropertyChange(#crumbs, null, 'some value');
         notifyPropertyChange(#pageContentClass, null, pageContentClass);
-        notifyPropertyChange(#isHomePage, null, isHomePage);
       });
     new PathObserver(this, "viewer.isMinimap").changes.listen((changes) {
       notifyPropertyChange(#shouldShowLibraryMinimap,
@@ -72,7 +71,6 @@ class IndexElement extends DartdocElement {
       shouldShowClassMinimapFor(viewer.isMinimap);
   @observable shouldShowClassMinimapFor(isMinimap) =>
       viewer.currentPage is Class && isMinimap;
-  @observable get isHomePage => viewer.currentPage == viewer.homePage;
   @observable get homePage => viewer.homePage;
   set homePage(x) {}
   @observable get viewer => super.viewer;

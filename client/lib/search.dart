@@ -60,8 +60,8 @@ import 'package:polymer/polymer.dart';
  * A score is given to each potential search result based off how likely it is
  * the appropriate qualified name to return for the search query.
  */
-@reflectable List<SearchResult>
-    lookupSearchResults(String query, int maxResults) {
+@reflectable
+List<SearchResult> lookupSearchResults(String query, int maxResults) {
   if (query == '') return [];
 
   var stopwatch = new Stopwatch()..start();

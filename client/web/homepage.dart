@@ -10,24 +10,23 @@ class HomeElement extends MemberElement {
   HomeElement.created() : super.created();
 
   get defaultItem => null;
-  get observables => concat(super.observables, const [#libraries]);
+  get observables => concat(super.observables,
+      const [#libraries, #addChildren]);
   wrongClass(newItem) => newItem is! Home;
 
   get item => super.item;
   set item(newItem) => super.item = newItem;
 
-  get methodsToCall => concat(super.methodsToCall, const [#addChildren]);
-
   @observable get libraries => item == null ? [] : item.libraries;
 
   enteredView() {
     super.enteredView();
-    addChildren();
-  }
+    addChildren;
+    }
 
   /// Dynamically generate elements for all of our libraries, for performance
   /// reasons.
-  addChildren() {
+  @observable get addChildren {
     // TODO(alanknight): Move this and other occurences of addChildren back
     // into templates if they get acceptable performance.
     var elements = [];

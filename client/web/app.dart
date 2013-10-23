@@ -48,6 +48,10 @@ class Viewer extends Observable {
   /// The homepage from which every [Item] can be reached.
   @observable Home homePage;
 
+  @observable get libraries =>
+      currentPage == null ? [] :
+          currentPage is Home ? currentPage.libraries : homePage.libraries;
+
   /// The current page being shown. An Item.
   /// TODO(alanknight): Restore the type declaration here and structure the code
   /// so we can avoid the warnings from casting to subclasses.
@@ -55,9 +59,11 @@ class Viewer extends Observable {
   @observable get currentPage => _currentPage;
   set currentPage(newPage) {
     var oldPage = _currentPage;
+    var oldLibraries = libraries;
     _currentPage = newPage;
     notifyPropertyChange(#breadcrumbs, null, breadcrumbs);
     notifyPropertyChange(#currentPage, oldPage, newPage);
+    notifyPropertyChange(#libraries, oldLibraries, libraries);
   }
 
   /// State for whether or not the library list panel should be shown.
@@ -213,7 +219,7 @@ class Viewer extends Observable {
         }
       }
     } else {
-      if (destination is Class && !destination.isLoaded) {
+      if (!destination.isLoaded) {
         return destination.load().then((_) {
           _updatePage(destination, hash);
           return true;
@@ -365,12 +371,8 @@ void navigate(event) {
     } else {
       viewer.currentPage = viewer.homePage;
     }
-    retrieveFileContents('../../docs/index.txt').then((String list) {
-      var elements = list.split('\n');
-      elements.forEach((element) {
-        var splitName = element.split(' ');
-        index[splitName[0]] = splitName[1];
-      });
+    retrieveFileContents('../../docs/index.json').then((String json) {
+      index = JSON.decode(json);
     });
   });
 }

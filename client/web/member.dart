@@ -90,9 +90,6 @@ class NullTreeSanitizer implements NodeTreeSanitizer {
   Iterable<Symbol> get observables =>
       concat(super.observables, const [#item, #idName]);
 
-  Iterable<Symbol> get methodsToCall =>
-      concat(super.methodsToCall, const [#addComment]);
-
   @published set item(newItem) {
     if (newItem == null || wrongClass(newItem)) return;
     notifyObservables(() => _item = newItem);
@@ -145,7 +142,7 @@ class NullTreeSanitizer implements NodeTreeSanitizer {
             var newName = link.text.substring(index + 1, link.text.length);
             link.replaceWith(new Element.html('<i>$newName</i>',
                 treeSanitizer: sanitizer));
-          } else if (!index.keys.contains(link.text)) {
+          } else if (!index.containsKey(link.text)) {
             // If markdown links to private or otherwise unknown members are
             // found, make them <i> tags instead of <a> tags for CSS.
             link.replaceWith(new Element.html('<i>${link.text}</i>',
@@ -165,7 +162,7 @@ class NullTreeSanitizer implements NodeTreeSanitizer {
   /// Creates an HTML element for a parameterized type.
   static Element createInner(NestedType type) {
     var span = new SpanElement();
-    if (index.keys.contains(type.outer.qualifiedName)) {
+    if (index.containsKey(type.outer.qualifiedName)) {
       var outer = new AnchorElement()
         ..text = type.outer.simpleType
         ..href = '#${type.outer.location}';
@@ -227,7 +224,7 @@ class NullTreeSanitizer implements NodeTreeSanitizer {
   /// Returns whether [location] exists within the search index.
   @observable bool exists(String location) {
     if (location == null) return false;
-    return index.keys.contains(location.replaceAll('-','.'));
+    return index.containsKey(location.replaceAll('-','.'));
   }
 
   /// Creates a [LinkableType] for the owner of [qualifiedName].

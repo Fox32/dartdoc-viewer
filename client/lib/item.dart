@@ -154,8 +154,11 @@ import 'package:yaml/yaml.dart';
    }
    var parts = name.split('/');
    name = parts.map((e) => Uri.encodeComponent(e)).join('/') + hash;
+//   return name;
    return name.replaceAll('%', '-');
   }
+
+  bool get isLoaded => true;
 }
 
 /// Sorts each inner [List] by qualified names.
@@ -178,11 +181,37 @@ import 'package:yaml/yaml.dart';
   /// [Placeholder] objects to display before loading libraries.
   Home(Map yaml) : super('', 'home', _wrapComment(yaml['introduction'])) {
     var libraryList = yaml['libraries'];
-    for (Map library in libraryList) {
+    if (yaml['packageName'] != null) {
+      name = yaml['packageName'];
+      qualifiedName = name;
+    }
+    var packages = new Map();
+    if (name == '') {
+      libraryList.forEach((each) =>
+         packages.putIfAbsent(each['packageName'], () => []).add(each));
+    }
+
+    var directLibraries = name == '' ? packages[''] : libraryList;
+    for (Map library in directLibraries) {
       var libraryName = library['name'];
       libraryNames[libraryName] = libraryName.replaceAll('.', '-');
-      this.libraries.add(new Library.forPlaceholder(library));
+      var newLibrary = new Library.forPlaceholder(library);
+      newLibrary.home = this;
+      this.libraries.add(newLibrary);
+      pageIndex[newLibrary.qualifiedName] = newLibrary;
     };
+    packages.remove('');
+    packages.forEach((packageName, libraries) {
+      var main = libraries.firstWhere(
+          (each) => each['name'] == packageName,
+          orElse: () => libraries.first);
+      var package = new Home({
+        'libraries' : libraries,
+        'packageName' : packageName
+        });
+      this.libraries.add(package);
+      libraryNames[package.name] = package.name.replaceAll('.', '-');
+    });
     _sort([this.libraries]);
   }
 
@@ -244,10 +273,16 @@ import 'package:yaml/yaml.dart';
   Category variables;
   Category functions;
   Category operators;
+  Home home;
 
   /// Creates a [Library] placeholder object with null fields.
   Library.forPlaceholder(Map library)
-    : super(library['name'], library['name'], library['preview']);
+    : super(
+        (library['packageName'] == null || library['packageName'].isEmpty
+            ? '' : library['packageName'] + '.')
+            + library['name'],
+        library['name'],
+        library['preview']);
 
   /// Normal constructor for testing.
   Library(Map yaml) : super(yaml['qualifiedName'], yaml['name'], '') {
@@ -256,7 +291,7 @@ import 'package:yaml/yaml.dart';
   }
 
   void addToHierarchy() {
-    pageIndex[qualifiedName] = this;
+    super.addToHierarchy();
     [classes, typedefs, errors, functions].forEach((category) {
       category.content.forEach((clazz) {
         buildHierarchy(clazz, this);
@@ -337,7 +372,7 @@ import 'package:yaml/yaml.dart';
   }
 
   void addToHierarchy() {
-    pageIndex[qualifiedName] = this;
+    super.addToHierarchy();
     if (isLoaded) {
       [functions, constructs, operators].forEach((category) {
         category.content.forEach((clazz) {
@@ -545,7 +580,8 @@ import 'package:yaml/yaml.dart';
   }
 
   void addToHierarchy() {
-    if (inheritedFrom != '') pageIndex[qualifiedName] = this;
+    // TODO(alanknight): Conditionally calling super is very unpleasant.
+    if (inheritedFrom != '') super.addToHierarchy();
   }
 
   void addInheritedComment(item) {
@@ -651,7 +687,7 @@ import 'package:yaml/yaml.dart';
   bool get isInherited => inheritedFrom != '' && inheritedFrom != null;
 
   void addToHierarchy() {
-    if (inheritedFrom != '') pageIndex[qualifiedName] = this;
+    if (inheritedFrom != '') super.addToHierarchy();
   }
 }
 

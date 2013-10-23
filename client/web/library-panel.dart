@@ -10,7 +10,7 @@ import 'dart:html';
 @CustomTag("dartdoc-library-panel")
 class LibraryPanel extends DartdocElement {
   LibraryPanel.created() : super.created() {
-    new PathObserver(this, "viewer.currentPage").bindSync(
+    new PathObserver(this, "viewer.libraries").bindSync(
     (_) {
       notifyPropertyChange(#createEntries, null, true);
     });
@@ -26,10 +26,8 @@ class LibraryPanel extends DartdocElement {
   @observable void createEntries() {
     var mainElement = shadowRoot.querySelector("#library-panel");
     if (mainElement == null) return;
-    // TODO(alanknight): Can we get away with checking if the children
-    // have been added at all, so we don't have to re-do it every time.
     mainElement.children.clear();
-    for (var library in viewer.homePage.libraries) {
+    for (var library in viewer.libraries) {
       var isFirst =
           library.decoratedName == viewer.breadcrumbs.first.decoratedName;
       var element =
@@ -38,7 +36,7 @@ class LibraryPanel extends DartdocElement {
     }
   }
 
-  newElement(Library library, bool isActive) {
+  newElement(library, bool isActive) {
     var html = '<a href="#${linkHref(library)}" class="list-group-item'
         '${isActive ? ' active' : ''}">'
         '${library.decoratedName}</a>';
