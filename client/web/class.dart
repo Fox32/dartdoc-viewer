@@ -12,7 +12,7 @@ import 'dart:mirrors';
 class ClassElement extends MemberElement {
   ClassElement.created() : super.created();
 
-  get defaultItem => new Class.forPlaceholder('loading', 'loading');
+  get defaultItem => new Class.forPlaceholder('loading.loading', 'loading');
 
   get observables => concat(super.observables,
     const [#variables, #operators, #constructors, #methods,

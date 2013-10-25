@@ -3,7 +3,6 @@
  */
 library data;
 
-import 'package:polymer/polymer.dart';
 import 'package:dartdoc_viewer/item.dart';
 
 // Pages generated from the YAML file. Keys are the title of the pages.

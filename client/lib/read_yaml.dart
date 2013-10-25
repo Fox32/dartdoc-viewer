@@ -12,7 +12,7 @@ import 'dart:convert';
  * Retrieves a file at the given [path].
  */
 Future<String> retrieveFileContents(String path) {
-  return HttpRequest.getString(path);
+  return HttpRequest.getString(Uri.encodeFull(path));
 }
 
 /**

@@ -10,15 +10,18 @@
 library dartdoc_viewer;
 
 import 'dart:async';
-import 'dart:html';
+import 'dart:html' show Element, querySelector, window, ScrollAlignment,
+    Event, AnchorElement;
 import 'dart:convert';
 
 import 'package:dartdoc_viewer/data.dart';
 import 'package:dartdoc_viewer/item.dart';
 import 'package:dartdoc_viewer/read_yaml.dart';
 import 'package:dartdoc_viewer/search.dart';
+import 'package:dartdoc_viewer/decode_uri.dart';
 import 'package:polymer/polymer.dart';
 import 'index.dart';
+import 'dart:math' as math;
 
 // TODO(janicejl): JSON path should not be hardcoded.
 // Path to the JSON file being read in. This file will always be in JSON
@@ -98,10 +101,7 @@ class Viewer extends Observable {
       });
   }
 
-  /// Creates a valid hash ID for anchor tags.
-  String toHash(String hash) {
-    return 'id_' + Uri.encodeComponent(hash).replaceAll('%', '-');
-  }
+
 
   /// The title of the current page.
   String get title => currentPage == null ? '' : currentPage.decoratedName;
@@ -162,73 +162,55 @@ class Viewer extends Observable {
   }
 
   /// Updates [currentPage] to be [page].
-  void _updatePage(Item page, String hash) {
+  void _updatePage(Item page, Location location) {
     if (page != null) {
       // Since currentPage is observable, if it changes the page reloads.
       // This avoids reloading the page when it isn't necessary.
       if (page != currentPage) currentPage = page;
-      _hash = hash;
-      _scrollScreen(hash);
+      _hash = location.anchorPlus;  // ### Is that right, or is it just anchor?
+      _scrollScreen(location.anchorPlus);
     }
-  }
-
-  /// Loads the [className] class and updates the current page to the
-  /// class's member described by [location].
-  Future _updateToClassMember(Class clazz, String location, String hash) {
-    var variable = location.split('.').last;
-    if (!clazz.isLoaded) {
-      return clazz.load().then((_) {
-        var destination = pageIndex[location];
-        if (destination != null)  {
-          _updatePage(destination, hash);
-        } else {
-          // If the destination is null, then it is a variable in this class.
-          _updatePage(clazz, '#${toHash(variable)}');
-        }
-        return true;
-      });
-    } else {
-      // It is a variable in this class.
-      _updatePage(clazz, '#${toHash(variable)}');
-    }
-    return new Future.value(false);
   }
 
   /// Loads the [libraryName] [Library] and [className] [Class] if necessary
   /// and updates the current page to the member described by [location]
   /// once the correct member is found and loaded.
-  Future _loadAndUpdatePage(String libraryName, String className,
-                           String location, String hash) {
-    var destination = pageIndex[location];
+  Future _loadAndUpdatePage(Location location) {
+//    String libraryName, String className,
+//                           String location, String hash) {
+    // If it's loaded, it will be in the index.
+    var destination = pageIndex[location.withoutAnchor];
     if (destination == null) {
-      var library = homePage.itemNamed(libraryName);
-      if (library == null) return new Future.value(false);
-      if (!library.isLoaded) {
-        return library.load().then((_) =>
-          _loadAndUpdatePage(libraryName, className, location, hash));
-      } else {
-        var clazz = pageIndex[className];
-        if (clazz != null) {
-          // The location is a member of a class.
-          return _updateToClassMember(clazz, location, hash);
-        } else {
-          // The location is of a top-level variable in a library.
-          var variable = location.split('.').last;
-          _updatePage(library, '#$variable');
-          return new Future.value(true);
-        }
-      }
+      return getItem(location).then((items)
+          => _updatePage(location.itemFromList(items.toList()), location));
     } else {
-      if (!destination.isLoaded) {
-        return destination.load().then((_) {
-          _updatePage(destination, hash);
-          return true;
-        });
-      } else {
-        _updatePage(destination, hash);
-        return new Future.value(true);
-      }
+      destination.load().then((_) => _updatePage(destination, location));
     }
+  }
+
+  Future getItem(Location location) =>
+    getLibrary(location)
+      .then((lib) => getMember(lib, location))
+      .then((libWithMember) => getSubMember(libWithMember, location));
+
+  // All libraries should be in [pageIndex], but may not be loaded.
+  // TODO(alanknight): It would be nice if this could all be methods on
+  // Location, but it doesn't have access to the lookup context right now.
+  Future<Item> getLibrary(Location location) =>
+      pageIndex[location.libraryQualifiedName].load();
+
+  Future<List<Item>> getMember(Library lib, Location location) {
+    var member = lib.memberNamed(location.memberName);
+    if (member == null) return new Future.value([lib, null]);
+    return member.load().then((mem) => new Future.value([lib, member]));
+  }
+
+  Future<List<Item>> getSubMember(List libWithMember, Location location) {
+    if (libWithMember.last == null) {
+      return new Future.value(libWithMember.first);
+    }
+    return new Future.value(concat(libWithMember,
+      [libWithMember.last.memberNamed(location.subMemberName)]));
   }
 
   /// Looks for the correct [Item] described by [location]. If it is found,
@@ -236,39 +218,28 @@ class Viewer extends Observable {
   /// Returns a [Future] to determine if a link was found or not.
   /// [location] is a [String] path to the location (either a qualified name
   /// or a url path).
-  Future _handleLinkWithoutState(String location) {
-    if (location == null || location == '') return new Future.value(false);
-    // An extra '/' at the end of the url must be removed.
-    if (location.endsWith('/'))
-      location = location.substring(0, location.length - 1);
-    if (location == 'home') {
-      _updatePage(homePage, null);
+  Future _handleLinkWithoutState(String uri) {
+    // ### Is this right??
+    if (uri == null || uri == '') return new Future.value(false);
+    // Valid forms for links are
+    // home - the global home page
+    // library.memberName.subMember#anchor
+    // where #anchor is optional and library can be any of
+    // dart:library, library-foo, package-foo/library-bar
+    // So we need an unambiguous form.
+    // #[package/]libraryWithDashes[.class.method]#anchor
+
+    // We will tolerate colons in the location instead of dashes, though
+    // there might be a better way to handle that.
+    var tweaked = uri.replaceAll(':', '-');
+    var location = new Location(uri);
+
+    if (location.libraryName == 'home') {
+      _updatePage(location, null);
       return new Future.value(true);
     }
-    // Converts to a qualified name from a url path.
-    location = location.replaceAll('/', '.');
-    var hashIndex = location.indexOf('#');
-    var variableHash;
-    var locationWithoutHash = location;
-    if (hashIndex != -1) {
-      variableHash = location.substring(hashIndex, location.length);
-      locationWithoutHash = location.substring(0, hashIndex);
-    }
-    var members = locationWithoutHash.split('.');
-    var libraryName = members.first;
-    // TODO(alanknight): A better implementation would be to match on either
-    // the link name or on the displayed name of a component.
-    // Allow references to be of the form #dart:core and convert them.
-    libraryName = libraryName.replaceAll(':', '-');
-    // Since library names can contain '.' characters, the library part
-    // of the input contains '-' characters replacing the '.' characters
-    // in the original qualified name to make finding a library easier. These
-    // must be changed back to '.' characters to be true qualified names.
-    var className = members.length <= 1 ? null :
-      '${libraryName.replaceAll('-', '.')}.${members[1]}';
-    locationWithoutHash = locationWithoutHash.replaceAll('-', '.');
-    return _loadAndUpdatePage(libraryName, className,
-        locationWithoutHash, variableHash);
+
+    return _loadAndUpdatePage(location);
   }
 
   /// Looks for the correct [Item] described by [location]. If it is found,
@@ -334,7 +305,8 @@ void startHistory() {
 }
 
 void navigate(event) {
-  location = window.location.hash.replaceFirst('#', '');
+  location = Uri.decodeComponent(window.location.hash).replaceFirst('#', '');
+//  location = window.location.hash.replaceFirst('#', '');
   if (viewer.homePage != null) {
     if (location != '') viewer._handleLinkWithoutState(location);
     else viewer._handleLinkWithoutState('home');
@@ -376,3 +348,6 @@ void navigate(event) {
     });
   });
 }
+
+Iterable concat(Iterable list1, Iterable list2) =>
+    [list1, list2].expand((x) => x);

@@ -15,7 +15,7 @@ class VariableHeading extends MemberElement {
 
   get observables => concat(super.observables,
       const [#getter, #setterParameter, #type, #name, #idName]);
-  get defaultItem => new Variable({'type' : [null]})..name = 'loading';
+  get defaultItem => new Variable({'type' : [null], 'name' : 'loading'});
   wrongClass(newItem) => newItem is! Variable;
 
   get item => super.item;

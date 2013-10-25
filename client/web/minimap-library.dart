@@ -24,6 +24,7 @@ class MinimapElementLibrary extends MemberElement {
 
   get defaultItem => new Library.forPlaceholder({
     "name" : 'loading',
+    "qualifiedName" : 'loading',
     "preview" : 'loading',
   });
 

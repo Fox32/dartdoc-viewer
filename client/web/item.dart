@@ -29,7 +29,7 @@ class ItemElement extends MemberElement {
   wrongClass(newItem) => newItem is! Item;
 
   get defaultItem =>
-      new Class.forPlaceholder("<p>loading</p>", "<p>loading</p>");
+      new Class.forPlaceholder("loading.loading", "loading");
 
   get item => super.item;
   set item(newItem) => super.item = newItem;

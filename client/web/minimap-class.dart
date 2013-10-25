@@ -21,7 +21,7 @@ class MinimapElementClass extends MemberElement {
 
   wrongClass(newItem) => newItem is! Class;
 
-  get defaultItem => new Class.forPlaceholder('loading', 'loading');
+  get defaultItem => new Class.forPlaceholder('loading.loading', 'loading');
 
   @observable get operatorItems => page.operators.content;
   @observable get variableItems => page.variables.content;

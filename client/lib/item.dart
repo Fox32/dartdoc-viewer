@@ -1,13 +1,13 @@
 library category_item;
 
 import 'dart:async';
-import 'dart:html';
 import 'dart:convert';
 
 import 'package:dartdoc_viewer/data.dart';
 import 'package:dartdoc_viewer/read_yaml.dart';
 import 'package:polymer/polymer.dart';
 import 'package:yaml/yaml.dart';
+import 'package:dartdoc_viewer/decode_uri.dart';
 
 // TODO(tmandel): Don't hardcode in a path if it can be avoided.
 @reflectable const docsPath = '../../docs/';
@@ -16,8 +16,10 @@ import 'package:yaml/yaml.dart';
  * Anything that holds values and can be displayed.
  */
 
+nothing() => null;
+
 @reflectable class Container extends Observable {
-  @observable String name;
+  @observable final String name;
   @observable String comment = '<span></span>';
 
   Container(this.name, [this.comment]);
@@ -47,11 +49,16 @@ import 'package:yaml/yaml.dart';
   int inheritedCounter = 0;
   int memberCounter = 0;
 
+  Item memberNamed(String name, {orElse : nothing}) {
+    return content.firstWhere((x) => x.name == name, orElse: orElse);
+  }
+
   Category.forClasses(List<Map> classes, String name,
       {bool isAbstract: false}) : super(name) {
     if (classes != null) {
       classes.forEach((clazz) =>
-        content.add(new Class.forPlaceholder(clazz['name'], clazz['preview'])));
+        content.add(new Class.forPlaceholder(clazz['qualifiedName'],
+            clazz['preview'])));
     }
   }
 
@@ -123,7 +130,7 @@ import 'package:yaml/yaml.dart';
 @reflectable class Item extends Container {
   /// A list of [Item]s representing the path to this [Item].
   List<Item> path = [];
-  @observable String qualifiedName;
+  @observable final String qualifiedName;
 
   Item(String name, this.qualifiedName, [String comment])
       : super(name, comment);
@@ -134,6 +141,11 @@ import 'package:yaml/yaml.dart';
   /// Adds this [Item] to [pageIndex] and updates all necessary members.
   void addToHierarchy() {
     pageIndex[qualifiedName] = this;
+  }
+
+  /// Loads this [Item]'s data and populates all fields.
+  Future load() {
+    return new Future.value(this);
   }
 
   /// Adds the comment from [item] to [this].
@@ -154,11 +166,13 @@ import 'package:yaml/yaml.dart';
    }
    var parts = name.split('/');
    name = parts.map((e) => Uri.encodeComponent(e)).join('/') + hash;
-//   return name;
-   return name.replaceAll('%', '-');
+   return name;
+//   return name.replaceAll('%', '-');
   }
 
   bool get isLoaded => true;
+
+  Item memberNamed(String name, {Function orElse : nothing}) => nothing();
 }
 
 /// Sorts each inner [List] by qualified names.
@@ -177,14 +191,19 @@ import 'package:yaml/yaml.dart';
   /// All libraries being viewed from the homepage.
   List<Item> libraries = [];
 
+  /// Return a link that will get us to this item.
+  String get linkHref => name == '' ? 'home' : Uri.encodeComponent(name);
+
+  static _nameFromYaml(Map yaml) {
+    var package = yaml['packageName'];
+    return package == null ? 'home' : package;
+  }
+
   /// The constructor parses the [yaml] input and constructs
   /// [Placeholder] objects to display before loading libraries.
-  Home(Map yaml) : super('', 'home', _wrapComment(yaml['introduction'])) {
+  Home(Map yaml) : super(_nameFromYaml(yaml), _nameFromYaml(yaml),
+      _wrapComment(yaml['introduction'])) {
     var libraryList = yaml['libraries'];
-    if (yaml['packageName'] != null) {
-      name = yaml['packageName'];
-      qualifiedName = name;
-    }
     var packages = new Map();
     if (name == '') {
       libraryList.forEach((each) =>
@@ -213,6 +232,7 @@ import 'package:yaml/yaml.dart';
       libraryNames[package.name] = package.name.replaceAll('.', '-');
     });
     _sort([this.libraries]);
+    pageIndex[qualifiedName] = this;
   }
 
   /// Returns the [Item] representing [libraryName].
@@ -249,12 +269,14 @@ import 'package:yaml/yaml.dart';
 
   /// Loads this [Item]'s data and populates all fields.
   Future load() {
+    if (isLoaded) return new Future.value(this);
     var location = '$docsPath$qualifiedName.' + (isYaml ? 'yaml' : 'json');
     var data = retrieveFileContents(location);
     return data.then((response) {
       var yaml = isYaml ? loadYaml(response) : JSON.decode(response);
       loadValues(yaml);
       buildHierarchy(this, this);
+      return new Future.value(this);
     });
   }
 
@@ -278,9 +300,7 @@ import 'package:yaml/yaml.dart';
   /// Creates a [Library] placeholder object with null fields.
   Library.forPlaceholder(Map library)
     : super(
-        (library['packageName'] == null || library['packageName'].isEmpty
-            ? '' : library['packageName'] + '.')
-            + library['name'],
+        library['qualifiedName'],
         library['name'],
         library['preview']);
 
@@ -329,13 +349,23 @@ import 'package:yaml/yaml.dart';
     isLoaded = true;
   }
 
-  String get decoratedName {
-    var parts = qualifiedName.split('.');
-    if (parts.length > 1) {
-      return '${parts.first}:${parts.last}';
-    } else {
-      return name;
+  String get decoratedName => name;
+
+  bool get isDartLibrary => name.startsWith("dart-");
+
+  /// Return a link that will get us back to this page.
+  String get linkHref {
+    return qualifiedName;
+  }
+
+  Item memberNamed(String name, {Function orElse : nothing}) {
+    if (name == null) return orElse();
+    for (var category in
+        [classes, functions, variables, operators, typedefs, errors]) {
+      var member = category.memberNamed(name, orElse: nothing);
+      if (member != null) return member;
     }
+    return orElse();
   }
 }
 
@@ -359,7 +389,7 @@ import 'package:yaml/yaml.dart';
 
   /// Creates a [Class] placeholder object with null fields.
   Class.forPlaceholder(String location, String previewComment)
-      : super(location, location.split('.').last, previewComment) {
+      : super(location, new Location(location).memberName, previewComment) {
     operators = new Category.forFunctions(null, 'placeholder');
     variables = new Category.forVariables(null, null, null);
     constructs = new Category.forFunctions(null, 'placeholder');
@@ -370,6 +400,8 @@ import 'package:yaml/yaml.dart';
   Class(Map yaml) : super(yaml['qualifiedName'], yaml['name'], '') {
     loadValues(yaml);
   }
+
+  String get linkHref => qualifiedName;
 
   void addToHierarchy() {
     super.addToHierarchy();
@@ -465,6 +497,17 @@ import 'package:yaml/yaml.dart';
     }
     return out.toString();
   }
+
+  Item memberNamed(String name, {Function orElse : nothing}) {
+    if (name == null) return orElse();
+    for (var category in
+        [annotations, constructs, functions, operators, variables]) {
+      var member = category.memberNamed(name, nothing);
+      if (member != null) return member;
+    }
+    return orElse();
+  }
+
 }
 
 /**
@@ -475,6 +518,13 @@ import 'package:yaml/yaml.dart';
   List<String> supportedBrowsers = [];
   List<Annotation> annotations = [];
   String domName;
+
+  Item memberNamed(String name, {Function orElse : nothing}) {
+    for (var annotation in annotations) {
+      if (annotation.name == name) return annotation;
+    }
+    return orElse();
+  }
 
   AnnotationGroup(List annotes) {
     if (annotes != null) {

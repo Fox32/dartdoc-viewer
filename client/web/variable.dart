@@ -16,7 +16,7 @@ class VariableElement extends InheritedElement {
   }
 
   get observables => concat(super.observables, const [#annotations]);
-  get defaultItem => new Variable({'type' : [null]})..name = 'loading';
+  get defaultItem => new Variable({'type' : [null], 'name' : 'loading'});
   wrongClass(newItem) => newItem is! Variable;
 
   get item => super.item;
