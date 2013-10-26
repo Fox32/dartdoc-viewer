@@ -259,6 +259,12 @@ nothing() => null;
     return libraries.firstWhere((lib) => libraryNames[lib.name] == libraryName,
         orElse: () => null);
   }
+
+  Item memberNamed(String name, {Function orElse : nothing}) {
+    return libraries.firstWhere(
+        (each) => each.name == name || each.decoratedName == name,
+        orElse: orElse);
+  }
 }
 
 /// Runs through the member structure and creates path information.
@@ -366,9 +372,13 @@ nothing() => null;
     isLoaded = true;
   }
 
-  String get decoratedName => isDartLibrary
-      ? name.replaceAll('-',':')
-      : name.replaceAll('-', '.');
+  String get decoratedName {
+    if (isDartLibrary) {
+      return name.replaceAll('-dom-', '-').replaceAll('-', ':');
+    } else {
+      return name.replaceAll('-', '.');
+    }
+  }
 
   bool get isDartLibrary => name.startsWith("dart-");
 

@@ -209,8 +209,17 @@ class Viewer extends Observable {
   // Location, but it doesn't have access to the lookup context right now.
   /// Return a future for the given item, ensuring that it and all its
   /// parent items are loaded.
-  Future<Item> getLibrary(Location location) =>
-      pageIndex[location.libraryQualifiedName].load();
+  Future<Item> getLibrary(Location location) {
+    var lib = pageIndex[location.libraryQualifiedName];
+    // If we can't find the name in the pageIndex, look through the home
+    // to see if we can find it there, searching by displayed name. Mostly
+    // important to find things like dart:html, which is really dart-dom-html
+    if (lib == null) {
+      lib = viewer.homePage.memberNamed(location.libraryName);
+    }
+    if (lib == null) return new Future.value(false);
+    return lib.load();
+  }
 
   Future<List<Item>> getMember(Library lib, Location location) {
     var member = lib.memberNamed(location.memberName);
@@ -220,7 +229,7 @@ class Viewer extends Observable {
 
   Future<List<Item>> getSubMember(List libWithMember, Location location) {
     if (libWithMember.last == null) {
-      return new Future.value(libWithMember.first);
+      return new Future.value([libWithMember.first]);
     }
     return new Future.value(concat(libWithMember,
       [libWithMember.last.memberNamed(location.subMemberName)]));
@@ -242,9 +251,7 @@ class Viewer extends Observable {
     // [package/]libraryWithDashes[.class.method]#anchor
 
     // We will tolerate colons in the location instead of dashes, though
-    // there might be a better way to handle that.
-    var tweaked = uri.replaceAll(':', '-');
-    var location = new Location(tweaked);
+    var location = new Location(uri);
 
     if (location.libraryName == 'home') {
       _updatePage(viewer.homePage, location);
