@@ -7,7 +7,7 @@ import 'package:dartdoc_viewer/data.dart';
 import 'package:dartdoc_viewer/read_yaml.dart';
 import 'package:polymer/polymer.dart';
 import 'package:yaml/yaml.dart';
-import 'package:dartdoc_viewer/decode_uri.dart';
+import 'package:dartdoc_viewer/location.dart';
 
 // TODO(tmandel): Don't hardcode in a path if it can be avoided.
 @reflectable const docsPath = '../../docs/';
@@ -155,24 +155,15 @@ nothing() => null;
   @observable bool get isInherited => false;
 
   /// Creates a link for the href attribute of an [AnchorElement].
-  String get linkHref {
-   var name = findLibraryName(qualifiedName).replaceAll('.', '/');
-   var index = name.indexOf('#');
-   var hash = '';
-   if (index != -1) {
-     hash = name.substring(index + 1, name.length);
-     name = name.substring(0, index);
-     hash = '#${Uri.encodeComponent(hash)}';
-   }
-   var parts = name.split('/');
-   name = parts.map((e) => Uri.encodeComponent(e)).join('/') + hash;
-   return name;
-//   return name.replaceAll('%', '-');
-  }
+  String get linkHref => qualifiedName;
 
   bool get isLoaded => true;
 
   Item memberNamed(String name, {Function orElse : nothing}) => nothing();
+
+  Item get owner => pageIndex[new Location(qualifiedName).parentQualifiedName];
+
+  Item get home => owner == null ? null : owner.home;
 }
 
 /// Sorts each inner [List] by qualified names.
@@ -187,6 +178,9 @@ nothing() => null;
  * An [Item] containing all of the [Library] and [Placeholder] objects.
  */
 @reflectable class Home extends Item {
+
+  Item get home => this;
+  Home owner;
 
   /// All libraries being viewed from the homepage.
   List<Item> libraries = [];
@@ -203,14 +197,16 @@ nothing() => null;
   /// [Placeholder] objects to display before loading libraries.
   Home(Map yaml) : super(_nameFromYaml(yaml), _nameFromYaml(yaml),
       _wrapComment(yaml['introduction'])) {
+
+    // TODO(alanknight): Fix complicated, recursive constructor.
     var libraryList = yaml['libraries'];
     var packages = new Map();
-    if (name == '') {
+    if (isTopLevelHome) {
       libraryList.forEach((each) =>
          packages.putIfAbsent(each['packageName'], () => []).add(each));
     }
 
-    var directLibraries = name == '' ? packages[''] : libraryList;
+    var directLibraries = isTopLevelHome ? packages[''] : libraryList;
     for (Map library in directLibraries) {
       var libraryName = library['name'];
       libraryNames[libraryName] = libraryName.replaceAll('.', '-');
@@ -228,11 +224,32 @@ nothing() => null;
         'libraries' : libraries,
         'packageName' : packageName
         });
+      package.owner = this;
       this.libraries.add(package);
       libraryNames[package.name] = package.name.replaceAll('.', '-');
     });
+
     _sort([this.libraries]);
+    makeMainLibrarySpecial(yaml);
     pageIndex[qualifiedName] = this;
+    if (isTopLevelHome) pageIndex[''] = this;
+  }
+
+  bool get isTopLevelHome => name == 'home';
+
+  void makeMainLibrarySpecial(yaml) {
+    var mainLib = libraries.firstWhere((each) => each.name == name,
+        orElse: nothing);
+    if (mainLib != null) {
+      libraries.remove(mainLib);
+      libraries.insert(0, mainLib);
+      var libs = yaml['libraries'];
+      var main = libs.firstWhere((each) => each['name'] == mainLib.name);
+      var intro = main['packageIntro'];
+      if (intro != null && !intro.isEmpty) {
+        comment = _wrapComment(intro);
+      }
+    }
   }
 
   /// Returns the [Item] representing [libraryName].
@@ -349,7 +366,9 @@ nothing() => null;
     isLoaded = true;
   }
 
-  String get decoratedName => name;
+  String get decoratedName => isDartLibrary
+      ? name.replaceAll('-',':')
+      : name.replaceAll('-', '.');
 
   bool get isDartLibrary => name.startsWith("dart-");
 
@@ -502,7 +521,7 @@ nothing() => null;
     if (name == null) return orElse();
     for (var category in
         [annotations, constructs, functions, operators, variables]) {
-      var member = category.memberNamed(name, nothing);
+      var member = category.memberNamed(name, orElse: nothing);
       if (member != null) return member;
     }
     return orElse();

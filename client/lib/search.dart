@@ -12,6 +12,7 @@ library search;
 
 import 'dart:async';
 import 'package:polymer/polymer.dart';
+import 'package:dartdoc_viewer/location.dart';
 
 /** Search Index */
 @reflectable Map<String, String> index = {};
@@ -20,6 +21,21 @@ import 'package:polymer/polymer.dart';
 
   /** Qualified name of this search result references. */
   String element;
+
+  static const typesThatLinkWithinAParentPage = const ['method', 'operator',
+    'getter', 'setter', 'variable', 'constructor', 'property' ];
+
+  String get url {
+    if (!typesThatLinkWithinAParentPage.contains(type)) return element;
+    var location = new Location(element);
+    var sub = location.subMemberName == null
+        ? location.memberName
+        : location.subMemberName;
+    if (sub == null) return element;
+    var newLocation = new Location(location.parentQualifiedName);
+    newLocation.anchor = newLocation.toHash(sub);
+    return newLocation.withAnchor;
+  }
 
   /** This element's member type. */
   String type;

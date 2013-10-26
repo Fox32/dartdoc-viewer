@@ -15,7 +15,7 @@ class Result extends AnchorElement with Polymer, Observable {
 
   Result.created() : super.created();
 
-  var _item;
+  SearchResult _item;
 
   @published get item => _item;
   set item(newItem) {
@@ -38,6 +38,7 @@ class Result extends AnchorElement with Polymer, Observable {
   /// The name of this member.
   String get descriptiveName {
     if (qualifiedname == null) return '';
+    // TODO(alanknight) : Look at unifying this with Location
     var name = qualifiedname.split('.');
     if (membertype == 'library') {
       if (name.first == 'dart') {

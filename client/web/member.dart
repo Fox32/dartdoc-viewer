@@ -8,7 +8,7 @@ import 'package:polymer/polymer.dart';
 @MirrorsUsed()
 import 'dart:mirrors';
 import 'app.dart' as app show viewer;
-import 'package:dartdoc_viewer/decode_uri.dart';
+import 'package:dartdoc_viewer/location.dart';
 
 class SameProtocolUriPolicy implements html.UriPolicy {
   final html.AnchorElement _hiddenAnchor = new html.AnchorElement();

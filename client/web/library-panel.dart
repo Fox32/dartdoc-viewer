@@ -27,9 +27,10 @@ class LibraryPanel extends DartdocElement {
     var mainElement = shadowRoot.querySelector("#library-panel");
     if (mainElement == null) return;
     mainElement.children.clear();
+    var breadcrumbs = viewer.breadcrumbs;
     for (var library in viewer.libraries) {
       var isFirst =
-          library.decoratedName == viewer.breadcrumbs.first.decoratedName;
+          library.decoratedName == breadcrumbs.first.decoratedName;
       var element =
           isFirst ? newElement(library, true) : newElement(library, false);
       mainElement.append(element);

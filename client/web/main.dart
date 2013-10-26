@@ -61,6 +61,7 @@ class IndexElement extends DartdocElement {
   togglePanel(event, detail, target) => viewer.togglePanel();
   toggleInherited(event, detail, target) => viewer.toggleInherited();
   toggleMinimap(event, detail, target) => viewer.toggleMinimap();
+  togglePkg(event, detail, target) => viewer.togglePkg();
 
   @observable get shouldShowLibraryMinimap =>
       shouldShowLibraryMinimapFor(viewer.isMinimap);

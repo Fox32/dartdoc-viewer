@@ -18,9 +18,9 @@ import 'package:dartdoc_viewer/data.dart';
 import 'package:dartdoc_viewer/item.dart';
 import 'package:dartdoc_viewer/read_yaml.dart';
 import 'package:dartdoc_viewer/search.dart';
-import 'package:dartdoc_viewer/decode_uri.dart';
+import 'package:dartdoc_viewer/location.dart';
 import 'package:polymer/polymer.dart';
-import 'index.dart';
+import 'main.dart';
 import 'dart:math' as math;
 
 // TODO(janicejl): JSON path should not be hardcoded.
@@ -51,9 +51,25 @@ class Viewer extends Observable {
   /// The homepage from which every [Item] can be reached.
   @observable Home homePage;
 
-  @observable get libraries =>
-      currentPage == null ? [] :
-          currentPage is Home ? currentPage.libraries : homePage.libraries;
+  bool _showPkgLibraries = false;
+  @observable bool get showPkgLibraries => _showPkgLibraries;
+  @observable set showPkgLibraries(newValue) {
+    var oldValue = _showPkgLibraries;
+    _showPkgLibraries = newValue;
+    notifyPropertyChange(#showPkgLibraries, oldValue, newValue);
+    // We know it's changed, don't need to bother telling it old and new values.
+    notifyPropertyChange(#libraries, null, []);
+  }
+
+  @observable get libraries {
+    if (currentPage == null) return [];
+    if (showPkgLibraries) {
+      return currentPage.home.libraries;
+    } else {
+      return currentPage.home.libraries.where(
+          (each) => each is Library).toList();
+    }
+  }
 
   /// The current page being shown. An Item.
   /// TODO(alanknight): Restore the type declaration here and structure the code
@@ -101,14 +117,22 @@ class Viewer extends Observable {
       });
   }
 
-
-
   /// The title of the current page.
   String get title => currentPage == null ? '' : currentPage.decoratedName;
 
   /// Creates a list of [Item] objects describing the path to [currentPage].
-  @observable List<Item> get breadcrumbs => [homePage]
-    ..addAll(currentPage == null ? [] : currentPage.path);
+  // TODO(alanknight) : This seems like it could be simpler.
+  @observable List<Item> get breadcrumbs {
+    if (viewer.homePage == null) return [];
+    var items = [];
+    var current = viewer.currentPage;
+    while (current != null) {
+      items.add(current);
+      current = current.owner;
+    }
+    items = items.reversed.toList();
+    return items;
+  }
 
   /// Scrolls the screen to the correct member if necessary.
   void _scrollScreen(String hash) {
@@ -124,20 +148,7 @@ class Viewer extends Observable {
         var e = queryEverywhere(dartdocMain, hash);
 
         if (e != null) {
-        // TODO(alanknight): Open the element automatically when scrolled to.
-//      Find the parent category element to make sure it is open.
-//          var category = e.parent;
-//          while (category != null &&
-//              !category.classes.contains('accordion-body')) {
-//            category = category.parent;
-//          }
-//          // Open the category if it is not open.
-//          if (category != null && !category.classes.contains('in')) {
-//            category.classes.add('in');
-//            category.attributes['style'] = 'height: auto;';
-//          }
           e.scrollIntoView(ScrollAlignment.TOP);
-
           // The navigation bar at the top of the page is 60px wide,
           // so scroll down 60px once the browser scrolls to the member.
           window.scrollBy(0, -60);
@@ -162,32 +173,32 @@ class Viewer extends Observable {
   }
 
   /// Updates [currentPage] to be [page].
-  void _updatePage(Item page, Location location) {
+  Future _updatePage(Item page, Location location) {
     if (page != null) {
       // Since currentPage is observable, if it changes the page reloads.
       // This avoids reloading the page when it isn't necessary.
       if (page != currentPage) currentPage = page;
-      _hash = location.anchorPlus;  // ### Is that right, or is it just anchor?
+      _hash = location.anchorPlus;
       _scrollScreen(location.anchorPlus);
     }
+    return new Future.value(true);
   }
 
   /// Loads the [libraryName] [Library] and [className] [Class] if necessary
   /// and updates the current page to the member described by [location]
   /// once the correct member is found and loaded.
   Future _loadAndUpdatePage(Location location) {
-//    String libraryName, String className,
-//                           String location, String hash) {
     // If it's loaded, it will be in the index.
     var destination = pageIndex[location.withoutAnchor];
     if (destination == null) {
       return getItem(location).then((items)
           => _updatePage(location.itemFromList(items.toList()), location));
     } else {
-      destination.load().then((_) => _updatePage(destination, location));
+      return destination.load().then((_) => _updatePage(destination, location));
     }
   }
 
+  /// Find the item corresponding to this location
   Future getItem(Location location) =>
     getLibrary(location)
       .then((lib) => getMember(lib, location))
@@ -196,6 +207,8 @@ class Viewer extends Observable {
   // All libraries should be in [pageIndex], but may not be loaded.
   // TODO(alanknight): It would be nice if this could all be methods on
   // Location, but it doesn't have access to the lookup context right now.
+  /// Return a future for the given item, ensuring that it and all its
+  /// parent items are loaded.
   Future<Item> getLibrary(Location location) =>
       pageIndex[location.libraryQualifiedName].load();
 
@@ -218,60 +231,28 @@ class Viewer extends Observable {
   /// Returns a [Future] to determine if a link was found or not.
   /// [location] is a [String] path to the location (either a qualified name
   /// or a url path).
-  Future _handleLinkWithoutState(String uri) {
-    // ### Is this right??
-    if (uri == null || uri == '') return new Future.value(false);
+  Future handleLink(String uri) {
+    // Links are the hash part of the URI without the leading #.
     // Valid forms for links are
     // home - the global home page
     // library.memberName.subMember#anchor
     // where #anchor is optional and library can be any of
     // dart:library, library-foo, package-foo/library-bar
     // So we need an unambiguous form.
-    // #[package/]libraryWithDashes[.class.method]#anchor
+    // [package/]libraryWithDashes[.class.method]#anchor
 
     // We will tolerate colons in the location instead of dashes, though
     // there might be a better way to handle that.
     var tweaked = uri.replaceAll(':', '-');
-    var location = new Location(uri);
+    var location = new Location(tweaked);
 
     if (location.libraryName == 'home') {
-      _updatePage(location, null);
+      _updatePage(viewer.homePage, location);
       return new Future.value(true);
     }
-
     return _loadAndUpdatePage(location);
-  }
-
-  /// Looks for the correct [Item] described by [location]. If it is found,
-  /// [currentPage] is updated and state is pushed to the history api.
-  void handleLink(String location) {
-    _handleLinkWithoutState(location).then((response) {
-      if (response) _updateState(currentPage);
-    });
-  }
-
-  /// Updates [currentPage] to [page] and pushes state for navigation.
-  void changePage(Item page) {
-    if (page is LazyItem && !((page as LazyItem).isLoaded)) {
-      (page as LazyItem).load().then((_) {
-        _updatePage(page, null);
-        _updateState(page);
-      });
-    } else {
-      _updatePage(page, null);
-      _updateState(page);
-    }
-  }
-
-  /// Pushes state to history for navigation in the browser.
-  void _updateState(Item page) {
-    String url = '#home';
-    for (var member in page.path) {
-      url = url == '#home' ? '#${libraryNames[member.name]}' :
-        '$url/${member.name}';
-    }
-    if (_hash != null) url = '$url$_hash';
-    window.history.pushState(url, url.replaceAll('/', '->'), url);
+    // TODO(alanknight) : This is now letting the history automatically
+    // update, even for non-found items. Is that an issue?
   }
 
   /// Toggles the library panel
@@ -284,6 +265,10 @@ class Viewer extends Observable {
   void toggleMinimap() {
     isMinimap = !_isMinimap;
     notifyPropertyChange(#isMinimap, !_isMinimap, _isMinimap);
+  }
+
+  void togglePkg() {
+    showPkgLibraries = !showPkgLibraries;
   }
 
   /// Toggles showing inherited members.
@@ -305,11 +290,10 @@ void startHistory() {
 }
 
 void navigate(event) {
-  location = Uri.decodeComponent(window.location.hash).replaceFirst('#', '');
-//  location = window.location.hash.replaceFirst('#', '');
+  // TODO(alanknight): Should we be URI encoding/decoding this?
+  var newLocation = window.location.hash.replaceFirst('#', '');
   if (viewer.homePage != null) {
-    if (location != '') viewer._handleLinkWithoutState(location);
-    else viewer._handleLinkWithoutState('home');
+    viewer.handleLink(newLocation);
   }
 }
 
@@ -339,7 +323,7 @@ void navigate(event) {
   // must first load fully before navigating to the specified page.
   viewer.finished.then((_) {
     if (location != null && location != '') {
-      viewer._handleLinkWithoutState(location);
+      viewer.handleLink(location);
     } else {
       viewer.currentPage = viewer.homePage;
     }

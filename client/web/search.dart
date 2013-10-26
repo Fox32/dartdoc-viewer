@@ -71,7 +71,9 @@ class Search extends DartdocElement {
         // If nothing is focused, use the first search result.
         refId = results.first.element;
       }
-      viewer.handleLink(new LinkableType(refId).location);
+      var newLocation = new LinkableType(refId).location;
+      viewer.handleLink(newLocation);
+      window.history.pushState("#$newLocation", viewer.title, "#$newLocation");
       searchQuery = "";
       results.clear();
       dartdocMain.searchSubmitted();

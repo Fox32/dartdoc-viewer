@@ -17,7 +17,7 @@ class HomeElement extends MemberElement {
   get item => super.item;
   set item(newItem) => super.item = newItem;
 
-  @observable get libraries => item == null ? [] : item.libraries;
+  @observable get libraries => item == null ? [] : viewer.libraries;
 
   enteredView() {
     super.enteredView();
