@@ -1,3 +1,7 @@
+// Copyright (c) 2013, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
+
 library category_item;
 
 import 'dart:async';
@@ -161,7 +165,7 @@ nothing() => null;
 
   Item memberNamed(String name, {Function orElse : nothing}) => nothing();
 
-  Item get owner => pageIndex[new Location(qualifiedName).parentQualifiedName];
+  Item get owner => pageIndex[new DocsLocation(qualifiedName).parentQualifiedName];
 
   Item get home => owner == null ? null : owner.home;
 }
@@ -418,7 +422,7 @@ nothing() => null;
 
   /// Creates a [Class] placeholder object with null fields.
   Class.forPlaceholder(String location, String previewComment)
-      : super(location, new Location(location).memberName, previewComment) {
+      : super(location, new DocsLocation(location).memberName, previewComment) {
     operators = new Category.forFunctions(null, 'placeholder');
     variables = new Category.forVariables(null, null, null);
     constructs = new Category.forFunctions(null, 'placeholder');

@@ -10,7 +10,8 @@ import 'package:dartdoc_viewer/location.dart';
 // Intent is to match
 // package/library-name.libMember.subMember#anchor
 // or  library-name.libMember.subMember#anchor
-// where all the trailing components are optional
+// where everything except library is optional, but you can't have
+// a sub-member without a member.
 
 // Mapping from URI to list of the form
 // [package, library, class, member, anchor]
@@ -35,8 +36,8 @@ _asList(Map m) => [m['package'], m['library'], m['member'], m['subMember'],
 main() {
   urls.forEach((uri, result) {
     test("test parsing $uri", () {
-      var location = new Location(uri);
-      expect(pieces, result);
+      var location = new DocsLocation(uri);
+      expect(location.allComponentNames, result);
     });
   });
 }

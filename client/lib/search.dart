@@ -1,3 +1,7 @@
+// Copyright (c) 2013, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
+
 /**
  * A library for searching and filtering documentation.
  *
@@ -27,12 +31,12 @@ import 'package:dartdoc_viewer/location.dart';
 
   String get url {
     if (!typesThatLinkWithinAParentPage.contains(type)) return element;
-    var location = new Location(element);
+    var location = new DocsLocation(element);
     var sub = location.subMemberName == null
         ? location.memberName
         : location.subMemberName;
     if (sub == null) return element;
-    var newLocation = new Location(location.parentQualifiedName);
+    var newLocation = new DocsLocation(location.parentQualifiedName);
     newLocation.anchor = newLocation.toHash(sub);
     return newLocation.withAnchor;
   }

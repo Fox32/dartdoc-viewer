@@ -4,31 +4,38 @@
 
 library location;
 
-// TODO(alanknight): You need to get the set of allowed characters for these
-// correct, which it definitely is not right now.
+// These regular expressions are not strictly accurate for picking Dart
+// identifiers out of arbitrary text, e.g. identifiers must start with an
+// alphabetic or underscore, this would allow "9a" as a library name. But
+// they should be sufficient for extracting them from URLs that were created
+// from valid identifiers.
+
+/// A package in one of our URIs is an identifer and ends with a slash
 final packageMatch = new RegExp(r'(\w+)/');
-final libraryMatch = new RegExp(r'([\w\-\:\_]+)');
-final memberMatch = new RegExp(r'\.([\w\_]+)');
-// TODO(alanknight): This should exclude a trailing slash along with any
-// disallowed characters in the anchor.
-final anchorMatch = new RegExp(r'\#(.+)');
+/// A library in one of our URIs is an identifier but may contain either
+/// ':' or '-' in place of the '.' that is legal in a Dart library name.
+final libraryMatch = new RegExp(r'([\w\-\:]+)');
+/// A member or sub-member in one of our URI's starts with a '.' and is
+/// an identifier.
+final memberMatch = new RegExp(r'\.(\w+)');
+final anchorMatch = new RegExp(r'\#(\w+)');
 
 // This represents a component described by a URI and can give us
 // the URI given the component or vice versa.
-class Location {
+class DocsLocation {
   String packageName;
   String libraryName;
   String memberName;
   String subMemberName;
   String anchor;
 
-  Location.empty();
+  DocsLocation.empty();
 
-  Location(String uri) {
+  DocsLocation(String uri) {
     _extractPieces(uri);
   }
 
-  Location.fromList(List<String> components) {
+  DocsLocation.fromList(List<String> components) {
     if (components.length > 0) packageName = components[0];
     if (components.length > 1) libraryName = components[1];
     if (components.length > 2) memberName = components[2];
@@ -55,21 +62,38 @@ class Location {
     anchor = _check(anchorMatch);
   }
 
+  /// The URI hash string without its leading hash
+  /// and without any trailing anchor portion, e.g. for
+  /// http://site/#args/args.ArgParser#id_== it would return args/argsArgParser
   String get withoutAnchor =>
       [packagePlus, libraryPlus, memberPlus, subMemberPlus].join("");
 
+  /// The URI hash for just the library portion of this location.
   String get libraryQualifiedName => "$packagePlus$libraryPlus";
 
+  /// The full URI hash string without the leading hash character.
+  /// e.g. for
+  /// http://site/#args/args.ArgParser#id_==
+  /// it would return args/argsArgParser#id_==
   String get withAnchor => withoutAnchor + anchorPlus;
 
+  /// The package name with the trailing / separator, or the empty
+  /// string if the package name is not set.
   get packagePlus => packageName == null
       ? ''
       : libraryName == null
           ? packageName
           : '$packageName/';
-  get memberPlus => memberName == null ? '' : '.$memberName';
-  get subMemberPlus => subMemberName == null ? '' : '.$subMemberName';
+  /// The name of the library. This never has leading or trailing separators,
+  /// so it's the same as [libraryName].
   get libraryPlus => libraryName == null ? '' :  libraryName;
+  /// The name of the library member, with a leading period if the [memberName]
+  /// is non-empty.
+  get memberPlus => memberName == null ? '' : '.$memberName';
+  /// The name of the member's sub-member (e.g. the field of a class),
+  /// with a leading period if the [subMemberName] is non-empty.
+  get subMemberPlus => subMemberName == null ? '' : '.$subMemberName';
+  /// The trailing anchor e.g. #id_hashCode, including the leading hash.
   get anchorPlus => anchor == null ? '' : '#$anchor';
 
   /// Return a list of the components' basic names. Omits the anchor, but
@@ -78,7 +102,17 @@ class Location {
       [packageName]..addAll(
           [libraryName, memberName, subMemberName].where((x) => x != null));
 
+  /// Return all component names, including the anchor, and including those
+  /// which are null.
+  List<String> get allComponentNames =>
+      [packageName, libraryName, memberName, subMemberName, anchor];
+
+  /// Return a minimal list of the items along our path, using [root] for
+  /// context. The [root] is of type Home, and it returns a list of Item,
+  /// but we can't see those types from here.
   List items(root) {
+    // TODO(alanknight): Re-arrange the structure so that we can see
+    // those types without needing to import html as well.
     var items = [];
     var package = packageName == null
         ? null
@@ -103,14 +137,17 @@ class Location {
   /// to finding the last non-nil entry.
   itemFromList(List items) => items.reversed.firstWhere((x) => x != null);
 
-  /// Creates a valid hash ID for anchor tags.
+  /// Change [hash] into the form we use for identifying a doc entry within
+  /// a larger page.
   String toHash(String hash) {
     return 'id_' + hash;
   }
 
-  get parentQualifiedName {
-    return new Location.fromList(componentNames..removeLast()).withoutAnchor;
-  }
+  /// The string that identifies our parent (e.g. the package containing a
+  /// library, or the class containing a method) or an empty string if
+  /// we don't have a parent.
+  String get parentQualifiedName =>
+      new DocsLocation.fromList(componentNames..removeLast()).withoutAnchor;
 
-  toString() => 'Location($withAnchor)';
+  toString() => 'DocsLocation($withAnchor)';
 }
