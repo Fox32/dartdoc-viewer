@@ -34,6 +34,7 @@ class MinimapElement extends DartdocElement {
   /// Creates a proper href String for an [Item].
   @observable String link(linkItem) {
    var hash = linkItem.name == '' ? linkItem.decoratedName : linkItem.name;
-   return '${viewer.currentPage.linkHref}#${new DocsLocation.empty().toHash(hash)}';
+   return '${viewer.currentPage.linkHref}'
+       '#${new DocsLocation.empty().toHash(hash)}';
   }
 }

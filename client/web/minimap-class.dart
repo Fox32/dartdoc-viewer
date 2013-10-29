@@ -13,7 +13,19 @@ import 'dart:html';
 /// An element in a page's minimap displayed on the right of the page.
 @CustomTag("dartdoc-minimap-class")
 class MinimapElementClass extends MemberElement {
-  MinimapElementClass.created() : super.created();
+  MinimapElementClass.created() : super.created() {
+    new PathObserver(this, "viewer.isInherited").bindSync(
+        (_) {
+          notifyPropertyChange(#shouldShowConstructors, null,
+              shouldShowConstructors);
+          notifyPropertyChange(#shouldShowOperators, null,
+              shouldShowConstructors);
+          notifyPropertyChange(#shouldShowFunctions, null,
+              shouldShowConstructors);
+          notifyPropertyChange(#shouldShowVariables, null,
+                  shouldShowConstructors);
+        });
+  }
 
   get observables => concat(super.observables, const [#operatorItems,
       #variableItems, #constructorItems,
@@ -21,7 +33,7 @@ class MinimapElementClass extends MemberElement {
       #operatorItemsIsNotEmpty, #variableItemsIsNotEmpty,
       #constructorItemsIsNotEmpty, #functionItemsIsNotEmpty, #page,
       #shouldShowConstructors, #shouldShowFunctions, #shouldShowVariables,
-      #shouldShowOperators, #name, #currentLocation]);
+      #shouldShowOperators, #name, #currentLocation, #linkHref]);
 
   wrongClass(newItem) => newItem is! Class;
 
@@ -45,6 +57,7 @@ class MinimapElementClass extends MemberElement {
   _isNotEmpty(x) => x == null || page is! Class ? false : x.content.isNotEmpty;
 
   @observable get page => item;
+  @observable get linkHref => item.linkHref;
 
   get item => super.item;
   set item(newItem) => super.item = newItem;
@@ -52,7 +65,11 @@ class MinimapElementClass extends MemberElement {
   @observable get shouldShowConstructors => shouldShow((x) => x.constructors);
   @observable get shouldShowFunctions => shouldShow((x) => x.functions);
   @observable get shouldShowVariables => shouldShow((x) => x.variables);
-  @observable get shouldShowOperators => shouldShow((x) => x.operators);
+  @observable get shouldShowOperators {
+    var result = shouldShow((x) => x.operators);
+    print(result);
+    return result;
+  }
 
   shouldShow(Function f) => page is Class &&
       (f(page).hasNonInherited ||  viewer.isInherited);
