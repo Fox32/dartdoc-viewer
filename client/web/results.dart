@@ -60,11 +60,12 @@ class Result extends AnchorElement with Polymer, Observable {
 
   /// The type of this member.
   String get descriptiveType {
+    if (item == null) return '';
     if (membertype == 'class' || membertype == 'library')
       return membertype;
-    var ownerType = index[item.owner.qualifiedName];
+    var ownerType = index[new DocsLocation(item.element).parentQualifiedName];
     if (ownerType == 'class')
-      return '$membertype in ${item.owner.name}';
+      return '$membertype in ${new DocsLocation(item.element).parentName}';
     return membertype;
   }
 

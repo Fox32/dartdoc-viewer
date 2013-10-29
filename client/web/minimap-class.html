@@ -9,8 +9,6 @@
       {{name}} Class
     </a>
     <ul>
-      <template
-          if="{{operatorItemsIsNotEmpty}}">
           <template if="{{shouldShowOperators}}">
             <li><a href="{{currentLocation}}#operators" on-click="{{hideShow}}">
               Operators<b class="caret"></b>
@@ -21,9 +19,6 @@
               </dartdoc-minimap>
             </ul>
           </template>
-        </template>
-        <template
-          if="{{variableItemsIsNotEmpty}}">
           <template if="{{shouldShowVariables}}">
             <li><a href="{{currentLocation}}#properties" 
                 on-click="{{hideShow}}">
@@ -35,9 +30,6 @@
               </dartdoc-minimap>
             </ul>
           </template>
-        </template>
-        <template
-          if="{{constructorItemsIsNotEmpty}}">
           <template if="{{shouldShowConstructors}}">
               <li><a href="{{currentLocation}}#constructors" 
                on-click="{{hideShow}}">
@@ -49,9 +41,6 @@
               </dartdoc-minimap>
             </ul>
           </template>
-        </template>
-        <template
-          if="{{functionItemsIsNotEmpty}}">
           <template if="{{shouldShowFunctions}}">
             <li><a href="{{currentLocation}}#functions" on-click="{{hideShow}}">
               Methods<b class="caret"></b>
@@ -62,7 +51,6 @@
               </dartdoc-minimap>
             </ul>
           </template>
-        </template>
       </ul>
     </div>
   </template>

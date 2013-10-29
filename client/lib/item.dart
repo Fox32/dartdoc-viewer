@@ -159,7 +159,8 @@ nothing() => null;
 
   Item memberNamed(String name, {Function orElse : nothing}) => nothing();
 
-  Item get owner => pageIndex[new DocsLocation(qualifiedName).parentQualifiedName];
+  Item get owner =>
+      pageIndex[new DocsLocation(qualifiedName).parentQualifiedName];
 
   Item get home => owner == null ? null : owner.home;
 }

@@ -160,5 +160,12 @@ class DocsLocation {
   String get parentQualifiedName =>
       new DocsLocation.fromList(componentNames..removeLast()).withoutAnchor;
 
+  /// The simple name of our parent
+  String get parentName {
+    var names = componentNames;
+    if (names.length < 2) return '';
+    return names[names.length - 2];
+  }
+
   toString() => 'DocsLocation($withAnchor)';
 }
