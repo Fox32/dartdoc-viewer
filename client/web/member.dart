@@ -163,6 +163,7 @@ class NullTreeSanitizer implements html.NodeTreeSanitizer {
       if (commentLocation == null) {
         commentLocation = shadowRoot.querySelector('.description');
       }
+      if (commentLocation == null) return;
       commentLocation.children.clear();
       var commentElement = new html.Element.html(comment,
           treeSanitizer: sanitizer);
@@ -244,10 +245,12 @@ class NullTreeSanitizer implements html.NodeTreeSanitizer {
   enteredView() {
     super.enteredView();
     if (isInherited) {
-      inheritedFrom = findInheritance(item.inheritedFrom);
+      inheritedFrom = new LinkableType(
+          new DocsLocation(item.inheritedFrom).parentQualifiedName);
     }
     if (hasInheritedComment) {
-      commentFrom = findInheritance(item.commentFrom);
+      commentFrom = new LinkableType(
+          new DocsLocation(item.commentFrom).parentQualifiedName);
     }
   }
 
@@ -261,11 +264,6 @@ class NullTreeSanitizer implements html.NodeTreeSanitizer {
   @observable bool exists(String location) {
     if (location == null) return false;
     return index.containsKey(location.replaceAll('-','.'));
-  }
-
-  /// Creates a [LinkableType] for the owner of [qualifiedName].
-  LinkableType findInheritance(String qualifiedName) {
-    return new LinkableType(ownerName(qualifiedName));
   }
 }
 

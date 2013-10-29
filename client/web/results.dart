@@ -7,6 +7,7 @@ library results;
 import 'package:dartdoc_viewer/data.dart';
 import 'package:dartdoc_viewer/item.dart';
 import 'package:dartdoc_viewer/search.dart';
+import 'package:dartdoc_viewer/location.dart';
 import 'package:polymer/polymer.dart';
 import 'member.dart';
 import 'dart:html';
@@ -61,22 +62,16 @@ class Result extends AnchorElement with Polymer, Observable {
   String get descriptiveType {
     if (membertype == 'class' || membertype == 'library')
       return membertype;
-    var owner = ownerName(qualifiedname);
-    var ownerShortName = owner.split('.').last;
-    var ownerType = index[owner];
+    var ownerType = index[item.owner.qualifiedName];
     if (ownerType == 'class')
-      return '$membertype in $ownerShortName';
+      return '$membertype in ${item.owner.name}';
     return membertype;
   }
 
   /// The library containing this member.
   String get outerLibrary {
     if (membertype == 'library') return '';
-    var nameWithLibrary = findLibraryName(qualifiedname);
-    var libraryName = nameWithLibrary.split('.').first;
-    libraryName = libraryName.replaceAll('-', ':');
-    if (libraryName.contains(':dom:'))
-      libraryName = libraryName.replaceFirst(':dom:', ':');
+    var libraryName = new DocsLocation(qualifiedname).libraryName;
     return 'library $libraryName';
   }
 }

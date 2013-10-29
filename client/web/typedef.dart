@@ -18,7 +18,8 @@ class TypedefElement extends MemberElement {
       const [#required, #optional, #annotations, #name,
       #location, #simpleType, #parameters]);
   wrongClass(newItem) => newItem is! Typedef;
-  get defaultItem => null;
+  get defaultItem =>
+      new Typedef({'name' : 'loading', 'qualifiedName' : 'loading'});
 
   get item => super.item;
   set item(newItem) => super.item = newItem;

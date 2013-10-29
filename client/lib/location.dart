@@ -55,6 +55,7 @@ class DocsLocation {
       }
     }
 
+    if (uri == null) return;
     packageName = _check(packageMatch);
     libraryName = _check(libraryMatch);
     memberName = _check(memberMatch);
@@ -106,6 +107,16 @@ class DocsLocation {
   /// which are null.
   List<String> get allComponentNames =>
       [packageName, libraryName, memberName, subMemberName, anchor];
+
+  /// Return the simple name of the lowest-level component.
+  String get name {
+    if (anchor != null) return anchor;
+    if (subMemberName != null) return subMemberName;
+    if (memberName != null) return memberName;
+    if (libraryName != null) return libraryName;
+    if (packageName != null) return packageName;
+    return '';
+  }
 
   /// Return a minimal list of the items along our path, using [root] for
   /// context. The [root] is of type Home, and it returns a list of Item,

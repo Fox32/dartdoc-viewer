@@ -156,6 +156,7 @@ class Viewer extends Observable {
           // The navigation bar at the top of the page is 60px wide,
           // so scroll down 60px once the browser scrolls to the member.
           window.scrollBy(0, -60);
+          e.focus();
         }
       });
     }

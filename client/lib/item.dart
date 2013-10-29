@@ -37,12 +37,6 @@ nothing() => null;
   return '<span>$comment</span>';
 }
 
-/// Returns the qualified name of [qualifiedName]'s owner.
-@reflectable String ownerName(String qualifiedName) {
-  var index = qualifiedName.lastIndexOf('.');
-  return index != -1 ? qualifiedName.substring(0, index) : '';
-}
-
 /**
  * A [Container] that contains other [Container]s to be displayed.
  */
@@ -213,7 +207,6 @@ nothing() => null;
     var directLibraries = isTopLevelHome ? packages[''] : libraryList;
     for (Map library in directLibraries) {
       var libraryName = library['name'];
-      libraryNames[libraryName] = libraryName.replaceAll('.', '-');
       var newLibrary = new Library.forPlaceholder(library);
       newLibrary.home = this;
       this.libraries.add(newLibrary);
@@ -230,7 +223,6 @@ nothing() => null;
         });
       package.owner = this;
       this.libraries.add(package);
-      libraryNames[package.name] = package.name.replaceAll('.', '-');
     });
 
     _sort([this.libraries]);
@@ -254,14 +246,6 @@ nothing() => null;
         comment = _wrapComment(intro);
       }
     }
-  }
-
-  /// Returns the [Item] representing [libraryName].
-  // TODO(tmandel): Stop looping through 'libraries' so much. Possibly use a
-  // map from library names to their objects.
-  Item itemNamed(String libraryName) {
-    return libraries.firstWhere((lib) => libraryNames[lib.name] == libraryName,
-        orElse: () => null);
   }
 
   Item memberNamed(String name, {Function orElse : nothing}) {
@@ -801,21 +785,21 @@ nothing() => null;
 @reflectable class LinkableType {
 
   /// The resolved qualified name of the type this [LinkableType] represents.
-  String type;
-  String qualifiedName;
+  DocsLocation loc;
 
   /// The constructor resolves the library name by finding the correct library
   /// from [libraryNames] and changing [type] to match.
   LinkableType(String type) {
-    qualifiedName = type;
-    this.type = findLibraryName(type);
+    loc = new DocsLocation(type);
   }
 
   /// The simple name for this type.
-  String get simpleType => type.split('.').last;
+  String get simpleType => loc.name;
 
   /// The [Item] describing this type if it has been loaded, otherwise null.
-  String get location => type;
+  String get location => loc.withAnchor;
+
+  String get qualifiedName => location;
 
   get isDynamic => simpleType == 'dynamic';
 }
