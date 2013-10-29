@@ -124,8 +124,8 @@ class CategoryElement extends DartdocElement {
     ..allowCustomElement("dartdoc-category-interior", attributes: ["item"])
     ..allowTagExtension("method-panel", "div", attributes: ["item"]);
 
-  hideShow(event, detail, target) {
-    var list = shadowRoot.querySelector("#" + target.hash.split("#").last);
+  hideShow(event, detail, AnchorElement target) {
+    var list = shadowRoot.querySelector(target.attributes["data-target"]);
     if (list.classes.contains("in")) {
       list.classes.remove("in");
       list.style.height = '0px';

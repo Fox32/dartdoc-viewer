@@ -12,7 +12,7 @@
       <template
           if="{{operatorItemsIsNotEmpty}}">
           <template if="{{shouldShowOperators}}">
-            <li><a href="{{currentLocation}}#operators" on-click="hideShow">
+            <li><a href="{{currentLocation}}#operators" on-click="{{hideShow}}">
               Operators<b class="caret"></b>
             </a></li>
             <ul id="minimap-operators" class="collapse in">
@@ -25,7 +25,8 @@
         <template
           if="{{variableItemsIsNotEmpty}}">
           <template if="{{shouldShowVariables}}">
-            <li><a href="{{currentLocation}}#properties" on-click="hideShow">
+            <li><a href="{{currentLocation}}#properties" 
+                on-click="{{hideShow}}">
               Properties<b class="caret"></b>
             </a></li>
             <ul id="minimap-properties" class="collapse in">
@@ -39,7 +40,7 @@
           if="{{constructorItemsIsNotEmpty}}">
           <template if="{{shouldShowConstructors}}">
               <li><a href="{{currentLocation}}#constructors" 
-               on-click="hideShow">
+               on-click="{{hideShow}}">
               Constructors<b class="caret"></b>
             </a></li>
             <ul id="minimap-constructors" class="collapse in">
@@ -52,7 +53,7 @@
         <template
           if="{{functionItemsIsNotEmpty}}">
           <template if="{{shouldShowFunctions}}">
-            <li><a href="{{currentLocation}}#functions" on-click="hideShow">
+            <li><a href="{{currentLocation}}#functions" on-click="{{hideShow}}">
               Methods<b class="caret"></b>
             </a></li>
             <ul id="minimap-functions" class="collapse in">

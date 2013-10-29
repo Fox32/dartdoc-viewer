@@ -78,6 +78,37 @@ class NullTreeSanitizer implements html.NodeTreeSanitizer {
   InstanceMirror _cachedMirror;
   get mirror =>
       _cachedMirror == null ? _cachedMirror = reflect(this) : _cachedMirror;
+
+  enteredView() {
+    super.enteredView();
+    // Handle clicks and redirect.
+
+    onClick.listen((html.Event e) {
+      if (e.target is html.AnchorElement) {
+        var anchor = e.target;
+        if (anchor.host == html.window.location.host
+            && anchor.pathname == _pathname && !e.ctrlKey) {
+          e.preventDefault();
+          var location = anchor.hash.substring(1, anchor.hash.length);
+          viewer.handleLink(location);
+        }
+      }
+    });
+  }
+
+  var _pathname = html.window.location.pathname;
+
+  void handleClick(html.Event e) {
+    if (e.target is html.AnchorElement) {
+      var anchor = e.target;
+      if (anchor.host == html.window.location.host
+          && anchor.pathname == _pathname && !e.ctrlKey) {
+        e.preventDefault();
+        var location = anchor.hash.substring(1, anchor.hash.length);
+        viewer.handleLink(location);
+      }
+    }
+  }
 }
 
 //// This is a web component to be extended by all Dart members with comments.

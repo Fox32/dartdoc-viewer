@@ -310,23 +310,8 @@ void navigate(event) {
 
 /// Handles browser navigation.
 @initMethod _init() {
-  _pathname = window.location.pathname;
-
   window.onResize.listen((event) {
     viewer.isDesktop = window.innerWidth > desktopSizeBoundary;
-  });
-
-  // Handle clicks and redirect.
-  window.onClick.listen((Event e) {
-    if (e.target is AnchorElement) {
-      var anchor = e.target;
-      if (anchor.host == window.location.host
-          && anchor.pathname == _pathname && !e.ctrlKey) {
-        e.preventDefault();
-        var location = anchor.hash.substring(1, anchor.hash.length);
-        viewer.handleLink(location);
-      }
-    }
   });
 
   startHistory();

@@ -39,25 +39,25 @@
           <ul class="nav navbar-nav pull-right">
     
             <li class="dropdown">
-              <a class="dropdown-toggle" on-click="hideShowOptions">
+              <a class="dropdown-toggle" on-click="{{hideShowOptions}}">
                 Options <b class="caret"></b>
               </a>
               <ul class="dropdown-menu">
-                <li class="visible-lg"><a on-click="togglePanel">
+                <li class="visible-lg"><a on-click="{{togglePanel}}">
                   <template if="{{viewer.isPanel}}">Hide Libraries</template>
                   <template if="{{!viewer.isPanel}}">Show Libraries</template>
                 </a></li>
-                <li class="visible-lg"><a on-click="toggleMinimap">
+                <li class="visible-lg"><a on-click="{{toggleMinimap}}">
                   <template if="{{viewer.isMinimap}}">Hide Minimap</template>
                   <template if="{{!viewer.isMinimap}}">Show Minimap</template>
                 </a></li>
-                <li><a on-click="toggleInherited">
+                <li><a on-click="{{toggleInherited}}">
                   <template if="{{viewer.isInherited}}">Hide Inherited
                   </template>
                   <template if="{{!viewer.isInherited}}">Show Inherited
                   </template>
                 </a></li>
-                <li><a on-click="togglePkg">
+                <li><a on-click="{{togglePkg}}">
                   <template if="{{viewer.showPkgLibraries}}">Hide Packages
                   </template>
                   <template if="{{!viewer.showPkgLibraries}}">Show Packages
