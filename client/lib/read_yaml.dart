@@ -23,7 +23,8 @@ Future<String> retrieveFileContents(String path) {
  * Creates a [Library] object from the [response] string of YAML.
  */
 Item loadData(String response) {
-  var doc = isYaml ? loadYaml(response) : JSON.decode(response);
+  var doc = isYaml ? loadYaml(response) :
+      response == '' ? null : JSON.decode(response);
   if (doc == null) return null;
   return new Library(doc);
 }
