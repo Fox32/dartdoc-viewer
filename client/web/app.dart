@@ -156,6 +156,8 @@ class Viewer extends Observable {
           // The navigation bar at the top of the page is 60px wide,
           // so scroll down 60px once the browser scrolls to the member.
           window.scrollBy(0, -60);
+          // TODO(alanknight): The focus only shows up the element if it's
+          // a link, e.g. classes. It would be nice to highlight sub-members
           e.focus();
         }
       });
@@ -196,6 +198,15 @@ class Viewer extends Observable {
     // If it's loaded, it will be in the index.
     var destination = pageIndex[location.withoutAnchor];
     if (destination == null) {
+      // TODO(alanknight) : A cleaner way to do this.
+      // Transform references to sub-members into anchors
+      if (location.subMemberName != null) {
+        var newLocation = new DocsLocation(location.parentQualifiedName);
+        newLocation.anchor = newLocation.toHash(location.subMemberName);
+        var newUri = newLocation.withAnchor;
+        window.history.pushState("#$newUri", viewer.title, "#$newUri");
+        return handleLink(newLocation.withAnchor);
+      }
       return getItem(location).then((items)
           => _updatePage(location.itemFromList(items.toList()), location));
     } else {
