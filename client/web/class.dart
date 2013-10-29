@@ -95,8 +95,8 @@ class ClassElement extends MemberElement {
           treeSanitizer: sanitizer));
       buttonThatMustBeStatic.classes.remove("hidden");
     }
-    p.append(buttonThatMustBeStatic);
     if (subclasses.length <= 3) return;
+    p.append(buttonThatMustBeStatic);
     p.append(p.createFragment(
          '<span id="${item.name}-subclass-hidden" class="hidden">,&nbsp;'
          '</span>', treeSanitizer: sanitizer));
