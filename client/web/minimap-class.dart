@@ -67,7 +67,6 @@ class MinimapElementClass extends MemberElement {
   @observable get shouldShowVariables => shouldShow((x) => x.variables);
   @observable get shouldShowOperators {
     var result = shouldShow((x) => x.operators);
-    print(result);
     return result;
   }
 
