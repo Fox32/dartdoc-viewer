@@ -95,18 +95,25 @@ class ClassElement extends MemberElement {
   }
 
   @observable addSubclassLinks() {
+    if (shadowRoot == null) return;
     var p = shadowRoot.querySelector("#subclasses");
     // Remove all the children except the '...' button, which we can't
     // create dynamically because the on-click handler won't get registered.
     var buttonThatMustBeStatic = p.querySelector(".btn-link");
     p.children.clear();
     var text = makeLinks(subclasses.take(3));
+    // TODO(alanknight) : I don't understand how we can have the #subclasses
+    // template element but not the .btn-link one, but it seems to happen.
     if (subclasses.isEmpty) {
-      buttonThatMustBeStatic.classes.add("hidden");
+      if (buttonThatMustBeStatic != null) {
+        buttonThatMustBeStatic.classes.add("hidden");
+      }
     } else {
       p.append(p.createFragment('Subclasses: ' + text,
           treeSanitizer: sanitizer));
-      buttonThatMustBeStatic.classes.remove("hidden");
+      if (buttonThatMustBeStatic != null) {
+        buttonThatMustBeStatic.classes.remove("hidden");
+      }
     }
     if (subclasses.length <= 3) return;
     p.append(buttonThatMustBeStatic);

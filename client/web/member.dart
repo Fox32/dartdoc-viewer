@@ -4,7 +4,7 @@
 
 library member;
 
-import 'dart:html' as html;
+import 'dart:html';
 
 import 'package:dartdoc_viewer/item.dart';
 import 'package:dartdoc_viewer/search.dart';
@@ -14,9 +14,9 @@ import 'dart:mirrors';
 import 'app.dart' as app show viewer;
 import 'package:dartdoc_viewer/location.dart';
 
-class SameProtocolUriPolicy implements html.UriPolicy {
-  final html.AnchorElement _hiddenAnchor = new html.AnchorElement();
-  final html.Location _loc = html.window.location;
+class SameProtocolUriPolicy implements UriPolicy {
+  final AnchorElement _hiddenAnchor = new AnchorElement();
+  final Location _loc = window.location;
 
   bool allowsUri(String uri) {
     _hiddenAnchor.href = uri;
@@ -32,7 +32,7 @@ class SameProtocolUriPolicy implements html.UriPolicy {
 }
 
 var uriPolicy = new SameProtocolUriPolicy();
-var validator = new html.NodeValidatorBuilder()
+var validator = new NodeValidatorBuilder()
     ..allowHtml5(uriPolicy: uriPolicy);
 
 var sanitizer = new NullTreeSanitizer();
@@ -41,8 +41,8 @@ var sanitizer = new NullTreeSanitizer();
 // things down too much, and that it's not disallowing valid content.
 /// A sanitizer that allows anything to maximize speed and not disallow any
 /// tags.
-class NullTreeSanitizer implements html.NodeTreeSanitizer {
-  void sanitizeTree(html.Node node) {}
+class NullTreeSanitizer implements NodeTreeSanitizer {
+  void sanitizeTree(Node node) {}
 }
 
 //// An abstract class for all Dartdoc elements.
@@ -82,26 +82,15 @@ class NullTreeSanitizer implements html.NodeTreeSanitizer {
   enteredView() {
     super.enteredView();
     // Handle clicks and redirect.
-
-    onClick.listen((html.Event e) {
-      if (e.target is html.AnchorElement) {
-        var anchor = e.target;
-        if (anchor.host == html.window.location.host
-            && anchor.pathname == _pathname && !e.ctrlKey) {
-          e.preventDefault();
-          var location = anchor.hash.substring(1, anchor.hash.length);
-          viewer.handleLink(location);
-        }
-      }
-    });
+    onClick.listen(handleClick);
   }
 
-  var _pathname = html.window.location.pathname;
+  var _pathname = window.location.pathname;
 
-  void handleClick(html.Event e) {
-    if (e.target is html.AnchorElement) {
+  void handleClick(Event e) {
+    if (e.target is AnchorElement) {
       var anchor = e.target;
-      if (anchor.host == html.window.location.host
+      if (anchor.host == window.location.host
           && anchor.pathname == _pathname && !e.ctrlKey) {
         e.preventDefault();
         var location = anchor.hash.substring(1, anchor.hash.length);
@@ -143,7 +132,7 @@ class NullTreeSanitizer implements html.NodeTreeSanitizer {
   /// Adds [item]'s comment to the the [elementName] element with markdown
   /// links converted to working links.
   void addComment(String elementName, [bool preview = false,
-      html.Element commentLocation]) {
+      Element commentLocation]) {
     if (item == null) return;
     var comment = item.comment;
     if (commentLocation == null) {
@@ -165,10 +154,10 @@ class NullTreeSanitizer implements html.NodeTreeSanitizer {
       }
       if (commentLocation == null) return;
       commentLocation.children.clear();
-      var commentElement = new html.Element.html(comment,
+      var commentElement = new Element.html(comment,
           treeSanitizer: sanitizer);
       var links = commentElement.querySelectorAll('a');
-      for (html.AnchorElement link in links) {
+      for (AnchorElement link in links) {
         if (link.href =='') {
           if (link.text.contains('#')) {
             // If the link is to a parameter of this method, it shouldn't be
@@ -177,12 +166,12 @@ class NullTreeSanitizer implements html.NodeTreeSanitizer {
             // TODO(tmandel): Handle parameters differently?
             var index = link.text.indexOf('#');
             var newName = link.text.substring(index + 1, link.text.length);
-            link.replaceWith(new html.Element.html('<i>$newName</i>',
+            link.replaceWith(new Element.html('<i>$newName</i>',
                 treeSanitizer: sanitizer));
           } else if (!index.containsKey(link.text)) {
             // If markdown links to private or otherwise unknown members are
             // found, make them <i> tags instead of <a> tags for CSS.
-            link.replaceWith(new html.Element.html('<i>${link.text}</i>',
+            link.replaceWith(new Element.html('<i>${link.text}</i>',
                 treeSanitizer: sanitizer));
           } else {
             var linkable = new LinkableType(link.text);
@@ -197,10 +186,10 @@ class NullTreeSanitizer implements html.NodeTreeSanitizer {
   }
 
   /// Creates an HTML element for a parameterized type.
-  static html.Element createInner(NestedType type) {
-    var span = new html.SpanElement();
+  static Element createInner(NestedType type) {
+    var span = new SpanElement();
     if (index.containsKey(type.outer.qualifiedName)) {
-      var outer = new html.AnchorElement()
+      var outer = new AnchorElement()
         ..text = type.outer.simpleType
         ..href = '#${type.outer.location}';
       span.append(outer);
