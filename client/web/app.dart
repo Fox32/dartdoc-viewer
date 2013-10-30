@@ -309,7 +309,9 @@ String location;
 /// Listens for browser navigation and acts accordingly.
 void startHistory() {
   location = window.location.hash.replaceFirst('#', '');
-  window.onPopState.listen(navigate);
+  // TODO(alanknight): onPopState doesn't work in IE, so using onHashChange.
+  // window.onPopState.listen(navigate);
+  window.onHashChange.listen(navigate);
 }
 
 void navigate(event) {
