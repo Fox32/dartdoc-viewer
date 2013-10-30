@@ -128,4 +128,13 @@ class IndexElement extends DartdocElement {
       return _buildIdentifier;
     }
   }
+
+  @observable navHideShow(event, detail, target) {
+    var nav = shadowRoot.querySelector("#nav-collapse-content");
+    if (nav.classes.contains("in")) {
+      nav.classes.remove("in");
+    } else {
+      nav.classes.add("in");
+    }
+  }
 }
