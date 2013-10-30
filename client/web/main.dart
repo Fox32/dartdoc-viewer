@@ -9,6 +9,7 @@ import 'package:polymer/polymer.dart';
 import 'member.dart';
 import 'app.dart';
 import 'dart:html';
+import 'package:dartdoc_viewer/read_yaml.dart';
 
 @CustomTag("dartdoc-main")
 class IndexElement extends DartdocElement {
@@ -111,6 +112,20 @@ class IndexElement extends DartdocElement {
       list.classes.remove("open");
     } else {
       list.classes.add("open");
+    }
+  }
+
+  var _buildIdentifier;
+  @observable get buildIdentifier {
+    if (_buildIdentifier == null) {
+      _buildIdentifier = ''; // Don't try twice.
+      retrieveFileContents('../../docs/VERSION').then((version) {
+        _buildIdentifier = "r $version";
+        notifyPropertyChange(#buildIdentifier, null, _buildIdentifier);
+      }).catchError((_) => null);
+      return '';
+    } else {
+      return _buildIdentifier;
     }
   }
 }
