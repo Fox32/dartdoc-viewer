@@ -11,7 +11,10 @@ import 'member.dart';
 
 @CustomTag("dartdoc-homepage")
 class HomeElement extends MemberElement {
-  HomeElement.created() : super.created();
+  HomeElement.created() : super.created() {
+    new PathObserver(this, "viewer.libraries").bindSync(
+        (_) => addChildren);
+  }
 
   get defaultItem => null;
   get observables => concat(super.observables,
@@ -33,6 +36,7 @@ class HomeElement extends MemberElement {
   @observable get addChildren {
     // TODO(alanknight): Move this and other occurences of addChildren back
     // into templates if they get acceptable performance.
+    if (shadowRoot == null) return;
     var elements = [];
     for (var library in libraries) {
       var newItem = document.createElement('dartdoc-item');
