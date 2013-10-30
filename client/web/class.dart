@@ -14,15 +14,27 @@ import 'dart:mirrors';
 
 @CustomTag("dartdoc-class")
 class ClassElement extends MemberElement {
-  ClassElement.created() : super.created();
+  ClassElement.created() : super.created() {
+    new PathObserver(viewer, "isInherited").changes.listen((changes) {
+      notifyPropertyChange(#shouldShowOperators, null, true);
+      notifyPropertyChange(#shouldShowVariables, null, true);
+      notifyPropertyChange(#shouldShowConstructors, null, true);
+      notifyPropertyChange(#shouldShowMethods, null, true);
+      notifyPropertyChange(#variables, null, []);
+      notifyPropertyChange(#operators, null, []);
+      notifyPropertyChange(#constructors, null, []);
+      notifyPropertyChange(#methods, null, []);
+    });
+  }
 
   get defaultItem => new Class.forPlaceholder('loading.loading', 'loading');
 
   get observables => concat(super.observables,
     const [#variables, #operators, #constructors, #methods,
-    #variablesIsNotEmpty, #operatorsIsNotEmpty, #constructorsIsNotEmpty,
-    #methodsIsNotEmpty, #annotations, #interfaces, #subclasses, #superClass,
-    #nameWithGeneric, #name, #isNotObject]);
+    #annotations, #interfaces, #subclasses, #superClass,
+    #nameWithGeneric, #name, #isNotObject,
+    #shouldShowOperators, #shouldShowVariables, #shouldShowConstructors,
+    #shouldShowMethods]);
 
   get methodsToCall => concat(super.methodsToCall,
       const [#addInterfaceLinks, #addSubclassLinks]);
@@ -36,12 +48,13 @@ class ClassElement extends MemberElement {
   @observable Category get operators => item.operators;
   @observable Category get constructors => item.constructs;
   @observable Category get methods => item.functions;
-  @observable bool get variablesIsNotEmpty => _isNotEmpty(variables);
-  @observable bool get operatorsIsNotEmpty => _isNotEmpty(operators);
-  @observable bool get constructorsIsNotEmpty => _isNotEmpty(constructors);
-  @observable bool get methodsIsNotEmpty => _isNotEmpty(methods);
-
-  _isNotEmpty(x) => x == null ? false : x.content.isNotEmpty;
+  @observable bool get shouldShowOperators => shouldShow(operators);
+  @observable bool get shouldShowVariables =>  shouldShow(variables);
+  @observable bool get shouldShowConstructors =>  shouldShow(constructors);
+  @observable bool get shouldShowMethods =>  shouldShow(methods);
+  @observable bool shouldShow(Category thing) =>
+      thing.content.isNotEmpty &&
+      (viewer.isInherited || thing.hasNonInherited);
 
   @observable AnnotationGroup get annotations => item.annotations;
   set annotations(_) {}
